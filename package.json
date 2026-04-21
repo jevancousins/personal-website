@@ -1,0 +1,18 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "Jevan Cousins | Applied AI engineering, full-stack shipping, founder-curious.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^4.15.13",
+    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/sitemap": "^3.1.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.6.3"
+  }
+}

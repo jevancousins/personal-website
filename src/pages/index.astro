@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<BaseLayout
+  title="Jevan Cousins | Applied AI engineering, full-stack shipping, founder-curious"
+  description="Applied AI engineering, full-stack shipping, founder-curious. Building Lineup and NutriPlan. Based in London, UK."
+>
+  <div class="bg-background">
+    <!-- Hero Section -->
+    <section class="max-w-4xl mx-auto px-6 py-24 md:py-32">
+      <div>
+        <h1 class="font-display font-bold mb-4">
+          Jevan Cousins
+        </h1>
+        <p class="text-2xl text-accent-red font-medium mb-6">
+          Applied AI engineering, full-stack shipping, founder-curious.
+        </p>
+        <p class="text-lg text-text-muted max-w-2xl leading-relaxed mb-8">
+          Currently building <strong>Lineup</strong> (concert discovery) and <strong>NutriPlan</strong> (AI meal planning) while finishing up at Allianz Global Investors. Based in London, targeting Paris long-term.
+        </p>
+      </div>
+    </section>
+
+    <!-- Featured Work -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-border-subtle">
+      <h2 class="font-display font-bold mb-8">Featured Work</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <ProjectCard
+          title="Lineup"
+          description="Concert discovery iOS app with production data platform: Apache Airflow, BigQuery, dbt, 1M+ events."
+          href="/projects/lineup"
+          tags={['iOS', 'Python', 'Data']}
+        />
+        <ProjectCard
+          title="NutriPlan"
+          description="AI meal planning with FastAPI backend, GPT-4o, and vector embeddings for personalised nutrition."
+          href="/projects/nutriplan"
+          tags={['iOS', 'FastAPI', 'AI/ML']}
+        />
+        <ProjectCard
+          title="JobHunter"
+          description="AI job search automation using Claude API, Playwright scraping, and Notion integration."
+          href="/projects/jobhunter"
+          tags={['Python', 'AI', 'Automation']}
+        />
+      </div>
+    </section>
+
+    <!-- Recent Writing -->
+    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-border-subtle">
+      <h2 class="font-display font-bold mb-8">Recent Writing</h2>
+      <div class="p-8 border border-border-subtle rounded-lg">
+        <p class="text-text-muted">
+          No posts yet. Starting with a short piece on why I am building Lineup, coming soon.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

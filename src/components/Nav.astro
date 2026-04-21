@@ -1,0 +1,41 @@
+---
+const currentPath = new URL(Astro.request.url).pathname;
+
+const navItems = [
+  { label: 'Work', href: '/projects' },
+  { label: 'Now', href: '/now' },
+  { label: 'Writing', href: '/writing' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<nav class="sticky top-0 z-50 border-b border-border-subtle bg-background bg-opacity-95 backdrop-blur-sm">
+  <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-display font-bold hover:text-accent-red-hover transition-colors">
+      Jevan
+    </a>
+
+    <div class="flex items-center gap-8">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`text-sm font-medium transition-colors ${
+            currentPath === item.href
+              ? 'text-accent-red'
+              : 'text-text-primary hover:text-accent-red'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <a
+        href="mailto:jevan.cousins@gmail.com"
+        class="text-sm font-medium text-text-muted hover:text-accent-red transition-colors"
+        title="Send me an email"
+      >
+        Email
+      </a>
+    </div>
+  </div>
+</nav>

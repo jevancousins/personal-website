@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+---
+
+<BaseLayout
+  title="Earnings Call Analyser | Jevan Cousins"
+  description="Case study: Earnings Call Q&A Alignment Analyser, a PyTorch NLP research project."
+>
+  <CaseStudy
+    title="Earnings Call Q&A Alignment Analyser"
+    subtitle="PyTorch NLP pipeline exploring Q&A alignment as an equity signal"
+    description="Research project investigating whether alignment in earnings call Q&A sessions predicts forward equity returns, following Chiang et al. 2025."
+  >
+    <h2>Overview</h2>
+    <p>
+      This project explores the research finding from Chiang et al. 2025 that alignment between management answers and analyst questions in earnings calls correlates with forward equity returns. The pipeline ingests earnings call transcripts, extracts and embeds questions and answers using FinBERT, trains a PyTorch contrastive-learning classifier to measure alignment, and backtests the signal against forward returns. The project is proof-of-concept; architecture is complete and model training is underway.
+    </p>
+
+    <h2>Problem</h2>
+    <p>
+      Most equity signals rely on price action or accounting data. Earnings calls are rich with linguistic and semantic information. If management and analysts are misaligned (management provides evasive or off-topic answers), does that predict returns? Chiang et al. suggest yes. This project validates the hypothesis on US equities.
+    </p>
+
+    <h2>Key Decisions and Trade-offs</h2>
+    <ul>
+      <li>
+        <strong>FinBERT for embeddings.</strong> ProsusAI/FinBERT is domain-specific for financial text. Outperforms generic BERT for understanding financial language.
+      </li>
+      <li>
+        <strong>Contrastive learning architecture.</strong> Q&A pairs generate positive samples; Q-A' pairs (mismatched) generate negative samples. Minimises embedding distance for aligned pairs, maximises for misaligned. Simpler than multi-class classification.
+      </li>
+      <li>
+        <strong>Combination loss function.</strong> Cross-entropy (classification) + MSE (alignment scores) + SimCSE-inspired contrastive loss. Trade-off is tuning complexity; payoff is richer signal.
+      </li>
+      <li>
+        <strong>Kubernetes for deployment.</strong> Containerised API and dashboard for reproducibility and scaling. Overkill for MVP but enables production validation.
+      </li>
+    </ul>
+
+    <h2>Stack and Why</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ML Framework</td>
+          <td>PyTorch 2.x</td>
+          <td>Research flexibility, debugging, academic standard.</td>
+        </tr>
+        <tr>
+          <td>Embeddings</td>
+          <td>ProsusAI/FinBERT</td>
+          <td>Domain-specific financial BERT, out-of-the-box fine-tuning ready.</td>
+        </tr>
+        <tr>
+          <td>Transformer Library</td>
+          <td>HuggingFace Transformers</td>
+          <td>FinBERT integration, preprocessing, model management.</td>
+        </tr>
+        <tr>
+          <td>Backend API</td>
+          <td>FastAPI</td>
+          <td>Async endpoints for analysis, company comparison, backtesting.</td>
+        </tr>
+        <tr>
+          <td>Database</td>
+          <td>PostgreSQL</td>
+          <td>Transcript storage, embedding persistence, query efficiency.</td>
+        </tr>
+        <tr>
+          <td>Frontend</td>
+          <td>Streamlit</td>
+          <td>Quick interactive dashboards. Plotly for alignment timelines and returns.</td>
+        </tr>
+        <tr>
+          <td>Deployment</td>
+          <td>Docker, Kubernetes (Minikube)</td>
+          <td>Reproducible containers, Kubernetes for scaling and orchestration.</td>
+        </tr>
+        <tr>
+          <td>Data Sources</td>
+          <td>Financial Modeling Prep API, SEC EDGAR, yfinance</td>
+          <td>Transcripts, returns data, financial metrics.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>What Shipped</h2>
+    <ul>
+      <li>
+        <strong>Transcript ingestion:</strong> Fetch from Financial Modeling Prep API and SEC EDGAR. Parse Q&A segments.
+      </li>
+      <li>
+        <strong>Embedding pipeline:</strong> FinBERT embeddings for questions and answers. Dimension: 768.
+      </li>
+      <li>
+        <strong>Alignment classifier:</strong> PyTorch neural network with question/answer projection heads. Combined loss function. Outputs alignment score 0-1.
+      </li>
+      <li>
+        <strong>Question categorisation:</strong> Topics: margins, guidance, competition, macro, capital structure. Multi-label classification.
+      </li>
+      <li>
+        <strong>Backtesting framework:</strong> Historical alignment scores vs forward 20/60-day returns. Sharpe ratio, information ratio, drawdown analysis.
+      </li>
+      <li>
+        <strong>API and dashboard:</strong> FastAPI backend with analysis endpoints. Streamlit frontend with alignment timeline, sector heatmaps, company rankings.
+      </li>
+    </ul>
+
+    <h2>Metrics (Planned)</h2>
+    <ul>
+      <li>Alignment score correlation with forward returns (target: &gt; 0.15)</li>
+      <li>Backtesting Sharpe ratio (target: &gt; 0.8)</li>
+      <li>Classification accuracy for question categorisation (target: &gt; 85%)</li>
+      <li>Model training on 500+ earnings calls covering S&P 500 constituents</li>
+    </ul>
+
+    <h2>What Is Next</h2>
+    <p>
+      Collect labelled data (manual alignment scoring on 100-200 Q&A pairs to train the classifier). Train the contrastive-learning model. Backtest against 2020-2025 earnings season data. Analyse which question types drive alignment signal. Expand to international markets. Consider integration with portfolio management workflows.
+    </p>
+
+    <div class="mt-12 p-8 border border-border-subtle rounded-lg">
+      <p class="text-text-muted text-sm mb-4">
+        Status: Proof of Concept. Based on Chiang et al. 2025 research.
+      </p>
+      <p class="text-text-muted text-sm">
+        Learn more: <a href="https://github.com/jevancousins/earnings-call-analyser" target="_blank">GitHub repository</a>
+      </p>
+    </div>
+  </CaseStudy>
+</BaseLayout>

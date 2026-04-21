@@ -1,0 +1,38 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-border-subtle bg-background mt-16">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <div class="flex items-center justify-between flex-wrap gap-4">
+      <p class="text-text-muted text-sm">
+        &copy; {currentYear} Jevan Cousins. All rights reserved.
+      </p>
+
+      <div class="flex items-center gap-6">
+        <a
+          href="mailto:jevan.cousins@gmail.com"
+          class="text-text-muted hover:text-accent-red transition-colors text-sm"
+        >
+          Email
+        </a>
+        <a
+          href="https://github.com/jevancousins"
+          class="text-text-muted hover:text-accent-red transition-colors text-sm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/jevancousins"
+          class="text-text-muted hover:text-accent-red transition-colors text-sm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

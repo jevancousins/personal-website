@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+---
+
+<BaseLayout
+  title="Projects | Jevan Cousins"
+  description="A selection of case studies from personal projects and work."
+>
+  <div class="max-w-4xl mx-auto px-6 py-16">
+    <h1 class="font-display font-bold mb-12">Projects</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <ProjectCard
+        title="Lineup"
+        description="Concert discovery iOS app with production data platform: Apache Airflow, BigQuery, dbt, 1M+ events, 300K+ artists."
+        href="/projects/lineup"
+        tags={['iOS', 'Python', 'Data Engineering']}
+      />
+      <ProjectCard
+        title="NutriPlan"
+        description="AI meal planning app with FastAPI backend, GPT-4o, vector embeddings, and personalised weekly meal generation."
+        href="/projects/nutriplan"
+        tags={['iOS', 'FastAPI', 'AI/ML']}
+      />
+      <ProjectCard
+        title="JobHunter"
+        description="AI job search automation with Claude API for scoring, Playwright for scraping, and Notion integration."
+        href="/projects/jobhunter"
+        tags={['Python', 'AI', 'Automation']}
+      />
+      <ProjectCard
+        title="Earnings Call Analyser"
+        description="PyTorch NLP pipeline with FinBERT embeddings exploring Q&A alignment as an equity trading signal."
+        href="/projects/earnings-call-analyser"
+        tags={['PyTorch', 'NLP', 'Research']}
+      />
+    </div>
+  </div>
+</BaseLayout>
