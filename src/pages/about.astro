@@ -11,23 +11,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <div class="prose prose-invert max-w-none space-y-6">
       <p class="text-lg leading-relaxed text-text-primary">
-        I am an applied AI engineer based in London, UK, currently finishing up as Solution Architect at Allianz Global Investors. Over four years, I have architected enterprise AI systems, built production data pipelines serving 176 billion euros in Fixed Income assets, and engineered the infrastructure for AI adoption across global teams.
+        I am an applied AI engineer based in London, UK. I spent four years as a Solution Architect at Allianz Global Investors, reporting into the Global COO, where I architected enterprise AI systems, built production data pipelines across a €176B Fixed Income platform, and drove the rollout of large system programmes. I left on 28 February 2026 to focus on products of my own while looking for the next role.
       </p>
 
       <p class="text-lg leading-relaxed text-text-primary">
-        I am most energised by problems at the intersection of AI and product: taking abstract research findings and shipping them as systems that users rely on. At AllianzGI, I designed the firm's first enterprise agentic AI system for investment services support, orchestrating five system integrations to reach user testing within a tight deadline. I led the technical rollout of MSCI BarraOne for performance attribution, completing a programme that had failed twice over seven years. I pioneered AI adoption across operations by identifying 50+ use cases and building proof-of-concept applications.
+        The work I care most about sits at the intersection of AI and product: taking research or a vague operational problem and shipping it as a system that people rely on. A few things I shipped at AllianzGI capture the register:
+      </p>
+
+      <ul class="text-lg leading-relaxed text-text-primary space-y-3 list-disc pl-6">
+        <li>
+          <strong>The firm's first enterprise agentic AI system.</strong> Designed and built a multi-agent orchestration layer spanning five systems (ServiceNow, Bloomberg, thinkFolio, MSCI BarraOne, Databricks) to support the Investment Services function. Reached user testing within the COO's December 2025 deadline, roughly two months after build start.
+        </li>
+        <li>
+          <strong>MSCI BarraOne performance attribution, delivered on the third attempt.</strong> Led the technical rollout of the firm's performance attribution platform, a programme that had failed twice over seven years. Built 20+ custom reports, took report delivery from T+3 to T+1 for 10+ investment teams managing €176B in assets, and saved the firm £500K+ in development costs and £300K+ per year in ongoing maintenance.
+        </li>
+        <li>
+          <strong>Generative and agentic AI adoption across operations.</strong> Ran a structured discovery that identified 50+ use cases; shipped proof-of-concept applications; built a production LangChain/OpenAI RAG pipeline that automated competitive market analysis previously done by hand; and directed AI upskilling for 200+ staff.
+        </li>
+      </ul>
+
+      <p class="text-lg leading-relaxed text-text-primary">
+        Outside of that, I've been building products from scratch. <strong>Lineup</strong> is a concert discovery iOS app backed by a production data platform ingesting 1M+ events from six APIs daily via Apache Airflow, with dbt transforms landing in BigQuery and 122 unit tests. <strong>NutriPlan</strong> is an AI meal planner: FastAPI backend with GPT-4o and pgvector RAG, hitting calorie targets within ±10% and generating plans in under two seconds end-to-end. <strong>JobHunter</strong> is the tool I use for my own job search: Claude API scoring 500 to 1,000 jobs a day against a 6-dimension career framework, Playwright crawlers across four sources, Notion as the UI. <strong>Earnings Call Analyser</strong> is an earlier-stage research project (Q1 2026) validating Chiang et al. 2025 on earnings call Q&A alignment as an equity signal, using FinBERT embeddings and contrastive learning in PyTorch.
       </p>
 
       <p class="text-lg leading-relaxed text-text-primary">
-        In parallel, I am building two products from scratch. Lineup is a concert discovery iOS app paired with a production data platform ingesting 1 million+ events from six APIs via Apache Airflow, transforming them through dbt, and landing them in BigQuery. NutriPlan is an AI meal planning app with a FastAPI backend using GPT-4o and vector embeddings to generate personalised weekly meal plans. JobHunter is a job search automation platform using Claude API for intelligent job scoring and Playwright for scraping.
+        My background is physics and mathematics from UCL. I hold a 2:1 BSc Natural Sciences with a First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging. I hold an LIBF Level 6 Diploma in Trading and Financial Market Analysis (Distinction) and continue to pick up certifications in data science, SQL, and AI through DataCamp. I'm a native English speaker and proficient in French (C1).
       </p>
 
       <p class="text-lg leading-relaxed text-text-primary">
-        My background is in physics and mathematics from UCL. I hold a 2:1 BSc Natural Sciences with a dissertation on deep learning for image reconstruction, and I've completed certifications in data science, SQL, and AI from DataCamp.
-      </p>
-
-      <p class="text-lg leading-relaxed text-text-primary">
-        I am currently job-searching for applied AI roles in Paris or London, ideally combining system architecture with product shipped to real users. I am curious about founder-path opportunities as well.
+        I'm actively looking for applied AI roles, ideally combining system architecture with product shipped to real users. I also look at quantitative, data science, and forward-deployed engineer roles when the problem is interesting enough. Paris is my primary target, London a close second; open to sponsorship where it's needed. Compensation floor is £65K / €60K, with flexibility for the right combination of salary, equity, and benefits. Longer term I'm founder-curious: I'd like to start or co-found a company once I've found the right problem and the right people.
       </p>
     </div>
   </article>

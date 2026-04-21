@@ -17,8 +17,11 @@ import ProjectCard from '../components/ProjectCard.astro';
         <p class="text-2xl text-accent-red font-medium mb-6">
           Applied AI engineering, full-stack shipping, founder-curious.
         </p>
-        <p class="text-lg text-text-muted max-w-2xl leading-relaxed mb-8">
-          Currently building <strong>Lineup</strong> (concert discovery) and <strong>NutriPlan</strong> (AI meal planning) while finishing up at Allianz Global Investors. Based in London, targeting Paris long-term.
+        <p class="text-lg text-text-muted max-w-2xl leading-relaxed mb-4">
+          Four years as Solution Architect at Allianz Global Investors: architected the firm's first enterprise agentic AI system, delivered an MSCI BarraOne attribution rollout that had failed twice over seven years, and directed AI adoption across a €176B Fixed Income platform. Left 28 February 2026.
+        </p>
+        <p class="text-lg text-text-muted max-w-2xl leading-relaxed">
+          Now building <a href="/projects/lineup" class="text-text-primary hover:text-accent-red transition-colors underline decoration-border-subtle hover:decoration-accent-red underline-offset-4">Lineup</a> and <a href="/projects/nutriplan" class="text-text-primary hover:text-accent-red transition-colors underline decoration-border-subtle hover:decoration-accent-red underline-offset-4">NutriPlan</a>. Based in London, targeting Paris. Open to applied AI, quant, DS, and forward-deployed roles.
         </p>
       </div>
     </section>
@@ -29,31 +32,34 @@ import ProjectCard from '../components/ProjectCard.astro';
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ProjectCard
           title="Lineup"
-          description="Concert discovery iOS app with production data platform: Apache Airflow, BigQuery, dbt, 1M+ events."
+          description="Concert discovery iOS app on a production data platform. 1M+ events and 300K+ artists ingested daily from six APIs via Airflow; BigQuery + dbt; 122 unit tests; zero data losses in twelve months."
           href="/projects/lineup"
-          tags={['iOS', 'Python', 'Data']}
+          tags={['iOS', 'Airflow', 'BigQuery']}
+          status="Production"
         />
         <ProjectCard
           title="NutriPlan"
-          description="AI meal planning with FastAPI backend, GPT-4o, and vector embeddings for personalised nutrition."
+          description="AI meal planner. FastAPI + GPT-4o with pgvector RAG, calorie accuracy within ±10%, generation under two seconds end-to-end. SwiftUI frontend in beta."
           href="/projects/nutriplan"
-          tags={['iOS', 'FastAPI', 'AI/ML']}
+          tags={['iOS', 'FastAPI', 'RAG']}
+          status="Beta"
         />
         <ProjectCard
           title="JobHunter"
-          description="AI job search automation using Claude API, Playwright scraping, and Notion integration."
+          description="My own job search automation. Claude API scores 500 to 1,000 jobs a day against a 6-dimension career framework. Playwright crawlers, GitHub Actions cron, Notion as the UI."
           href="/projects/jobhunter"
-          tags={['Python', 'AI', 'Automation']}
+          tags={['Python', 'Claude API', 'Automation']}
+          status="In use"
         />
       </div>
     </section>
 
     <!-- Recent Writing -->
     <section class="max-w-4xl mx-auto px-6 py-16 border-t border-border-subtle">
-      <h2 class="font-display font-bold mb-8">Recent Writing</h2>
+      <h2 class="font-display font-bold mb-8">Writing</h2>
       <div class="p-8 border border-border-subtle rounded-lg">
         <p class="text-text-muted">
-          No posts yet. Starting with a short piece on why I am building Lineup, coming soon.
+          Notes and essays on applied AI, shipping products solo, and the path from enterprise engineering to founding something. First pieces coming soon.
         </p>
       </div>
     </section>

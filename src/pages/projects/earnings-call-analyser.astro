@@ -14,7 +14,7 @@ import CaseStudy from '../../components/CaseStudy.astro';
   >
     <h2>Overview</h2>
     <p>
-      This project explores the research finding from Chiang et al. 2025 that alignment between management answers and analyst questions in earnings calls correlates with forward equity returns. The pipeline ingests earnings call transcripts, extracts and embeds questions and answers using FinBERT, trains a PyTorch contrastive-learning classifier to measure alignment, and backtests the signal against forward returns. The project is proof-of-concept; architecture is complete and model training is underway.
+      Started in Q1 2026. The project tests the result from Chiang et al. 2025 that alignment between management answers and analyst questions in earnings calls correlates with forward equity returns. The pipeline ingests earnings call transcripts, extracts and embeds Q&A pairs using FinBERT, trains a PyTorch contrastive-learning classifier to measure alignment, and backtests the signal against forward returns. Architecture is complete; the next step is building a labelled training set so the classifier can actually be fit.
     </p>
 
     <h2>Problem</h2>
@@ -122,13 +122,31 @@ import CaseStudy from '../../components/CaseStudy.astro';
     </ul>
 
     <h2>What Is Next</h2>
-    <p>
-      Collect labelled data (manual alignment scoring on 100-200 Q&A pairs to train the classifier). Train the contrastive-learning model. Backtest against 2020-2025 earnings season data. Analyse which question types drive alignment signal. Expand to international markets. Consider integration with portfolio management workflows.
+    <ol class="list-decimal pl-6 space-y-2">
+      <li>
+        <strong>Labelled training data.</strong> Manually score 100 to 200 Q&A pairs with alignment labels. This is the critical blocker: the classifier cannot be fit without it.
+      </li>
+      <li>
+        <strong>Train the AlignmentClassifier</strong> on the labelled set, tuning the combined loss.
+      </li>
+      <li>
+        <strong>Backtest</strong> the alignment signal against 2020 to 2025 earnings seasons, evaluating correlation with forward 20-day and 60-day returns.
+      </li>
+      <li>
+        <strong>Attribute the signal</strong> by question topic (margins, guidance, competition, macro, capital structure) to understand what's actually driving it.
+      </li>
+      <li>
+        <strong>Expand</strong> to international equities if the US signal validates; consider integration with portfolio workflows.
+      </li>
+    </ol>
+
+    <p class="mt-4">
+      If the signal validates (target correlation &gt; 0.15, target Sharpe &gt; 0.8), this becomes a personal trading strategy. If it doesn't, the architecture (FinBERT + contrastive learning + backtesting) generalises to other financial NLP problems I care about.
     </p>
 
     <div class="mt-12 p-8 border border-border-subtle rounded-lg">
       <p class="text-text-muted text-sm mb-4">
-        Status: Proof of Concept. Based on Chiang et al. 2025 research.
+        Status: Proof of Concept, started Q1 2026. Based on Chiang et al. 2025 research.
       </p>
       <p class="text-text-muted text-sm">
         Learn more: <a href="https://github.com/jevancousins/earnings-call-analyser" target="_blank">GitHub repository</a>

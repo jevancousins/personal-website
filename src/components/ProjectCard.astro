@@ -4,9 +4,10 @@ interface Props {
   description: string;
   href: string;
   tags?: string[];
+  status?: string;
 }
 
-const { title, description, href, tags = [] } = Astro.props;
+const { title, description, href, tags = [], status } = Astro.props;
 ---
 
 <a
@@ -14,9 +15,16 @@ const { title, description, href, tags = [] } = Astro.props;
   class="group block p-6 border border-border-subtle rounded-lg hover:border-accent-red transition-all duration-200 hover:shadow-lg hover:-translate-y-1"
 >
   <div class="mb-4">
-    <h3 class="text-xl font-display font-semibold mb-2 group-hover:text-accent-red transition-colors">
-      {title}
-    </h3>
+    <div class="flex items-baseline justify-between mb-2 gap-3">
+      <h3 class="text-xl font-display font-semibold group-hover:text-accent-red transition-colors">
+        {title}
+      </h3>
+      {status && (
+        <span class="text-[0.65rem] uppercase tracking-wider text-accent-red/80 font-medium whitespace-nowrap">
+          {status}
+        </span>
+      )}
+    </div>
     <p class="text-text-muted text-sm leading-relaxed">
       {description}
     </p>

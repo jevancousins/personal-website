@@ -28,13 +28,16 @@ import CaseStudy from '../../components/CaseStudy.astro';
         <strong>Airflow for orchestration.</strong> Chose Apache Airflow with CeleryExecutor and Redis caching for robust, observable scheduling. Alternative was Lambda-based serverless, but Airflow gives better visibility and control.
       </li>
       <li>
-        <strong>Multi-source deduplication.</strong> Implemented a three-step entity deduplication logic: source ID to MusicBrainz ID to fuzzy name/location matching. Trade-off was complexity; the payoff is high data quality.
+        <strong>Multi-source deduplication.</strong> Three-step matching logic: source ID to MusicBrainz ID first, fuzzy name/location matching for what doesn't match, then an <code>ExternalIdManager</code> class holding persistent cross-source mappings in dedicated tables. Handles conflicts across Ticketmaster, Skiddle, Resident Advisor, Concert Archives, Spotify, and MusicBrainz. Trade-off is complexity; payoff is high data quality.
       </li>
       <li>
-        <strong>Write-through pattern.</strong> Simultaneous writes to Supabase (operational) and GCS Parquet (analytics) to avoid coupling. Increases latency slightly but gives independence between systems.
+        <strong>Write-through pattern.</strong> Simultaneous writes to Supabase (operational) and GCS Parquet (analytics) to avoid coupling. Slight latency cost; the two systems stay independent.
       </li>
       <li>
-        <strong>BigQuery warehouse.</strong> Selected over a traditional data lake for cost efficiency and ease of SQL queries for analytics. dbt layered architecture (staging, intermediate, marts) keeps transforms maintainable.
+        <strong>BigQuery warehouse.</strong> Chosen over a traditional data lake for cost efficiency and SQL ergonomics. dbt layered architecture (staging, intermediate, marts) keeps transforms maintainable.
+      </li>
+      <li>
+        <strong>Redis over a 57MB JSON cache.</strong> Replaced an in-repo JSON cache with Redis 7.x as a distributed cache for Celery workers. Smaller worker memory footprint, faster warm starts, and proper eviction semantics.
       </li>
     </ul>
 
@@ -84,13 +87,16 @@ import CaseStudy from '../../components/CaseStudy.astro';
     <h2>What Shipped</h2>
     <ul>
       <li>
-        <strong>Airflow DAGs:</strong> 10 production DAGs orchestrating daily syncs from 6 API sources with source-specific selectors and retry logic.
+        <strong>Airflow DAGs:</strong> 10 production DAGs orchestrating daily syncs from 6 API sources with source-specific selectors. Retry config: 3 retries with exponential backoff, plus Slack and email alerting on failure.
+      </li>
+      <li>
+        <strong>Modular Python package.</strong> Pipeline refactored into an installable package (<code>src/lineup_pipeline/</code>) with proper module structure, dependency management, and CI validation so changes don't silently break downstream jobs.
       </li>
       <li>
         <strong>BigQuery warehouse:</strong> dbt project with staging, intermediate, and mart layers. Data quality tests enforcing uniqueness and referential integrity.
       </li>
       <li>
-        <strong>Entity deduplication:</strong> Three-step matching logic handling conflicts across sources. ExternalIdManager class managing all mappings.
+        <strong>Entity deduplication:</strong> Three-step matching logic handling conflicts across sources. <code>ExternalIdManager</code> class managing all mappings with dedicated persistence tables.
       </li>
       <li>
         <strong>iOS app:</strong> Swift/SwiftUI frontend with event browsing, tracking, and sharing.
@@ -115,7 +121,7 @@ import CaseStudy from '../../components/CaseStudy.astro';
 
     <h2>What Is Next</h2>
     <p>
-      Refactoring the pipeline into a maintainable Python package with proper dependency management. Adding incremental loads for cost efficiency. Expanding analytics: attribution modelling for venue popularity trends and artist discovery patterns. Planning integration with Live Nation and other major promoters for event coverage depth.
+      Incremental loads to cut BigQuery costs. Analytics expansion: attribution modelling for venue popularity trends and artist discovery patterns (which events and artists drive ticket sales, where emerging genres surface). Integration roadmap: Live Nation API for major promoter events, then regional promoters for deeper market coverage.
     </p>
 
     <div class="mt-12 p-8 border border-border-subtle rounded-lg">

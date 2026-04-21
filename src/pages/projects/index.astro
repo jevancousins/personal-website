@@ -8,32 +8,39 @@ import ProjectCard from '../../components/ProjectCard.astro';
   description="A selection of case studies from personal projects and work."
 >
   <div class="max-w-4xl mx-auto px-6 py-16">
-    <h1 class="font-display font-bold mb-12">Projects</h1>
+    <h1 class="font-display font-bold mb-4">Projects</h1>
+    <p class="text-text-muted max-w-2xl mb-12 leading-relaxed">
+      A selection of work, from production platforms to earlier-stage research. Case studies focus on the decisions and trade-offs rather than the highlight reel.
+    </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <ProjectCard
         title="Lineup"
-        description="Concert discovery iOS app with production data platform: Apache Airflow, BigQuery, dbt, 1M+ events, 300K+ artists."
+        description="Concert discovery iOS app on a production data platform. 1M+ events and 300K+ artists ingested daily from six APIs via Airflow; BigQuery + dbt; 122 unit tests; zero data losses in twelve months."
         href="/projects/lineup"
-        tags={['iOS', 'Python', 'Data Engineering']}
+        tags={['iOS', 'Airflow', 'BigQuery', 'dbt']}
+        status="Production"
       />
       <ProjectCard
         title="NutriPlan"
-        description="AI meal planning app with FastAPI backend, GPT-4o, vector embeddings, and personalised weekly meal generation."
+        description="AI meal planner. FastAPI + GPT-4o with pgvector RAG, calorie accuracy within ±10%, generation under two seconds end-to-end, 99.8% uptime on Render. SwiftUI frontend in beta."
         href="/projects/nutriplan"
-        tags={['iOS', 'FastAPI', 'AI/ML']}
+        tags={['iOS', 'FastAPI', 'RAG', 'pgvector']}
+        status="Beta"
       />
       <ProjectCard
         title="JobHunter"
-        description="AI job search automation with Claude API for scoring, Playwright for scraping, and Notion integration."
+        description="My own job search automation. Claude API scores 500 to 1,000 jobs a day against a 6-dimension career framework. Playwright crawlers across four sources, GitHub Actions cron, Notion as the UI."
         href="/projects/jobhunter"
-        tags={['Python', 'AI', 'Automation']}
+        tags={['Python', 'Claude API', 'Playwright', 'Notion']}
+        status="In use"
       />
       <ProjectCard
         title="Earnings Call Analyser"
-        description="PyTorch NLP pipeline with FinBERT embeddings exploring Q&A alignment as an equity trading signal."
+        description="PyTorch + FinBERT NLP pipeline testing Chiang et al. 2025 on earnings call Q&A alignment as an equity signal. Contrastive classifier, backtesting framework, Kubernetes deployment. Started Q1 2026."
         href="/projects/earnings-call-analyser"
-        tags={['PyTorch', 'NLP', 'Research']}
+        tags={['PyTorch', 'FinBERT', 'NLP', 'Research']}
+        status="Proof of concept"
       />
     </div>
   </div>

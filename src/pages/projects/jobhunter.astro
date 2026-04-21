@@ -14,12 +14,12 @@ import CaseStudy from '../../components/CaseStudy.astro';
   >
     <h2>Overview</h2>
     <p>
-      JobHunter automates job discovery and scoring for targeted job search. The system crawls four job sources daily (Indeed, LinkedIn, WTFJ, company career pages) using Playwright and BeautifulSoup, scores each job against a 6-dimension career goals framework using Claude API, and pushes results to Notion. GitHub Actions runs the discovery pipeline daily; the user reviews scored jobs in Notion and applies to high-priority matches.
+      JobHunter is the system I built to run my own job search. It crawls four job sources daily (Indeed, LinkedIn, WTFJ, company career pages) using Playwright and BeautifulSoup, scores every role against a 6-dimension career goals framework using Claude API, and pushes the results into Notion so I can triage in a familiar UI. GitHub Actions runs the pipeline on a daily cron; I review scored jobs in Notion, apply to high-signal matches, and feed rejections and interview outcomes back into the scoring calibration.
     </p>
 
     <h2>Problem</h2>
     <p>
-      Job search is tedious: finding relevant roles, evaluating fit, tailoring CVs. Most job aggregators are generic and show low-signal results. JobHunter solves this by automating discovery and using AI to score jobs against career goals, reducing noise and highlighting the roles that matter most.
+      The bottleneck in a modern job search is not finding jobs; it is filtering them. Aggregators show thousands of loosely-matched roles; generic keyword filters miss the ones that actually fit. JobHunter solves my specific version of this problem: rather than trying to be a product for everyone, it encodes my goals, my constraints, and my current risk tolerance into the scoring framework, and keeps the noise manageable. It's also a useful stress-test for my own engineering: a full-stack AI system I eat my own dog food with.
     </p>
 
     <h2>Key Decisions and Trade-offs</h2>
@@ -106,12 +106,12 @@ import CaseStudy from '../../components/CaseStudy.astro';
 
     <h2>What Is Next</h2>
     <p>
-      Refine the scoring framework based on interview outcomes. Add interview prep module (researching companies, role prep). Extend source coverage to aggregators (AngelList, Wellfound) for startup roles. Build analytics: track application-to-interview conversion rate, feedback loop scoring accuracy. Consider productising for other job seekers.
+      Near-term, everything is in service of my live search. I'm refining the 6-dimension scoring weights against interview outcomes (which signals actually predict fit, which ones I over-weighted). Tracking application-to-interview conversion to ground-truth the scoring accuracy. Adding an interview prep module: company research automation, role-specific checklists, salary negotiation notes. Extending source coverage to Wellfound and AngelList for startup roles, which matter for the founder-adjacent end of my target list. Productising is not the goal; the tool exists to solve my own problem, though the architecture (Claude for scoring, Notion as UI, GitHub Actions as cron) would generalise for anyone willing to encode their own goals.
     </p>
 
     <div class="mt-12 p-8 border border-border-subtle rounded-lg">
       <p class="text-text-muted text-sm mb-4">
-        Status: Active development
+        Status: In active use for my Paris/London search.
       </p>
     </div>
   </CaseStudy>
