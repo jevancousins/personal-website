@@ -4,22 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0a',
-        'text-primary': '#ededed',
-        'text-muted': '#8a8a8a',
-        'accent-red': '#E11D2E',
-        'accent-red-hover': '#F43645',
-        'border-subtle': '#1f1f1f',
+        paper: '#f3ecde',
+        'paper-shade': '#ebe0c9',
+        'paper-deep': '#e3d6ba',
+        ink: '#1a1612',
+        'ink-muted': '#6e6453',
+        'ink-faint': '#a89c87',
+        rule: '#d4c5a8',
+        'rule-strong': '#bba887',
+        oxide: '#9c2a18',
+        'oxide-deep': '#7a1f10',
+        marker: '#c8a548',
+        'marker-soft': '#e7d4a0',
       },
       fontFamily: {
-        display: ['Fraunces', 'serif'],
-        sans: ['Inter', 'sans-serif'],
+        display: ['"Instrument Serif"', 'serif'],
+        body: ['"Newsreader"', 'serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
-      backgroundColor: {
-        DEFAULT: '#0a0a0a',
-      },
-      textColor: {
-        DEFAULT: '#ededed',
+      letterSpacing: {
+        widest: '0.22em',
       },
     },
   },

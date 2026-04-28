@@ -1,18 +1,83 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const queued = [
+  {
+    title: 'Why I am building Lineup',
+    blurb: 'A short note on why a London engineer with a day job in fixed income decided to ship a concert discovery app.',
+    when: 'Q2 2026',
+  },
+  {
+    title: 'Three months inside an enterprise agentic AI rollout',
+    blurb: 'What worked, what nearly killed it, and the bits I would change before doing it again.',
+    when: 'Q2 2026',
+  },
+  {
+    title: 'Job search as a system',
+    blurb: 'How I built a six-dimension scoring framework for my own search, and what the data has done to my priors so far.',
+    when: 'Q3 2026',
+  },
+];
 ---
 
 <BaseLayout
-  title="Writing | Jevan Cousins"
-  description="Essays and explorations on AI, product development, and engineering."
+  title="Writing · Jevan Cousins"
+  description="Notes and essays from Jevan Cousins on applied AI, shipping products, and moving from enterprise engineering to building something of your own."
 >
-  <article class="max-w-3xl mx-auto px-6 py-16">
-    <h1 class="font-display font-bold mb-8">Writing</h1>
+  <article class="max-w-[1280px] mx-auto px-6 md:px-10 pt-10 pb-24">
 
-    <div class="p-8 border border-border-subtle rounded-lg">
-      <p class="text-text-muted text-lg">
-        No posts yet. Starting with a short piece on why I am building Lineup, coming soon.
-      </p>
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 mono text-[0.68rem] uppercase tracking-widest text-ink">
+      <span>Writing</span>
+      <span class="text-ink-muted hidden md:inline">Notes, essays, working drafts</span>
+      <span>Folio · IV</span>
     </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-16">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-oxide mb-5">A first issue</p>
+        <h1 class="font-display leading-[0.96] text-ink mb-6">
+          The<br/>
+          <span class="italic text-oxide">writing desk.</span>
+        </h1>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule self-end">
+        <p class="font-display italic text-xl text-ink leading-snug mb-3">
+          Coming soon, in the way that things actually do.
+        </p>
+        <p class="mono text-[0.7rem] uppercase tracking-widest text-ink-muted">
+          Three pieces queued. The first is half-drafted.
+        </p>
+      </aside>
+    </header>
+
+    <section>
+      <p class="label-oxide mb-6">In preparation</p>
+      <ol class="border-t border-ink">
+        {queued.map((q, i) => (
+          <li class="grid grid-cols-12 gap-6 py-8 border-b border-rule">
+            <div class="col-span-2 md:col-span-1 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-2">
+              № {String(i + 1).padStart(2, '0')}
+            </div>
+            <div class="col-span-10 md:col-span-8">
+              <p class="font-display text-2xl md:text-3xl text-ink leading-tight mb-2">
+                {q.title}
+              </p>
+              <p class="text-ink-muted leading-relaxed max-w-2xl">
+                {q.blurb}
+              </p>
+            </div>
+            <div class="col-span-12 md:col-span-3 md:text-right mono text-[0.7rem] uppercase tracking-widest text-ink-muted pt-2">
+              Targeted · {q.when}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mt-16 border-y border-ink py-10">
+      <p class="font-display italic text-3xl md:text-4xl text-ink leading-tight max-w-3xl">
+        If a particular subject above is the reason you came here, <a href="mailto:jevan.cousins@gmail.com" class="ink-link text-ink">tell me</a>. I will move it up the queue.
+      </p>
+    </section>
   </article>
 </BaseLayout>

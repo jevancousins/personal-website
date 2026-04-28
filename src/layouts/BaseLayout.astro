@@ -9,7 +9,10 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Jevan Cousins: Applied AI engineering, full-stack shipping, founder-curious.' } = Astro.props;
+const {
+  title,
+  description = 'Jevan Cousins. Applied AI engineer. Building Lineup and NutriPlan. London, targeting Paris.',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -17,30 +20,27 @@ const { title, description = 'Jevan Cousins: Applied AI engineering, full-stack 
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f3ecde" />
 
     <title>{title}</title>
 
-    <!-- Preconnect to font sources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Load fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
-    <!-- View Transitions -->
     <ViewTransitions />
   </head>
 
-  <body class="bg-background text-text-primary flex flex-col min-h-screen">
+  <body class="bg-paper text-ink flex flex-col min-h-screen">
     <Nav />
     <main class="flex-1 w-full">
       <slot />

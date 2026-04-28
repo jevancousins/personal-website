@@ -1,46 +1,199 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const timeline = [
+  {
+    year: '2026',
+    title: 'Building independently',
+    detail: 'Left Allianz GI on 28 February. Searching for the next role; shipping Lineup, NutriPlan, JobHunter, and the earnings-call signal in parallel.',
+  },
+  {
+    year: '2022–26',
+    title: 'Solution Architect, Allianz Global Investors',
+    detail: 'Reporting into the Global COO. Architected the firm\'s first enterprise agentic AI system. Delivered MSCI BarraOne attribution at the third attempt across a €176B Fixed Income platform. Directed AI adoption for 200+ staff.',
+  },
+  {
+    year: '2021',
+    title: 'LIBF Level 6, Trading and Financial Market Analysis',
+    detail: 'Distinction. Picked up because I wanted to read company filings without anyone explaining them to me.',
+  },
+  {
+    year: '2017–21',
+    title: 'BSc Natural Sciences, UCL',
+    detail: 'Physics and mathematics. First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging.',
+  },
+];
+
+const skills = [
+  { group: 'Languages', items: ['Python', 'SQL', 'Swift / SwiftUI', 'TypeScript', 'Bash'] },
+  { group: 'Data & ML', items: ['PyTorch', 'HuggingFace / FinBERT', 'pgvector', 'Airflow', 'dbt', 'BigQuery', 'Supabase / Postgres'] },
+  { group: 'Applied AI', items: ['LangChain', 'LiteLLM', 'OpenAI / Anthropic APIs', 'RAG architectures', 'Agentic orchestration', 'Prompt + eval design'] },
+  { group: 'Infra & shipping', items: ['Docker', 'Kubernetes', 'GitHub Actions', 'Render / Vercel', 'Playwright', 'Notion API'] },
+  { group: 'Spoken', items: ['English (native)', 'French (C1)'] },
+];
 ---
 
 <BaseLayout
-  title="About | Jevan Cousins"
-  description="Jevan Cousins is an applied AI engineer based in London, UK. Solution Architect at Allianz Global Investors with expertise in AI, data engineering, and full-stack product development."
+  title="Bio · Jevan Cousins"
+  description="Jevan Cousins: applied AI engineer based in London. Solution Architect at Allianz Global Investors. Physics + maths from UCL. Founder-curious."
 >
-  <article class="max-w-3xl mx-auto px-6 py-16">
-    <h1 class="font-display font-bold mb-8">About</h1>
+  <article class="max-w-[1280px] mx-auto px-6 md:px-10 pt-10 pb-24">
 
-    <div class="prose prose-invert max-w-none space-y-6">
-      <p class="text-lg leading-relaxed text-text-primary">
-        I am an applied AI engineer based in London, UK. I spent four years as a Solution Architect at Allianz Global Investors, reporting into the Global COO, where I architected enterprise AI systems, built production data pipelines across a €176B Fixed Income platform, and drove the rollout of large system programmes. I left on 28 February 2026 to focus on products of my own while looking for the next role.
-      </p>
+    <!-- header band -->
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 mono text-[0.68rem] uppercase tracking-widest text-ink">
+      <span>Bio</span>
+      <span class="text-ink-muted hidden md:inline">A short biography in the third person, mostly</span>
+      <span>Filed · Spring 2026</span>
+    </div>
 
-      <p class="text-lg leading-relaxed text-text-primary">
-        The work I care most about sits at the intersection of AI and product: taking research or a vague operational problem and shipping it as a system that people rely on. A few things I shipped at AllianzGI capture the register:
-      </p>
+    <!-- title -->
+    <header class="grid grid-cols-12 gap-6 mb-16">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-oxide mb-5">Folio · Bio</p>
+        <h1 class="font-display leading-[0.96] text-ink mb-6">
+          Engineer,<br/>
+          <span class="italic text-oxide">in residence.</span>
+        </h1>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule self-end">
+        <dl class="space-y-3 mono text-[0.78rem]">
+          <div class="flex justify-between gap-4 border-b border-rule pb-2">
+            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Born</dt>
+            <dd class="text-ink">UK</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-rule pb-2">
+            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Based</dt>
+            <dd class="text-ink">London</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-rule pb-2">
+            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Tongue</dt>
+            <dd class="text-ink">EN · FR (C1)</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-rule pb-2">
+            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Trained</dt>
+            <dd class="text-ink">UCL · Physics</dd>
+          </div>
+        </dl>
+      </aside>
+    </header>
 
-      <ul class="text-lg leading-relaxed text-text-primary space-y-3 list-disc pl-6">
-        <li>
-          <strong>The firm's first enterprise agentic AI system.</strong> Designed and built a multi-agent orchestration layer spanning five systems (ServiceNow, Bloomberg, thinkFolio, MSCI BarraOne, Databricks) to support the Investment Services function. Reached user testing within the COO's December 2025 deadline, roughly two months after build start.
-        </li>
-        <li>
-          <strong>MSCI BarraOne performance attribution, delivered on the third attempt.</strong> Led the technical rollout of the firm's performance attribution platform, a programme that had failed twice over seven years. Built 20+ custom reports, took report delivery from T+3 to T+1 for 10+ investment teams managing €176B in assets, and saved the firm £500K+ in development costs and £300K+ per year in ongoing maintenance.
-        </li>
-        <li>
-          <strong>Generative and agentic AI adoption across operations.</strong> Ran a structured discovery that identified 50+ use cases; shipped proof-of-concept applications; built a production LangChain/OpenAI RAG pipeline that automated competitive market analysis previously done by hand; and directed AI upskilling for 200+ staff.
-        </li>
-      </ul>
+    <!-- body -->
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-8 md:col-start-3">
+        <div class="prose-body">
+          <p class="drop-cap">
+            I am an applied AI engineer based in London. I spent four years as a Solution Architect at Allianz Global Investors, reporting into the Global COO, where I architected enterprise AI systems, built production data pipelines across a €176B Fixed Income platform, and ran the rollout of large system programmes. I left on 28 February 2026 to focus on products of my own while looking for the next role.
+          </p>
 
-      <p class="text-lg leading-relaxed text-text-primary">
-        Outside of that, I've been building products from scratch. <strong>Lineup</strong> is a concert discovery iOS app backed by a production data platform ingesting 1M+ events from six APIs daily via Apache Airflow, with dbt transforms landing in BigQuery and 122 unit tests. <strong>NutriPlan</strong> is an AI meal planner: FastAPI backend with GPT-4o and pgvector RAG, hitting calorie targets within ±10% and generating plans in under two seconds end-to-end. <strong>JobHunter</strong> is the tool I use for my own job search: Claude API scoring 500 to 1,000 jobs a day against a 6-dimension career framework, Playwright crawlers across four sources, Notion as the UI. <strong>Earnings Call Analyser</strong> is an earlier-stage research project (Q1 2026) validating Chiang et al. 2025 on earnings call Q&A alignment as an equity signal, using FinBERT embeddings and contrastive learning in PyTorch.
-      </p>
+          <p>
+            The work I care most about sits at the intersection of AI and product: taking research or a vague operational problem and shipping it as a system that people rely on. A few things from AllianzGI capture the register.
+          </p>
 
-      <p class="text-lg leading-relaxed text-text-primary">
-        My background is physics and mathematics from UCL. I hold a 2:1 BSc Natural Sciences with a First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging. I hold an LIBF Level 6 Diploma in Trading and Financial Market Analysis (Distinction) and continue to pick up certifications in data science, SQL, and AI through DataCamp. I'm a native English speaker and proficient in French (C1).
-      </p>
+          <ul>
+            <li>
+              <strong>The firm's first enterprise agentic AI system.</strong> Designed and built a multi-agent orchestration layer spanning five systems (ServiceNow, Bloomberg, thinkFolio, MSCI BarraOne, Databricks) for the Investment Services function. Reached user testing within the COO's December 2025 deadline, roughly two months from build start.
+            </li>
+            <li>
+              <strong>MSCI BarraOne, delivered at the third attempt.</strong> Led the technical rollout of the firm's performance attribution platform after two prior failures over seven years. Built 20+ custom reports, took report delivery from T+3 to T+1 for ten investment teams managing €176B, and saved £500K+ in development costs and £300K+ per year in ongoing maintenance.
+            </li>
+            <li>
+              <strong>Generative and agentic AI adoption across operations.</strong> Ran a structured discovery that identified 50+ use cases. Shipped proofs of concept. Built a production LangChain/OpenAI RAG pipeline that automated competitive market analysis previously done by hand. Directed AI upskilling for 200+ staff.
+            </li>
+          </ul>
 
-      <p class="text-lg leading-relaxed text-text-primary">
-        I'm actively looking for applied AI roles, ideally combining system architecture with product shipped to real users. I also look at quantitative, data science, and forward-deployed engineer roles when the problem is interesting enough. Paris is my primary target, London a close second; open to sponsorship where it's needed. Compensation floor is £65K / €60K, with flexibility for the right combination of salary, equity, and benefits. Longer term I'm founder-curious: I'd like to start or co-found a company once I've found the right problem and the right people.
-      </p>
+          <hr class="rule my-10" />
+
+          <p>
+            Outside of that I have been building products from scratch. <strong>Lineup</strong> is a concert discovery iOS app backed by a production data platform ingesting 1M+ events from six APIs daily via Apache Airflow, with dbt transforms landing in BigQuery and 122 unit tests. <strong>NutriPlan</strong> is an AI meal planner: FastAPI backend with GPT-4o and pgvector RAG, hitting calorie targets within ±10% and generating plans in under two seconds end-to-end. <strong>JobHunter</strong> is the tool I use to run my own job search: Claude API scoring 500 to 1,000 jobs a day against a six-dimension career framework, Playwright crawlers across four sources, Notion as the UI. <strong>Earnings Call Analyser</strong> is an earlier-stage research project (Q1 2026) validating Chiang et al. 2025 on earnings call Q&A alignment as an equity signal, using FinBERT embeddings and contrastive learning in PyTorch.
+          </p>
+
+          <p>
+            My background is physics and mathematics from UCL: a 2:1 BSc Natural Sciences with a First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging. I hold the LIBF Level 6 Diploma in Trading and Financial Market Analysis (Distinction) and continue to pick up certifications in data science, SQL, and AI through DataCamp. Native English; French at C1.
+          </p>
+
+          <p>
+            I am actively looking for applied AI roles, ideally combining system architecture with product shipped to real users. I also look at quantitative, data science, and forward-deployed engineer roles when the problem is interesting enough. Paris is my primary target, London a close second; open to sponsorship where it is needed. Compensation floor is £65K / €60K, with flexibility for the right combination of salary, equity, and benefits. Longer term I am founder-curious: I would like to start or co-found a company once I have found the right problem and the right people.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <section class="mt-24 border-t border-ink pt-12">
+      <div class="grid grid-cols-12 gap-6 mb-10">
+        <div class="col-span-12 md:col-span-4">
+          <p class="label-oxide mb-4">Cursus</p>
+          <h2 class="font-display text-ink leading-none">Where I have been</h2>
+        </div>
+        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
+          <p class="text-ink-muted leading-relaxed max-w-xl">
+            A short timeline. The years are exact; the categorisation is generous.
+          </p>
+        </div>
+      </div>
+
+      <ol class="border-t border-ink">
+        {timeline.map((row) => (
+          <li class="grid grid-cols-12 gap-6 py-7 border-b border-rule">
+            <div class="col-span-3 md:col-span-2">
+              <p class="font-display text-3xl md:text-4xl text-oxide leading-none tabular">
+                {row.year}
+              </p>
+            </div>
+            <div class="col-span-9 md:col-span-10">
+              <p class="font-display italic text-2xl text-ink leading-tight mb-2">
+                {row.title}
+              </p>
+              <p class="text-ink-muted leading-relaxed max-w-3xl">
+                {row.detail}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="mt-24 border-t border-ink pt-12">
+      <div class="grid grid-cols-12 gap-6 mb-10">
+        <div class="col-span-12 md:col-span-4">
+          <p class="label-oxide mb-4">Apparatus</p>
+          <h2 class="font-display text-ink leading-none">What I work with</h2>
+        </div>
+        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
+          <p class="text-ink-muted leading-relaxed max-w-xl">
+            Tools and stacks I have shipped real systems on, not the full bingo card. Anything missing, ask.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-px bg-rule-strong border border-rule-strong">
+        {skills.map((s) => (
+          <div class="bg-paper p-6">
+            <p class="label-oxide mb-4">{s.group}</p>
+            <ul class="space-y-1.5 text-ink leading-snug">
+              {s.items.map((it) => <li>{it}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="mt-24 border-y border-ink py-10 grid grid-cols-12 gap-6 items-center">
+      <div class="col-span-12 md:col-span-8">
+        <p class="font-display italic text-3xl md:text-4xl text-ink leading-tight">
+          The short version: <span class="text-oxide">say hello.</span>
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-4 md:text-right">
+        <a
+          href="mailto:jevan.cousins@gmail.com"
+          class="inline-block mono text-[0.78rem] uppercase tracking-widest border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
+        >
+          jevan.cousins@gmail.com →
+        </a>
+      </div>
     </div>
   </article>
 </BaseLayout>

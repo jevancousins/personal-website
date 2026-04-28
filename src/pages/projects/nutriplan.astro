@@ -4,17 +4,27 @@ import CaseStudy from '../../components/CaseStudy.astro';
 ---
 
 <BaseLayout
-  title="NutriPlan | Jevan Cousins"
-  description="Case study: NutriPlan, an AI meal planning app with FastAPI backend and GPT-4o."
+  title="NutriPlan · Field Note No. 02 · Jevan Cousins"
+  description="NutriPlan: AI meal planning. FastAPI backend with GPT-4o and pgvector RAG, generating personalised plans within ±10% calorie accuracy in under two seconds."
 >
   <CaseStudy
     title="NutriPlan"
-    subtitle="AI-powered meal planning with vector embeddings and personalised nutrition"
-    description="Production meal planning platform with FastAPI async backend serving iOS frontend, using GPT-4o and pgvector for personalised weekly meal plans."
+    subtitle="Personalised meal planning, with vector embeddings for taste."
+    description="A FastAPI backend with GPT-4o and pgvector RAG, hitting calorie targets within ±10% and generating plans in under two seconds end-to-end. SwiftUI frontend in beta."
+    status="Field Note · 02"
+    repo="https://github.com/jevancousins/nutriplan"
+    meta={[
+      { label: 'Status', value: 'Beta' },
+      { label: 'Started', value: '2025' },
+      { label: 'Stack', value: 'FastAPI · GPT-4o · pgvector' },
+      { label: 'Calorie acc.', value: '±10%' },
+      { label: 'Latency', value: '< 2s end-to-end' },
+      { label: 'Uptime', value: '99.8% · Render' },
+    ]}
   >
     <h2>Overview</h2>
     <p>
-      NutriPlan is an AI meal planning app combining user preferences, dietary constraints, and nutrition science to generate personalised weekly meal plans. The backend uses FastAPI and GPT-4o; the RAG pipeline retrieves candidate meals via pgvector similarity search before LLM optimisation. Deployed on Render.com with Supabase PostgreSQL. SwiftUI iOS frontend is in beta.
+      NutriPlan is an AI meal planning app combining user preferences, dietary constraints, and nutrition science to generate personalised weekly meal plans. The backend uses FastAPI and GPT-4o; the RAG pipeline retrieves candidate meals via pgvector similarity search before LLM optimisation. Deployed on Render with Supabase PostgreSQL. SwiftUI iOS frontend is in beta.
     </p>
 
     <h2>Problem</h2>
@@ -22,105 +32,51 @@ import CaseStudy from '../../components/CaseStudy.astro';
       Meal planning is time-consuming and requires balancing taste, nutrition, and constraints. Most tools are template-based and static. NutriPlan personalises plans using AI: learning from feedback, adapting to preferences, and generating meals that hit precise calorie and macro targets using UK nutrition guidelines.
     </p>
 
-    <h2>Key Decisions and Trade-offs</h2>
+    <h2>Key decisions and trade-offs</h2>
     <ul>
-      <li>
-        <strong>RAG over pure LLM generation.</strong> Pure GPT-4o generation risks repeated meals. RAG first retrieves ~100 candidate meals via pgvector similarity, then LLM optimises within that candidate set. Trade-off is latency; payoff is quality and diversity.
-      </li>
-      <li>
-        <strong>GPT-4o + GPT-4o-mini.</strong> Used GPT-4o for meal generation (quality) and GPT-4o-mini for feedback analysis (cost efficiency). LiteLLM abstraction lets us swap models without code changes.
-      </li>
-      <li>
-        <strong>Vector embeddings for preferences.</strong> User feedback updates preference embeddings rather than explicit rules. Learns implicitly what meals the user likes.
-      </li>
-      <li>
-        <strong>Async FastAPI.</strong> Async throughout for high throughput on Render's free tier. Structured Pydantic models for type safety.
-      </li>
+      <li><strong>RAG over pure LLM generation.</strong> Pure GPT-4o generation risks repeated meals. RAG first retrieves ~100 candidate meals via pgvector similarity, then LLM optimises within that candidate set. Trade-off is latency; payoff is quality and diversity.</li>
+      <li><strong>GPT-4o + GPT-4o-mini.</strong> GPT-4o for meal generation (quality), GPT-4o-mini for feedback analysis (cost efficiency). LiteLLM abstraction lets us swap models without code changes.</li>
+      <li><strong>Vector embeddings for preferences.</strong> User feedback updates preference embeddings rather than explicit rules. Learns implicitly what meals the user likes.</li>
+      <li><strong>Async FastAPI.</strong> Async throughout for high throughput on Render's free tier. Structured Pydantic models for type safety.</li>
     </ul>
 
-    <h2>Stack and Why</h2>
+    <h2>Stack and why</h2>
     <table>
       <thead>
-        <tr>
-          <th>Layer</th>
-          <th>Technology</th>
-          <th>Rationale</th>
-        </tr>
+        <tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Frontend</td>
-          <td>Swift/SwiftUI, iOS 26</td>
-          <td>Native iOS performance with Liquid Glass design system.</td>
-        </tr>
-        <tr>
-          <td>Backend API</td>
-          <td>FastAPI (Python)</td>
-          <td>Async, high performance, automatic OpenAPI docs, Pydantic validation.</td>
-        </tr>
-        <tr>
-          <td>Database</td>
-          <td>Supabase (PostgreSQL 15)</td>
-          <td>Managed PostgreSQL with pgvector extension, RLS for security.</td>
-        </tr>
-        <tr>
-          <td>Vector Search</td>
-          <td>pgvector with text-embedding-3-small</td>
-          <td>1536-dim embeddings, cosine similarity for meal retrieval.</td>
-        </tr>
-        <tr>
-          <td>LLM</td>
-          <td>GPT-4o (meal gen), GPT-4o-mini (feedback)</td>
-          <td>Quality primary model, cost-efficient secondary. Abstracted via LiteLLM.</td>
-        </tr>
-        <tr>
-          <td>Deployment</td>
-          <td>Render.com</td>
-          <td>Simple deploy from GitHub, environment variables, free tier adequate for MVP.</td>
-        </tr>
+        <tr><td>Frontend</td><td>Swift / SwiftUI, iOS 26</td><td>Native iOS performance with Liquid Glass design system.</td></tr>
+        <tr><td>Backend API</td><td>FastAPI (Python)</td><td>Async, high performance, automatic OpenAPI docs, Pydantic validation.</td></tr>
+        <tr><td>Database</td><td>Supabase (PostgreSQL 15)</td><td>Managed PostgreSQL with pgvector, RLS for security.</td></tr>
+        <tr><td>Vector search</td><td>pgvector + text-embedding-3-small</td><td>1536-dim embeddings, cosine similarity for meal retrieval.</td></tr>
+        <tr><td>LLM</td><td>GPT-4o (gen), GPT-4o-mini (feedback)</td><td>Quality primary, cost-efficient secondary. Abstracted via LiteLLM.</td></tr>
+        <tr><td>Deployment</td><td>Render</td><td>Simple deploy from GitHub, env vars, free tier adequate for MVP.</td></tr>
       </tbody>
     </table>
 
-    <h2>What Shipped</h2>
+    <h2>What shipped</h2>
     <ul>
-      <li>
-        <strong>FastAPI backend:</strong> Async endpoints for meal plan generation, swapping, feedback, and nutrition analytics.
-      </li>
-      <li>
-        <strong>RAG pipeline:</strong> Vector similarity search over meal database, LLM optimisation with calorie/macro targeting.
-      </li>
-      <li>
-        <strong>Nutrition engine:</strong> Henry/Oxford equations per SACN guidelines. Targets within +/- 10% accuracy, supports macro splits (e.g. 40% carbs, 30% protein, 30% fat).
-      </li>
-      <li>
-        <strong>Preference learning:</strong> User feedback updates preference embeddings. 14-day meal history to avoid repetition.
-      </li>
-      <li>
-        <strong>Meal swapping:</strong> Intelligence swap logic finding alternatives matching similar taste profiles, macros, and constraints.
-      </li>
-      <li>
-        <strong>iOS frontend:</strong> SwiftUI interface for onboarding, viewing plans, swapping meals, and providing feedback.
-      </li>
+      <li><strong>FastAPI backend:</strong> Async endpoints for meal plan generation, swapping, feedback, and nutrition analytics.</li>
+      <li><strong>RAG pipeline:</strong> Vector similarity search over meal database, LLM optimisation with calorie/macro targeting.</li>
+      <li><strong>Nutrition engine:</strong> Henry/Oxford equations per SACN guidelines. Targets within ±10% accuracy, supports macro splits (e.g. 40/30/30).</li>
+      <li><strong>Preference learning:</strong> User feedback updates preference embeddings. 14-day meal history to avoid repetition.</li>
+      <li><strong>Meal swapping:</strong> Intelligent swap logic finding alternatives matching similar taste profiles, macros, and constraints.</li>
+      <li><strong>iOS frontend:</strong> SwiftUI interface for onboarding, viewing plans, swapping meals, and providing feedback.</li>
     </ul>
 
     <h2>Metrics</h2>
     <ul>
-      <li>Calorie accuracy: within +/- 10% of target</li>
+      <li>Calorie accuracy: within ±10% of target</li>
       <li>Macro targeting: user-defined ratios with &lt; 5% variance</li>
       <li>Generation latency: &lt; 2 seconds end-to-end (RAG + LLM)</li>
-      <li>API uptime: 99.8% on Render.com</li>
+      <li>API uptime: 99.8% on Render</li>
       <li>User feedback integration: 100+ meals in preference embeddings database</li>
     </ul>
 
-    <h2>What Is Next</h2>
+    <h2>What is next</h2>
     <p>
       Complete SwiftUI iOS implementation and launch beta. Integrate real recipe APIs (Spoonacular, Edamam) for richer meal database. Build web dashboard for meal history and analytics. Plan progression: free tier (calorie tracker), premium tier (meal planning), pro tier (advanced personalisation and macro tracking).
     </p>
-
-    <div class="mt-12 p-8 border border-border-subtle rounded-lg">
-      <p class="text-text-muted text-sm mb-4">
-        Learn more: <a href="https://github.com/jevancousins/nutriplan" target="_blank">GitHub repository</a>
-      </p>
-    </div>
   </CaseStudy>
 </BaseLayout>

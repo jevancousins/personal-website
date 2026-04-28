@@ -1,67 +1,313 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+
+const today = new Date();
+const todayFmt = today.toISOString().slice(0, 10);
+
+const projects = [
+  {
+    index: '№ 01',
+    title: 'Lineup',
+    description: 'Concert discovery iOS app on a production data platform. 1M+ events and 300K+ artists ingested daily from six APIs via Airflow; BigQuery + dbt; 122 unit tests; zero data losses in twelve months.',
+    href: '/projects/lineup',
+    tags: ['iOS', 'Airflow', 'BigQuery', 'dbt'],
+    status: 'Production · 2024–',
+    meta: 'Read the dossier',
+  },
+  {
+    index: '№ 02',
+    title: 'NutriPlan',
+    description: 'AI meal planner. FastAPI + GPT-4o with pgvector RAG; calorie accuracy within ±10%; generation under two seconds end-to-end. SwiftUI frontend in beta.',
+    href: '/projects/nutriplan',
+    tags: ['iOS', 'FastAPI', 'RAG', 'pgvector'],
+    status: 'Beta · 2025–',
+    meta: 'Read the dossier',
+  },
+  {
+    index: '№ 03',
+    title: 'JobHunter',
+    description: 'My own job search automation. Claude API scores 500–1,000 jobs a day against a six-dimension career framework. Playwright crawlers, GitHub Actions cron, Notion as the UI.',
+    href: '/projects/jobhunter',
+    tags: ['Python', 'Claude API', 'Playwright', 'Notion'],
+    status: 'In daily use · 2026',
+    meta: 'Read the dossier',
+  },
+  {
+    index: '№ 04',
+    title: 'Earnings Call Analyser',
+    description: 'PyTorch + FinBERT pipeline testing Chiang et al. 2025 on earnings call Q&A alignment as an equity signal. Contrastive classifier, backtesting framework, Kubernetes deployment.',
+    href: '/projects/earnings-call-analyser',
+    tags: ['PyTorch', 'FinBERT', 'NLP', 'Research'],
+    status: 'Proof of concept · Q1 2026',
+    meta: 'Read the dossier',
+  },
+];
+
+const stats = [
+  { num: '€176B', label: 'Fixed Income AUM\nplatform supported' },
+  { num: '1M+', label: 'Events ingested\nfor Lineup, daily' },
+  { num: '500–1K', label: 'Roles scored daily\nby JobHunter' },
+  { num: '7yrs', label: 'BarraOne rollout\nfailed twice; shipped 3rd time' },
+];
+
+const principles = [
+  { n: '01', t: 'Ship the system, not the slide.', b: 'A working pipeline beats a polished proposal. Architecture earns its keep when somebody depends on it on a Monday morning.' },
+  { n: '02', t: 'Read the paper. Then build it.', b: 'Most edge in applied AI is implementation craft on top of public research. Closing that gap is the work.' },
+  { n: '03', t: 'Eat the dog food.', b: 'JobHunter scores my own job search. Lineup ingests gigs I want to attend. Build for yourself first; users second.' },
+];
 ---
 
 <BaseLayout
-  title="Jevan Cousins | Applied AI engineering, full-stack shipping, founder-curious"
-  description="Applied AI engineering, full-stack shipping, founder-curious. Building Lineup and NutriPlan. Based in London, UK."
+  title="Jevan Cousins — Applied AI engineer, builder of Lineup and NutriPlan"
+  description="Jevan Cousins. Applied AI engineer. Architected enterprise agentic AI at Allianz GI on a €176B platform. Now building Lineup and NutriPlan. London, targeting Paris."
 >
-  <div class="bg-background">
-    <!-- Hero Section -->
-    <section class="max-w-4xl mx-auto px-6 py-24 md:py-32">
+  <!-- ===== HERO ===== -->
+  <section class="border-b border-ink">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+
+      <!-- top metadata band -->
+      <div class="grid grid-cols-12 gap-6 py-4 mono text-[0.68rem] uppercase tracking-widest text-ink-muted border-b border-rule">
+        <div class="col-span-6 md:col-span-3 reveal d-1">
+          <span class="text-ink">Filed</span> · {todayFmt}
+        </div>
+        <div class="col-span-6 md:col-span-3 reveal d-1">
+          <span class="text-ink">Located</span> · 51.5074°N / 0.1278°W
+        </div>
+        <div class="hidden md:block col-span-3 reveal d-2">
+          <span class="text-ink">Status</span> · Open to roles
+        </div>
+        <div class="hidden md:block col-span-3 text-right reveal d-2">
+          Ed. 04 / Spring 2026
+        </div>
+      </div>
+
+      <!-- name + tagline -->
+      <div class="grid grid-cols-12 gap-6 pt-12 md:pt-20 pb-12">
+        <div class="col-span-12 md:col-span-9">
+          <p class="label-oxide mb-6 reveal d-1">A dossier ·  J.&nbsp;C.</p>
+          <h1 class="font-display leading-[0.92] tracking-tight text-ink reveal d-2">
+            Jevan<br/>
+            <span class="italic text-oxide">Cousins.</span>
+          </h1>
+        </div>
+        <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule self-end reveal d-3">
+          <p class="font-display italic text-xl md:text-2xl leading-snug text-ink mb-4">
+            Applied&nbsp;AI engineer.
+          </p>
+          <p class="mono text-[0.72rem] uppercase tracking-widest text-ink-muted leading-relaxed">
+            Full-stack shipping.<br/>
+            Founder-curious.<br/>
+            Quant-adjacent.
+          </p>
+        </aside>
+      </div>
+
+      <hr class="rule" />
+
+      <!-- bio block -->
+      <div class="grid grid-cols-12 gap-6 py-12">
+        <div class="col-span-12 md:col-span-3 md:order-1 order-2 reveal d-3">
+          <p class="label mb-3">Précis</p>
+          <p class="mono text-[0.72rem] leading-relaxed text-ink-muted">
+            Four years architecting AI systems and data pipelines inside a €176B Fixed Income platform. Left 28 February 2026 to ship products and find the next problem worth chasing.
+          </p>
+        </div>
+
+        <div class="col-span-12 md:col-span-9 md:order-2 order-1 reveal d-4">
+          <p class="font-display text-2xl md:text-[1.85rem] leading-[1.25] text-ink">
+            I architected the <a href="/about" class="ink-link">first enterprise agentic AI system</a> at Allianz Global Investors, delivered an <span class="marker">MSCI BarraOne</span> rollout that had failed twice over seven years, and directed AI adoption across a €176B Fixed Income platform.
+          </p>
+          <p class="font-display text-2xl md:text-[1.85rem] leading-[1.25] text-ink-muted mt-5">
+            Now building <a href="/projects/lineup" class="ink-link text-ink">Lineup</a>, <a href="/projects/nutriplan" class="ink-link text-ink">NutriPlan</a>, <a href="/projects/jobhunter" class="ink-link text-ink">JobHunter</a>, and an <a href="/projects/earnings-call-analyser" class="ink-link text-ink">earnings-call equity signal</a>. Based in London, targeting Paris.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATISTICS SLAB ===== -->
+  <section class="border-b border-ink bg-paper-shade">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-10">
+      <div class="flex items-baseline justify-between mb-6">
+        <p class="label-oxide">Vital statistics</p>
+        <p class="mono text-[0.68rem] uppercase tracking-widest text-ink-faint hidden md:inline">
+          As of {todayFmt} · figures verified
+        </p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4">
+        {stats.map((s, i) => (
+          <div class={`p-5 md:p-7 ${i < 3 ? 'border-r border-rule-strong' : ''} ${i < 2 ? 'border-b border-rule-strong md:border-b-0' : ''}`}>
+            <p class="font-display text-5xl md:text-6xl leading-none text-ink tabular">
+              {s.num}
+            </p>
+            <p class="mono text-[0.66rem] uppercase tracking-widest text-ink-muted mt-3 whitespace-pre-line">
+              {s.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FIELD NOTES ===== -->
+  <section class="border-b border-ink">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20">
+      <div class="grid grid-cols-12 gap-6 mb-10">
+        <div class="col-span-12 md:col-span-4">
+          <p class="label-oxide mb-4">Folio · I</p>
+          <h2 class="font-display text-ink leading-none">Field notes</h2>
+        </div>
+        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
+          <p class="text-ink-muted leading-relaxed max-w-xl">
+            Four projects in active rotation. Each entry is a working system; each dossier is the decisions and trade-offs, not the highlight reel. Pulled apart and labelled.
+          </p>
+        </div>
+      </div>
+
       <div>
-        <h1 class="font-display font-bold mb-4">
-          Jevan Cousins
-        </h1>
-        <p class="text-2xl text-accent-red font-medium mb-6">
-          Applied AI engineering, full-stack shipping, founder-curious.
-        </p>
-        <p class="text-lg text-text-muted max-w-2xl leading-relaxed mb-4">
-          Four years as Solution Architect at Allianz Global Investors: architected the firm's first enterprise agentic AI system, delivered an MSCI BarraOne attribution rollout that had failed twice over seven years, and directed AI adoption across a €176B Fixed Income platform. Left 28 February 2026.
-        </p>
-        <p class="text-lg text-text-muted max-w-2xl leading-relaxed">
-          Now building <a href="/projects/lineup" class="text-text-primary hover:text-accent-red transition-colors underline decoration-border-subtle hover:decoration-accent-red underline-offset-4">Lineup</a> and <a href="/projects/nutriplan" class="text-text-primary hover:text-accent-red transition-colors underline decoration-border-subtle hover:decoration-accent-red underline-offset-4">NutriPlan</a>. Based in London, targeting Paris. Open to applied AI, quant, DS, and forward-deployed roles.
-        </p>
+        {projects.map((p) => (
+          <ProjectCard
+            title={p.title}
+            description={p.description}
+            href={p.href}
+            tags={p.tags}
+            status={p.status}
+            index={p.index}
+            meta={p.meta}
+          />
+        ))}
+        <div class="border-t border-ink pt-4">
+          <a href="/projects" class="mono text-[0.72rem] uppercase tracking-widest text-ink hover:text-oxide transition-colors">
+            All field notes →
+          </a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Featured Work -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-border-subtle">
-      <h2 class="font-display font-bold mb-8">Featured Work</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <ProjectCard
-          title="Lineup"
-          description="Concert discovery iOS app on a production data platform. 1M+ events and 300K+ artists ingested daily from six APIs via Airflow; BigQuery + dbt; 122 unit tests; zero data losses in twelve months."
-          href="/projects/lineup"
-          tags={['iOS', 'Airflow', 'BigQuery']}
-          status="Production"
-        />
-        <ProjectCard
-          title="NutriPlan"
-          description="AI meal planner. FastAPI + GPT-4o with pgvector RAG, calorie accuracy within ±10%, generation under two seconds end-to-end. SwiftUI frontend in beta."
-          href="/projects/nutriplan"
-          tags={['iOS', 'FastAPI', 'RAG']}
-          status="Beta"
-        />
-        <ProjectCard
-          title="JobHunter"
-          description="My own job search automation. Claude API scores 500 to 1,000 jobs a day against a 6-dimension career framework. Playwright crawlers, GitHub Actions cron, Notion as the UI."
-          href="/projects/jobhunter"
-          tags={['Python', 'Claude API', 'Automation']}
-          status="In use"
-        />
+  <!-- ===== PRINCIPLES ===== -->
+  <section class="border-b border-ink bg-paper-shade">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20">
+      <div class="grid grid-cols-12 gap-6 mb-10">
+        <div class="col-span-12 md:col-span-4">
+          <p class="label-oxide mb-4">Folio · II</p>
+          <h2 class="font-display text-ink leading-none">House rules</h2>
+        </div>
+        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
+          <p class="text-ink-muted leading-relaxed max-w-xl">
+            Three principles, learned by being wrong about all three at some point. Posted on the wall above the desk.
+          </p>
+        </div>
       </div>
-    </section>
 
-    <!-- Recent Writing -->
-    <section class="max-w-4xl mx-auto px-6 py-16 border-t border-border-subtle">
-      <h2 class="font-display font-bold mb-8">Writing</h2>
-      <div class="p-8 border border-border-subtle rounded-lg">
-        <p class="text-text-muted">
-          Notes and essays on applied AI, shipping products solo, and the path from enterprise engineering to founding something. First pieces coming soon.
-        </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule-strong border border-rule-strong">
+        {principles.map((p) => (
+          <div class="bg-paper-shade p-7 md:p-9">
+            <p class="mono text-[0.68rem] uppercase tracking-widest text-oxide mb-3">
+              Rule {p.n}
+            </p>
+            <p class="font-display italic text-2xl md:text-[1.7rem] leading-tight text-ink mb-4">
+              {p.t}
+            </p>
+            <p class="text-ink-muted leading-relaxed text-[0.97rem]">
+              {p.b}
+            </p>
+          </div>
+        ))}
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+
+  <!-- ===== NOW + WRITING ===== -->
+  <section class="border-b border-ink">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20 grid grid-cols-12 gap-10">
+
+      <div class="col-span-12 md:col-span-7 md:border-r border-rule md:pr-10">
+        <p class="label-oxide mb-4">Folio · III</p>
+        <h2 class="font-display text-ink leading-none mb-8">Currently</h2>
+
+        <ul class="space-y-6">
+          <li class="grid grid-cols-12 gap-4">
+            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
+              Searching
+            </span>
+            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
+              For applied AI, quant, and forward-deployed roles. Paris first, London close second. <a href="/now" class="ink-link">More on the Now page</a>.
+            </p>
+          </li>
+          <li class="grid grid-cols-12 gap-4">
+            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
+              Hardening
+            </span>
+            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
+              Lineup's pipeline: incremental BigQuery loads, Redis cache replacing the 57MB JSON, Looker dashboards next.
+            </p>
+          </li>
+          <li class="grid grid-cols-12 gap-4">
+            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
+              Closing out
+            </span>
+            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
+              NutriPlan v1: SwiftUI frontend implementation, TestFlight beta targeted for summer 2026.
+            </p>
+          </li>
+          <li class="grid grid-cols-12 gap-4">
+            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
+              Researching
+            </span>
+            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
+              Earnings-call Q&A alignment as an equity signal. Blocker: a labelled training set of 100–200 Q&A pairs.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <aside class="col-span-12 md:col-span-5">
+        <p class="label-oxide mb-4">Folio · IV</p>
+        <h2 class="font-display text-ink leading-none mb-8">From the desk</h2>
+
+        <div class="border-y border-ink py-8">
+          <p class="font-display italic text-3xl md:text-[2rem] leading-[1.18] text-ink mb-4">
+            "The interesting bit isn't the model. It's the operational scar tissue around it."
+          </p>
+          <p class="mono text-[0.68rem] uppercase tracking-widest text-ink-muted">
+            Working notes · 2026
+          </p>
+        </div>
+
+        <p class="text-ink-muted leading-relaxed mt-8">
+          Notes and essays on applied AI, shipping products solo, and the path from enterprise engineering to founding something. First pieces queued.
+        </p>
+        <a href="/writing" class="mono text-[0.72rem] uppercase tracking-widest text-ink hover:text-oxide transition-colors mt-4 inline-block">
+          To the Writing index →
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT BAND ===== -->
+  <section>
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
+      <div class="grid grid-cols-12 gap-6 items-end">
+        <div class="col-span-12 md:col-span-8">
+          <p class="label-oxide mb-6">End of folio</p>
+          <p class="font-display leading-[0.96] text-[clamp(2.5rem,7vw,5.5rem)] text-ink">
+            If the work resonates, <span class="italic text-oxide">write to me.</span>
+          </p>
+          <p class="text-ink-muted mt-6 max-w-xl leading-relaxed">
+            Roles, collaborations, problems you can't quite get out of your head. I read everything and reply to most.
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-4 md:text-right">
+          <a
+            href="mailto:jevan.cousins@gmail.com"
+            class="inline-block mono text-[0.78rem] uppercase tracking-widest border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
+          >
+            jevan.cousins@gmail.com →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
