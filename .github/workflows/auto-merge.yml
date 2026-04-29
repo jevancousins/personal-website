@@ -1,0 +1,27 @@
+name: Auto-merge
+
+# Enables auto-merge on every non-draft pull request. The PR will then merge
+# automatically once all required status checks pass and required review
+# conditions (if any) are satisfied. Branch protection on master and the
+# Playwright E2E required check do the actual gating; this workflow only
+# flips the auto-merge flag on so the merge happens without a manual click.
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    name: Enable auto-merge (squash)
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR_URL"
