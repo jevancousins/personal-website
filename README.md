@@ -1,54 +1,37 @@
-# Personal Website
+# personal-website
 
-Jevan Cousins | Applied AI engineering, full-stack shipping, founder-curious.
+Source for [jevancousins.com](https://jevancousins.com): a working journal of applied engineering. Astro 4, Tailwind, Vercel.
 
-A modern personal portfolio website built with Astro 4, Tailwind CSS, and deployed on Vercel.
+## Local
 
-## Getting Started
-
-### Prerequisites
-- Node.js 18+
-- npm
-
-### Install Dependencies
 ```bash
 npm install
+npm run dev          # http://localhost:4321
+npm run build        # static output in dist/
+npm run test:e2e     # Playwright smoke + metadata suite
 ```
 
-### Development
-```bash
-npm run dev
-```
-Opens http://localhost:3000 in your browser. The site reloads on file changes.
+## Stack
 
-### Build
-```bash
-npm run build
-```
-Generates optimised static HTML in the `dist/` directory.
+- **Astro 4** with Tailwind CSS and a hand-rolled design system in `src/styles/global.css`
+- **Source Serif 4** (display + body), **IBM Plex Sans** (UI / labels), **IBM Plex Mono** (technical metadata)
+- **Playwright** for smoke and SEO-metadata checks (`tests/e2e/`)
+- **Vercel** hosting; redirects in `vercel.json` keep old routes (`/now`, `/writing`, `/projects/*`) pointing to the new ones
 
-### Preview
-```bash
-npm run preview
-```
-Preview the production build locally at http://localhost:3000.
+## Site map
 
-## Deployment
+| Route        | Purpose                                                   |
+| ------------ | --------------------------------------------------------- |
+| `/`          | Journal cover: masthead, abstract, in-this-issue index    |
+| `/papers`    | Working papers (case studies as preprints)                |
+| `/notes`     | Working notes and literature reviews                      |
+| `/reading`   | Currently reading, curriculum, reviews, French reading    |
+| `/journal`   | Lab journal: reverse-chronological log                    |
+| `/about`     | Long-form bio                                             |
+| `/past-work` | Archived earlier work and certifications                  |
 
-This site deploys automatically on Vercel from the main branch. Astro's default Vercel adapter handles all configuration.
+## CI and merging
 
-## Tech Stack
-
-- **Framework**: Astro 4.x
-- **Styling**: Tailwind CSS with custom design system
-- **Fonts**: Fraunces (display) and Inter (body) via Google Fonts
-- **Animation**: View Transitions (Astro built-in)
-- **Hosting**: Vercel
-
-## Site Structure
-
-- `/` – Home with featured projects and writing stubs
-- `/about` – Narrative about page
-- `/now` – Now page (nownownow.com format)
-- `/projects` – Project case studies
-- `/writing` – Writing index (coming soon)
+- Every Vercel preview deploy triggers `qa.yml`, which runs the Playwright suite against the preview URL. The job is gated on the PR not being from a fork (`fork-check` job).
+- Every non-draft PR is auto-flagged for auto-merge by `auto-merge.yml`. Squash-merges into `master` once `Playwright E2E` passes; the branch is then deleted.
+- Open a PR as a draft if you want to hold it for manual review.
