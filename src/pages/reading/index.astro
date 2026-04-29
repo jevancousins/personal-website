@@ -35,6 +35,14 @@ const reviews = [
     blurb: 'The economics and social dynamics of open-source maintainership, written with unusual care. Has aged remarkably well.',
     tags: ['Open source', 'Software economics'],
   },
+  {
+    title: 'Why Machines Learn',
+    author: 'Anil Ananthaswamy',
+    year: '2024',
+    rating: null,
+    blurb: 'A historical-mathematical tour of the ideas behind modern machine learning, traced through the people who developed them. Read in 2025.',
+    tags: ['Machine learning', 'History of ideas'],
+  },
 ];
 
 const french = [
@@ -171,7 +179,7 @@ const star = (n: number | null) => n == null ? '·' : '★'.repeat(n) + '☆'.re
         <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">{reviews.length} entries</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule border border-rule">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-rule border border-rule">
         {reviews.map((b) => (
           <div class="bg-paper p-7 flex flex-col">
             <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-prussian mb-3">
@@ -183,9 +191,15 @@ const star = (n: number | null) => n == null ? '·' : '★'.repeat(n) + '☆'.re
             <p class="font-display italic text-ink-muted text-[1.05rem] mb-3">
               {b.author} · {b.year}
             </p>
-            <p class="mono text-[0.78rem] text-prussian mb-4 tabular">
-              {star(b.rating)}
-            </p>
+            {b.rating != null ? (
+              <p class="mono text-[0.78rem] text-prussian mb-4 tabular">
+                {star(b.rating)}
+              </p>
+            ) : (
+              <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-ink-faint mb-4">
+                Read · awaiting rating
+              </p>
+            )}
             <p class="text-ink-muted leading-snug text-[0.95rem] mb-4 flex-1">
               {b.blurb}
             </p>
