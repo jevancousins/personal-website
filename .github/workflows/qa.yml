@@ -6,11 +6,46 @@ on:
 permissions:
   contents: read
   deployments: read
+  pull-requests: read
 
 jobs:
+  # Cheap gate that runs first and decides whether the E2E job should execute.
+  # We need this because the deployment_status webhook payload's repository
+  # field always reflects the BASE repo (where Vercel created the deployment),
+  # not the PR head's repo. To know if the underlying PR is from a fork we
+  # have to look it up via the GitHub API.
+  fork-check:
+    name: Fork-check gate
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview'
+    runs-on: ubuntu-latest
+    outputs:
+      is_fork: ${{ steps.check.outputs.is_fork }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.deployment.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          PR_NUMBER=$(gh api "/repos/${REPO}/commits/${SHA}/pulls" --jq '.[0].number // empty')
+          if [ -z "${PR_NUMBER}" ]; then
+            echo "No PR associated with ${SHA}; treating as trusted (likely a direct push to a same-repo branch)."
+            echo "is_fork=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          IS_FORK=$(gh api "/repos/${REPO}/pulls/${PR_NUMBER}" --jq '.head.repo.fork')
+          echo "PR #${PR_NUMBER} fork status: ${IS_FORK}"
+          echo "is_fork=${IS_FORK}" >> "$GITHUB_OUTPUT"
+
   e2e:
     name: Playwright E2E
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview'
+    needs: fork-check
+    # Skip when the deployment came from a fork PR. This workflow checks out
+    # the PR head and runs `npm ci`, which can execute install scripts. Doing
+    # that in a context that has VERCEL_AUTOMATION_BYPASS_SECRET would let a
+    # malicious fork PR exfiltrate the secret. Same-repo branches are trusted.
+    if: needs.fork-check.outputs.is_fork == 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
