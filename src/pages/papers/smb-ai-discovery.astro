@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="SMB AI discovery · A working paper · J. Cousins"
+  description="A structured discovery method for identifying real agentic-AI use cases in SMBs, adapted from enterprise discovery work inside a €176B European asset manager."
+>
+  <Paper
+    identifier="jcousins/2026.04.007"
+    title="SMB AI discovery"
+    subtitle="A structured approach to identifying real agentic-AI use cases in small and mid-sized businesses."
+    abstract="The most common failure mode when an SMB engages with AI is to start from the technology rather than from the work. The result is some combination of an unused chatbot, a calendar assistant the team forgets about, and an honest belief that AI 'wasn't the right fit'. This working paper describes a structured discovery method for SMBs, adapted from enterprise discovery work the author ran inside a large European asset manager (50+ use cases identified, several taken to production). The method is content-light and process-heavy by design: most of the value sits in the order of the questions, not in any particular framework, and the deliverable is a small ranked list of candidates with a thin-slice prototype, not a slide deck."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2026-03"
+    revised="2026-04"
+    status="In active engagement"
+    keywords={['agentic AI', 'discovery', 'SMB', 'change management', 'enterprise AI']}
+    meta={[
+      { label: 'Version', value: 'v0.5' },
+      { label: 'Started', value: '2026' },
+      { label: 'Engagements', value: 'Active' },
+      { label: 'Lineage', value: 'AGI 50+ use-case discovery' },
+      { label: 'Output', value: 'Ranked shortlist + thin-slice prototype' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      Most SMB AI engagements that fail do so before any code is written. They fail in the discovery stage, where the wrong question is asked of the wrong people in the wrong order and produces a list of "AI use cases" that are really wishlists for general-purpose intelligence. The author's view, sharpened by running structured AI discovery inside a €176B European asset manager, is that the discovery step deserves more rigour than it usually gets, and that the output should be small and concrete enough to act on within a quarter.
+    </p>
+
+    <h2><span class="secnum">2</span>Method</h2>
+
+    <h3><span class="secnum">2.1</span>Start with the work, not the technology</h3>
+    <p>
+      The opening session is deliberately unsexy: walk through the operating week with one or two people from each function, and write down every recurring activity that takes more than thirty minutes. The deliverable is a flat list, not a framework. The list is the input to everything that follows.
+    </p>
+
+    <h3><span class="secnum">2.2</span>Score against three axes</h3>
+    <p>
+      Each candidate activity is scored on three dimensions:
+    </p>
+    <ol>
+      <li><strong>Frequency × duration.</strong> How much human time is currently spent on this in steady state.</li>
+      <li><strong>Specifiability.</strong> How clearly the desired output can be described to a model. Vaguely-specified work is bad AI work.</li>
+      <li><strong>Reversibility.</strong> The cost of the AI being wrong. High-reversibility work (drafts, suggestions, classification with human review) is dramatically safer to deploy than low-reversibility work (sending external mail, taking financial actions).</li>
+    </ol>
+
+    <h3><span class="secnum">2.3</span>Pick three; build the smallest prototype that proves the value</h3>
+    <p>
+      The output of discovery is three candidates ranked by the score above and a thin-slice prototype on the top one. The prototype is deliberately ugly: it lives in a Notion page or a Streamlit app, runs on the operator's own data, and is judged purely on whether the team uses it twice without being asked.
+    </p>
+
+    <h2><span class="secnum">3</span>Lessons from the enterprise version</h2>
+    <ul>
+      <li><strong>The strongest signal in discovery is what people complain about.</strong> The work people describe with frustration is almost always more specifiable than the work they describe with enthusiasm.</li>
+      <li><strong>Most candidates will not survive the specifiability axis.</strong> That is fine. A discovery that produces three good candidates and twenty rejected ones is more useful than one that produces twenty plausible candidates and zero clear winners.</li>
+      <li><strong>Adoption beats accuracy in the first sprint.</strong> A 70%-accurate tool used daily generates more value than a 95%-accurate one nobody opens.</li>
+      <li><strong>Train the operators alongside the build.</strong> 200+ staff went through structured AI upskilling in parallel with the discovery work at AGI. The build is half the project; the change is the other half.</li>
+    </ul>
+
+    <h2><span class="secnum">4</span>Discussion</h2>
+    <p>
+      The method is not unique. What is unusual is the discipline of refusing to ship a roadmap; the deliverable is a working tool, not a plan to build one. SMBs operate on quarterly cash; an engagement that only produces slides is an engagement that ends with the next budget review.
+    </p>
+    <p>
+      This work is currently in active engagement and is run as an independent project. Interest in the method, particularly from operators who have tried and rejected an off-the-shelf "AI strategy", can be directed to <a href="mailto:jevan.cousins@gmail.com">correspondence</a>.
+    </p>
+  </Paper>
+</BaseLayout>

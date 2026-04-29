@@ -1,118 +1,138 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const timeline = [
+const career = [
   {
-    year: '2026',
-    title: 'Building independently',
-    detail: 'Left Allianz GI on 28 February. Searching for the next role; shipping Lineup, NutriPlan, JobHunter, and the earnings-call signal in parallel.',
+    year: '2026 →',
+    title: 'Independent · building',
+    detail: 'Building Lineup, NutriPlan, JobHunter, the earnings-call signal, the personal AI layer, the adaptive learning system, and an SMB AI discovery practice. Looking for the next problem worth committing to.',
   },
   {
-    year: '2022–26',
-    title: 'Solution Architect, Allianz Global Investors',
-    detail: 'Reporting into the Global COO. Architected the firm\'s first enterprise agentic AI system. Delivered MSCI BarraOne attribution at the third attempt across a €176B Fixed Income platform. Directed AI adoption for 200+ staff.',
+    year: '2022 – 26',
+    title: 'Solution Architect · Allianz Global Investors',
+    detail: "Reporting into the Global COO. Architected the firm's first enterprise agentic AI system. Delivered MSCI BarraOne attribution at the third attempt across a €176B Fixed Income platform. Directed AI adoption for 200+ staff across the Investment Services function.",
   },
   {
     year: '2021',
-    title: 'LIBF Level 6, Trading and Financial Market Analysis',
-    detail: 'Distinction. Picked up because I wanted to read company filings without anyone explaining them to me.',
+    title: 'LIBF Level 6 · Trading and Financial Market Analysis',
+    detail: 'Distinction. Picked up alongside the UCL degree because reading filings without a translator was overdue.',
   },
   {
-    year: '2017–21',
-    title: 'BSc Natural Sciences, UCL',
-    detail: 'Physics and mathematics. First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging.',
+    year: '2017 – 21',
+    title: 'BSc Natural Sciences (Physics & Maths) · UCL',
+    detail: 'Upper second. First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging.',
   },
-];
-
-const skills = [
-  { group: 'Languages', items: ['Python', 'SQL', 'Swift / SwiftUI', 'TypeScript', 'Bash'] },
-  { group: 'Data & ML', items: ['PyTorch', 'HuggingFace / FinBERT', 'pgvector', 'Airflow', 'dbt', 'BigQuery', 'Supabase / Postgres'] },
-  { group: 'Applied AI', items: ['LangChain', 'LiteLLM', 'OpenAI / Anthropic APIs', 'RAG architectures', 'Agentic orchestration', 'Prompt + eval design'] },
-  { group: 'Infra & shipping', items: ['Docker', 'Kubernetes', 'GitHub Actions', 'Render / Vercel', 'Playwright', 'Notion API'] },
-  { group: 'Spoken', items: ['English (native)', 'French (C1)'] },
+  {
+    year: 'Pre-2017',
+    title: 'Ratton School, Eastbourne',
+    detail: 'Young Enterprise; Sussex County representative in football, cricket, long-distance running.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Bio · Jevan Cousins"
-  description="Jevan Cousins: applied AI engineer based in London. Solution Architect at Allianz Global Investors. Physics + maths from UCL. Founder-curious."
+  title="About · A working journal · J. Cousins"
+  description="A short biography. Applied engineer trained in physics; four years architecting AI inside a €176B European asset manager; now building independently across several domains."
 >
-  <article class="max-w-[1280px] mx-auto px-6 md:px-10 pt-10 pb-24">
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
 
-    <!-- header band -->
-    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 mono text-[0.68rem] uppercase tracking-widest text-ink">
-      <span>Bio</span>
-      <span class="text-ink-muted hidden md:inline">A short biography in the third person, mostly</span>
-      <span>Filed · Spring 2026</span>
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>About the author</span>
+      <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">jcousins/about</span>
+      <span class="text-ink-muted">A short biography</span>
     </div>
 
-    <!-- title -->
     <header class="grid grid-cols-12 gap-6 mb-16">
       <div class="col-span-12 md:col-span-9">
-        <p class="label-oxide mb-5">Folio · Bio</p>
-        <h1 class="font-display leading-[0.96] text-ink mb-6">
-          Engineer,<br/>
-          <span class="italic text-oxide">in residence.</span>
+        <p class="label-prussian mb-5">About the author</p>
+        <h1 class="font-display leading-[0.96] text-ink mb-5 text-[clamp(2.6rem,7vw,5rem)]">
+          Jevan Cousins
         </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          Applied engineer. Trained in physics; sharpened in markets; now building things that have to work for someone other than me.
+        </p>
       </div>
       <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule self-end">
-        <dl class="space-y-3 mono text-[0.78rem]">
+        <dl class="space-y-3 sans text-[0.84rem]">
           <div class="flex justify-between gap-4 border-b border-rule pb-2">
-            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Born</dt>
-            <dd class="text-ink">UK</dd>
-          </div>
-          <div class="flex justify-between gap-4 border-b border-rule pb-2">
-            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Based</dt>
+            <dt class="text-ink-muted uppercase tracking-[0.14em] text-[0.62rem] font-medium">Based</dt>
             <dd class="text-ink">London</dd>
           </div>
           <div class="flex justify-between gap-4 border-b border-rule pb-2">
-            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Tongue</dt>
-            <dd class="text-ink">EN · FR (C1)</dd>
+            <dt class="text-ink-muted uppercase tracking-[0.14em] text-[0.62rem] font-medium">Languages</dt>
+            <dd class="text-ink">English · Français (C1)</dd>
           </div>
           <div class="flex justify-between gap-4 border-b border-rule pb-2">
-            <dt class="text-ink-muted uppercase tracking-widest text-[0.66rem]">Trained</dt>
+            <dt class="text-ink-muted uppercase tracking-[0.14em] text-[0.62rem] font-medium">Trained</dt>
             <dd class="text-ink">UCL · Physics</dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-rule pb-2">
+            <dt class="text-ink-muted uppercase tracking-[0.14em] text-[0.62rem] font-medium">Working from</dt>
+            <dd class="text-ink">Independent</dd>
           </div>
         </dl>
       </aside>
     </header>
 
-    <!-- body -->
+    <!-- BODY PROSE -->
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-12 md:col-span-8 md:col-start-3">
         <div class="prose-body">
+
           <p class="drop-cap">
-            I am an applied AI engineer based in London. I spent four years as a Solution Architect at Allianz Global Investors, reporting into the Global COO, where I architected enterprise AI systems, built production data pipelines across a €176B Fixed Income platform, and ran the rollout of large system programmes. I left on 28 February 2026 to focus on products of my own while looking for the next role.
+            I am an applied engineer based in London. The label is plain on purpose: I prefer it to the more fashionable adjacent ones because it captures what I actually try to do, which is take a real-world problem in a specific domain (finance, science, business, my own life) and build the technology that turns the understanding of the problem into something useful.
           </p>
 
-          <p>
-            The work I care most about sits at the intersection of AI and product: taking research or a vague operational problem and shipping it as a system that people rely on. A few things from AllianzGI capture the register.
+          <p class="no-indent">
+            My route to that work runs through physics. I did Natural Sciences at UCL, finishing with a first-class dissertation on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging. I cared more about the dissertation than the degree, which is probably the truest sentence in this paragraph.
           </p>
 
-          <ul>
-            <li>
-              <strong>The firm's first enterprise agentic AI system.</strong> Designed and built a multi-agent orchestration layer spanning five systems (ServiceNow, Bloomberg, thinkFolio, MSCI BarraOne, Databricks) for the Investment Services function. Reached user testing within the COO's December 2025 deadline, roughly two months from build start.
-            </li>
-            <li>
-              <strong>MSCI BarraOne, delivered at the third attempt.</strong> Led the technical rollout of the firm's performance attribution platform after two prior failures over seven years. Built 20+ custom reports, took report delivery from T+3 to T+1 for ten investment teams managing €176B, and saved £500K+ in development costs and £300K+ per year in ongoing maintenance.
-            </li>
-            <li>
-              <strong>Generative and agentic AI adoption across operations.</strong> Ran a structured discovery that identified 50+ use cases. Shipped proofs of concept. Built a production LangChain/OpenAI RAG pipeline that automated competitive market analysis previously done by hand. Directed AI upskilling for 200+ staff.
-            </li>
-          </ul>
+          <p class="no-indent">
+            I spent the four years after university as a Solution Architect inside Allianz Global Investors, reporting into the Global COO. The work was unusually broad for the title: architecting the firm's first enterprise agentic AI system; delivering MSCI BarraOne performance attribution at the third attempt after two prior failures over seven years, across a €176B Fixed Income platform; running a structured discovery that identified 50+ candidate AI use cases and shipped several to production; directing AI upskilling for 200+ staff. I left in February 2026.
+          </p>
 
           <hr class="rule my-10" />
 
-          <p>
-            Outside of that I have been building products from scratch. <strong>Lineup</strong> is a concert discovery iOS app backed by a production data platform ingesting 1M+ events from six APIs daily via Apache Airflow, with dbt transforms landing in BigQuery and 122 unit tests. <strong>NutriPlan</strong> is an AI meal planner: FastAPI backend with GPT-4o and pgvector RAG, hitting calorie targets within ±10% and generating plans in under two seconds end-to-end. <strong>JobHunter</strong> is the tool I use to run my own job search: Claude API scoring 500 to 1,000 jobs a day against a six-dimension career framework, Playwright crawlers across four sources, Notion as the UI. <strong>Earnings Call Analyser</strong> is an earlier-stage research project (Q1 2026) validating Chiang et al. 2025 on earnings call Q&A alignment as an equity signal, using FinBERT embeddings and contrastive learning in PyTorch.
+          <h2><span class="secnum">A</span>What I am working on now</h2>
+
+          <p class="no-indent">
+            Independently, in parallel: <a href="/papers/lineup">Lineup</a>, a production data platform behind a SwiftUI live-music app; <a href="/papers/nutriplan">NutriPlan</a>, a personalised meal-planning system on a retrieval-then-optimise architecture; <a href="/papers/jobhunter">JobHunter</a>, a single-user system that runs my own job search; the <a href="/papers/earnings-call-analyser">earnings-call analyser</a>, a research replication of recent work on Q&A alignment as an equity signal; the <a href="/papers/personal-ai-layer">personal AI layer</a> stitching OpenClaw and a Cowork-backed assistant; the <a href="/papers/personalised-learning-system">adaptive learning system</a> driving my own technical study; and an <a href="/papers/smb-ai-discovery">SMB AI discovery practice</a> bringing the enterprise discovery method to smaller operators.
           </p>
 
           <p>
-            My background is physics and mathematics from UCL: a 2:1 BSc Natural Sciences with a First-class dissertation (76%) on deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging. I hold the LIBF Level 6 Diploma in Trading and Financial Market Analysis (Distinction) and continue to pick up certifications in data science, SQL, and AI through DataCamp. Native English; French at C1.
+            The thread, if there is one, is that I get pulled toward problems where the leverage comes from sitting at the boundary between a domain and a technology and refusing to leave until the work joins up. Real impact, in my experience, comes from going deep on the domain, not from running off-the-shelf tooling at it.
+          </p>
+
+          <hr class="rule my-10" />
+
+          <h2><span class="secnum">B</span>Some things that are also true</h2>
+
+          <p class="no-indent">
+            I read widely and study deliberately. The <a href="/reading">Reading page</a> lists what I am studying, what I am currently reading, and the broader subjects I keep returning to. I am particularly interested in wealth inequality and what the evidence says about social mobility; this comes from somewhere honest, not from a position paper.
           </p>
 
           <p>
-            I am actively looking for applied AI roles, ideally combining system architecture with product shipped to real users. I also look at quantitative, data science, and forward-deployed engineer roles when the problem is interesting enough. Paris is my primary target, London a close second; open to sponsorship where it is needed. Compensation floor is £65K / €60K, with flexibility for the right combination of salary, equity, and benefits. Longer term I am founder-curious: I would like to start or co-found a company once I have found the right problem and the right people.
+            I spent years tutoring and mentoring children from under-privileged backgrounds, mostly in maths and the sciences. Most of what I think I know about how people learn, I learned in those rooms. The <a href="/papers/personalised-learning-system">adaptive learning system</a> I built for my own study borrows heavily from that experience.
+          </p>
+
+          <p>
+            I played football, cricket, and long-distance running for Sussex at secondary school. Sport has been a constant: discipline, training cycles, and the useful habit of being wrong in front of other people. I still run.
+          </p>
+
+          <p>
+            I am a native English speaker and proficient in French (C1). I read in both, and I keep <em>Lectures francophones</em> on the <a href="/reading">Reading page</a> on purpose, because the language fades quickly without use.
+          </p>
+
+          <p>
+            I went to the Databricks Data + AI World Tour in London this past cycle. Beyond that, my conference attendance is light by choice; I get more out of building and reading than out of programmes.
+          </p>
+
+          <hr class="rule my-10" />
+
+          <h2><span class="secnum">C</span>About contact</h2>
+
+          <p class="no-indent">
+            This site is a working journal more than a CV; if anything here is the reason you are reading, please <a href="mailto:jevan.cousins@gmail.com">write</a>. I read every message and reply to most. The right reasons to make contact, in roughly descending order of probability of a useful conversation: a problem in a domain you know well that you suspect benefits from the kind of work documented here; a paper or idea you'd like a second opinion on; a role where the job description and the work above appear to overlap. Bien à vous.
           </p>
         </div>
       </div>
@@ -122,26 +142,26 @@ const skills = [
     <section class="mt-24 border-t border-ink pt-12">
       <div class="grid grid-cols-12 gap-6 mb-10">
         <div class="col-span-12 md:col-span-4">
-          <p class="label-oxide mb-4">Cursus</p>
+          <p class="label-prussian mb-4">Cursus</p>
           <h2 class="font-display text-ink leading-none">Where I have been</h2>
         </div>
         <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
           <p class="text-ink-muted leading-relaxed max-w-xl">
-            A short timeline. The years are exact; the categorisation is generous.
+            A short timeline. Detail of certifications and earlier work lives in the <a href="/past-work" class="ink-link text-ink">past-work archive</a>.
           </p>
         </div>
       </div>
 
       <ol class="border-t border-ink">
-        {timeline.map((row) => (
+        {career.map((row) => (
           <li class="grid grid-cols-12 gap-6 py-7 border-b border-rule">
             <div class="col-span-3 md:col-span-2">
-              <p class="font-display text-3xl md:text-4xl text-oxide leading-none tabular">
+              <p class="font-display text-[1.6rem] md:text-[1.9rem] text-prussian leading-none tabular">
                 {row.year}
               </p>
             </div>
             <div class="col-span-9 md:col-span-10">
-              <p class="font-display italic text-2xl text-ink leading-tight mb-2">
+              <p class="font-display text-[1.3rem] md:text-[1.5rem] text-ink leading-tight mb-1">
                 {row.title}
               </p>
               <p class="text-ink-muted leading-relaxed max-w-3xl">
@@ -153,43 +173,17 @@ const skills = [
       </ol>
     </section>
 
-    <!-- SKILLS -->
-    <section class="mt-24 border-t border-ink pt-12">
-      <div class="grid grid-cols-12 gap-6 mb-10">
-        <div class="col-span-12 md:col-span-4">
-          <p class="label-oxide mb-4">Apparatus</p>
-          <h2 class="font-display text-ink leading-none">What I work with</h2>
-        </div>
-        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
-          <p class="text-ink-muted leading-relaxed max-w-xl">
-            Tools and stacks I have shipped real systems on, not the full bingo card. Anything missing, ask.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-px bg-rule-strong border border-rule-strong">
-        {skills.map((s) => (
-          <div class="bg-paper p-6">
-            <p class="label-oxide mb-4">{s.group}</p>
-            <ul class="space-y-1.5 text-ink leading-snug">
-              {s.items.map((it) => <li>{it}</li>)}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
-
     <!-- CTA -->
     <div class="mt-24 border-y border-ink py-10 grid grid-cols-12 gap-6 items-center">
       <div class="col-span-12 md:col-span-8">
-        <p class="font-display italic text-3xl md:text-4xl text-ink leading-tight">
-          The short version: <span class="text-oxide">say hello.</span>
+        <p class="font-display italic text-[1.7rem] md:text-[2.2rem] text-ink leading-tight">
+          The short version: <span class="text-prussian not-italic">say hello.</span>
         </p>
       </div>
       <div class="col-span-12 md:col-span-4 md:text-right">
         <a
           href="mailto:jevan.cousins@gmail.com"
-          class="inline-block mono text-[0.78rem] uppercase tracking-widest border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
+          class="inline-block sans text-[0.74rem] uppercase tracking-[0.18em] font-medium border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
         >
           jevan.cousins@gmail.com →
         </a>

@@ -1,0 +1,69 @@
+---
+interface Props {
+  identifier?: string;
+  title: string;
+  abstract: string;
+  href: string;
+  authors?: string;
+  status?: string;
+  keywords?: string[];
+  pageRef?: string;
+}
+
+const {
+  identifier,
+  title,
+  abstract,
+  href,
+  authors = 'J. Cousins',
+  status,
+  keywords = [],
+  pageRef,
+} = Astro.props;
+---
+
+<article class="border-t border-ink first:border-t-0">
+  <a href={href} class="group block py-7 transition-colors duration-200 hover:bg-paper-tint -mx-3 px-3">
+    <div class="grid grid-cols-12 gap-4 md:gap-6 items-baseline mb-3">
+      <div class="col-span-9 md:col-span-9 flex items-baseline gap-3 min-w-0 flex-wrap">
+        {identifier && (
+          <span class="mono text-[0.72rem] text-ink-muted tracking-[0.04em] flex-none">
+            {identifier}
+          </span>
+        )}
+        <h3 class="font-display text-[1.55rem] md:text-[1.85rem] leading-[1.1] text-ink group-hover:text-prussian transition-colors min-w-0">
+          {title}
+        </h3>
+      </div>
+      <div class="col-span-3 md:col-span-3 text-right flex flex-col items-end gap-1.5">
+        {status && <span class="pill pill-prussian">{status}</span>}
+        {pageRef && (
+          <span class="mono text-[0.66rem] text-ink-faint tracking-[0.04em]">
+            p. {pageRef}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <p class="sans text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted mb-3">
+      {authors}
+    </p>
+
+    <p class="text-ink leading-[1.55] max-w-3xl text-[0.98rem]">
+      {abstract}
+    </p>
+
+    <div class="flex items-center justify-between flex-wrap gap-3 mt-4">
+      {keywords.length > 0 ? (
+        <div class="flex flex-wrap gap-x-3 gap-y-1 sans text-[0.66rem] uppercase tracking-[0.12em] text-ink-muted">
+          {keywords.map((kw, i) => (
+            <span>{kw}{i < keywords.length - 1 ? ' ·' : ''}</span>
+          ))}
+        </div>
+      ) : <span></span>}
+      <span class="sans text-[0.7rem] uppercase tracking-[0.16em] font-medium text-ink group-hover:text-prussian transition-colors">
+        Read in full →
+      </span>
+    </div>
+  </a>
+</article>

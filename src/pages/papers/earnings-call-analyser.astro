@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="Earnings-call Q&A alignment · A working paper · J. Cousins"
+  description="A working paper on whether semantic alignment between analyst questions and management answers in earnings calls predicts forward equity returns. PyTorch + FinBERT + contrastive learning."
+>
+  <Paper
+    identifier="jcousins/2026.04.004"
+    title="Earnings-call Q&A alignment as an equity signal"
+    subtitle="A research replication of Chiang et al. (2025), with a contrastive PyTorch classifier over FinBERT embeddings."
+    abstract="Most equity signals derive from price action or fundamental accounting data. Earnings-call transcripts contain a rich linguistic surface that is largely under-exploited. <strong>Chiang et al. (2025)</strong> argue that the semantic alignment between an analyst's question and management's answer correlates with subsequent equity returns: misaligned answers (evasive, off-topic, or partial) are informative beyond the narrative the call presents. We describe a working pipeline to test the claim on US equities: transcripts are ingested from Financial Modeling Prep and SEC EDGAR, Q&A pairs are embedded using ProsusAI/FinBERT (768d), and a PyTorch contrastive classifier with a combined cross-entropy / MSE / SimCSE-inspired loss is trained to score alignment. Architecture, dashboard, and Kubernetes deployment are complete. The remaining critical-path blocker is a hand-labelled training set."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2026-02"
+    revised="2026-04"
+    status="Working paper · in preparation"
+    keywords={['NLP', 'FinBERT', 'contrastive learning', 'PyTorch', 'equity research', 'replication study']}
+    repo="https://github.com/jevancousins/earnings-call-analyser"
+    meta={[
+      { label: 'Version', value: 'v0.4 (preprint)' },
+      { label: 'Started', value: 'Q1 2026' },
+      { label: 'Stack', value: 'PyTorch · FinBERT · K8s' },
+      { label: 'Embedding', value: '768-dim FinBERT' },
+      { label: 'Loss', value: 'CE + MSE + SimCSE' },
+      { label: 'Reference', value: 'Chiang et al. 2025' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      The information content of an earnings call extends well beyond the headline numbers and the prepared remarks. The Q&A section in particular reveals which questions management is willing or able to answer cleanly and which they evade. If a measurable signal exists in that evasion, it is the kind of edge that compounds: every quarter, every covered name, several times per year, in language that is technically already public.
+    </p>
+
+    <h2><span class="secnum">2</span>Method</h2>
+
+    <h3><span class="secnum">2.1</span>Embeddings</h3>
+    <p>
+      We use ProsusAI/FinBERT, a BERT model pre-trained on financial text, for question and answer embeddings. The 768-dimensional output captures domain-specific vocabulary (guidance, margins, capital allocation, tail risk) that generic BERT embeds poorly. We considered fine-tuning FinBERT itself but, with limited labelled data, the marginal gain is unlikely to justify the complexity.
+    </p>
+
+    <h3><span class="secnum">2.2</span>Contrastive architecture</h3>
+    <p>
+      The classifier learns from positive Q&A pairs (real question paired with the corresponding management answer) and negative Q&A' pairs (the same question paired with a randomly-sampled answer from a different call). Training minimises distance between aligned pairs and maximises it for misaligned ones. This is simpler than a multi-class formulation and gives a continuous alignment score that downstream backtesting can threshold flexibly.
+    </p>
+
+    <h3><span class="secnum">2.3</span>Loss</h3>
+    <div class="eqn">
+      L = α · L<sub>CE</sub> + β · L<sub>MSE</sub> + γ · L<sub>SimCSE</sub>
+      <span class="eqn-num">(1)</span>
+    </div>
+    <p>
+      The combined loss has three terms: cross-entropy for binary aligned/misaligned classification, mean-squared error against per-pair alignment scores, and a SimCSE-inspired contrastive term to keep representations well-spread in embedding space. The trade-off is more hyperparameters; the payoff is a richer signal that is less brittle than a single-objective formulation.
+    </p>
+
+    <h3><span class="secnum">2.4</span>Backtesting</h3>
+    <p>
+      Historical alignment scores are evaluated against forward 20-day and 60-day equity returns. Reporting is by Sharpe ratio, information ratio, and drawdown analysis, with attribution by question topic (margins, guidance, competition, macro, capital structure).
+    </p>
+
+    <h2><span class="secnum">3</span>Implementation</h2>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ML framework</td><td>PyTorch 2.x</td><td>Research flexibility, debugging tooling, academic standard.</td></tr>
+        <tr><td>Embeddings</td><td>ProsusAI/FinBERT</td><td>Domain-specific pre-training, fine-tuning ready.</td></tr>
+        <tr><td>NLP plumbing</td><td>HuggingFace Transformers</td><td>Standard FinBERT integration.</td></tr>
+        <tr><td>Backend</td><td>FastAPI</td><td>Async endpoints for analysis, comparison, backtesting.</td></tr>
+        <tr><td>Storage</td><td>PostgreSQL</td><td>Transcript and embedding persistence; SQL ergonomics.</td></tr>
+        <tr><td>Dashboard</td><td>Streamlit</td><td>Quick interactive exploration; Plotly for timelines and heatmaps.</td></tr>
+        <tr><td>Deployment</td><td>Docker · Kubernetes (Minikube)</td><td>Reproducibility now; production scaling later.</td></tr>
+        <tr><td>Data</td><td>Financial Modeling Prep · SEC EDGAR · yfinance</td><td>Transcripts, returns, fundamentals.</td></tr>
+      </tbody>
+    </table>
+
+    <h2><span class="secnum">4</span>Results (planned)</h2>
+    <ul>
+      <li>Alignment score correlation with forward returns: target &gt; 0.15.</li>
+      <li>Backtest Sharpe ratio: target &gt; 0.8.</li>
+      <li>Question-categorisation accuracy: target &gt; 85%.</li>
+      <li>Training corpus: 500+ earnings calls covering S&P 500 constituents.</li>
+    </ul>
+
+    <h2><span class="secnum">5</span>Critical path</h2>
+    <ol>
+      <li><strong>Labelled training data.</strong> Hand-score 100–200 Q&A pairs with alignment labels. The classifier cannot be fit without this.</li>
+      <li>Train the alignment classifier on the labelled set, tuning the combined loss.</li>
+      <li>Backtest against 2020–2025 earnings seasons across forward 20 and 60-day windows.</li>
+      <li>Attribute the signal by question topic to understand what is actually driving it.</li>
+      <li>Expand to international equities if the US signal validates.</li>
+    </ol>
+
+    <h2><span class="secnum">6</span>Discussion</h2>
+    <p>
+      If the signal validates, this becomes a personal trading strategy. If it does not, the architecture (FinBERT plus contrastive learning plus a transparent backtest) generalises to other financial NLP problems where the question is whether language adds information beyond the numbers. Either outcome produces something useful; only the labelling work is wasted in the negative case, and even that builds expertise.
+    </p>
+
+    <h2><span class="secnum">7</span>References</h2>
+    <div class="refs">
+      <ol>
+        <li>Chiang, R., et al. (2025), "Q&A Alignment in Earnings Calls and the Cross-Section of Returns", working paper.</li>
+        <li>Araci, D. (2019), "FinBERT: Financial Sentiment Analysis with Pre-trained Language Models", arXiv:1908.10063.</li>
+        <li>Gao, T., Yao, X., Chen, D. (2021), "SimCSE: Simple Contrastive Learning of Sentence Embeddings", arXiv:2104.08821.</li>
+      </ol>
+    </div>
+  </Paper>
+</BaseLayout>

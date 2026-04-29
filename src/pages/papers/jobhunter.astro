@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="JobHunter · A working paper · J. Cousins"
+  description="JobHunter: an automated job-discovery and scoring system that encodes personal career goals as a six-dimension framework evaluated by Claude API. 500 to 1,000 roles scored daily."
+>
+  <Paper
+    identifier="jcousins/2026.04.003"
+    title="JobHunter"
+    subtitle="Encoding personal career goals as an automated discovery and scoring system."
+    abstract="The bottleneck in a contemporary job search is no longer discovery; it is filtering. Aggregators surface thousands of nominally-matching roles per day; generic keyword filters reject the high-signal ones along with the noise. <strong>JobHunter</strong> is a single-user system that encodes the author's career goals as a six-dimension framework (role fit, compensation, growth, location, team quality, mission alignment) and asks the Claude API to score every newly-discovered role against it. Discovery runs daily across four sources (Indeed, LinkedIn, Welcome to the Jungle, and curated company career pages) using Playwright; results land in a Notion database that doubles as the triage UI. The pipeline runs on a GitHub Actions cron at 06:00 UTC. Application outcomes feed back into score calibration. The system is in active production use for the author's own search."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2026-01"
+    revised="2026-04"
+    status="In daily use"
+    keywords={['Claude API', 'Playwright', 'Notion API', 'GitHub Actions', 'personal automation', 'preference modelling']}
+    meta={[
+      { label: 'Version', value: 'v1.2' },
+      { label: 'Started', value: '2026' },
+      { label: 'Stack', value: 'Python · Claude · Playwright' },
+      { label: 'Sources', value: '4 boards' },
+      { label: 'Throughput', value: '500–1,000 roles / day' },
+      { label: 'Cost', value: '$5–10 / day API' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      A modern job search produces an information-flow problem at the wrong end of the funnel. Aggregators are good at surfacing roles and bad at filtering them; the cognitive load of triage falls entirely on the searcher, and the searcher is rarely operating at peak rationality during a search. The thesis behind JobHunter is that the only filter capable of doing useful work at this volume is one that has been told, in detail, what the searcher actually wants. That filter is then easy to delegate to an LLM with sufficient reasoning capability.
+    </p>
+    <p>
+      This is not a product attempt. It is a system built for one user, and the value derives almost entirely from the specificity of that user's encoded preferences.
+    </p>
+
+    <h2><span class="secnum">2</span>Method</h2>
+
+    <h3><span class="secnum">2.1</span>Six-dimension scoring framework</h3>
+    <p>
+      Each role is scored on six dimensions: role fit, compensation, growth potential, location and relocation, team quality, and mission alignment. Each dimension carries a weight set by hand and adjusted over time. The Claude API is given the role description, the framework definition, and the per-dimension weights, and is asked to return a calibrated score per dimension and an aggregate normalised to 0–100, with reasoning attached.
+    </p>
+
+    <h3><span class="secnum">2.2</span>Discovery</h3>
+    <p>
+      Four site-specific crawlers run in Playwright with BeautifulSoup as a fallback for static pages. Job boards are JavaScript-heavy in 2026 and increasingly hostile to scraping; Playwright handles dynamic content reliably at the cost of speed. Each crawler runs once per day and pushes new roles to the scoring queue.
+    </p>
+
+    <h3><span class="secnum">2.3</span>Notion as both database and UI</h3>
+    <p>
+      Scored roles are written to a Notion database with structured properties (title, company, score, dimension breakdowns, link, raw description). Notion provides a stable API and a familiar filterable interface without requiring a custom dashboard. The trade-off is limited customisation; the payoff is that triage happens in a tool the user already lives in.
+    </p>
+
+    <h3><span class="secnum">2.4</span>Outcome feedback</h3>
+    <p>
+      Application outcomes (rejected, screened, interviewed, offered) are recorded against each role and used to recalibrate dimension weights periodically. This is the quietest but most valuable part of the system: the framework that scored well at month one is almost certainly not the framework that scores well at month three.
+    </p>
+
+    <h2><span class="secnum">3</span>Implementation</h2>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Discovery</td><td>Playwright + BeautifulSoup</td><td>JS-heavy boards need a real browser; static pages do not.</td></tr>
+        <tr><td>Scoring</td><td>Claude API</td><td>Reasoning quality at the edge cases; long context per role.</td></tr>
+        <tr><td>Database / UI</td><td>Notion API</td><td>Familiar UI; no custom dashboard required.</td></tr>
+        <tr><td>Schedule</td><td>GitHub Actions</td><td>Free cron, zero server maintenance.</td></tr>
+        <tr><td>Language</td><td>Python</td><td>Mature scraping and API ecosystems.</td></tr>
+      </tbody>
+    </table>
+
+    <h2><span class="secnum">4</span>Results</h2>
+    <ul>
+      <li>4 sources actively crawled, daily.</li>
+      <li>500–1,000 roles scored per day in steady state.</li>
+      <li>Discovery latency: under 5 minutes from a job appearing on a board to it landing in Notion.</li>
+      <li>Cost: roughly $5–10 per day in Claude API charges; GitHub Actions free.</li>
+      <li>Active calibration: weights re-tuned against outcomes monthly.</li>
+    </ul>
+
+    <h2><span class="secnum">5</span>Discussion</h2>
+    <p>
+      The lesson generalises beyond job search: the right way to apply LLMs to a flood of low-signal information is to give the model a clear, hand-written scoring rubric and let it do the boring work consistently. It is not a triumph of model intelligence. It is a triumph of writing the rubric down.
+    </p>
+    <p>
+      Near-term work focuses on the calibration loop: refining dimension weights against actual interview outcomes, tracking application-to-interview conversion as a ground truth, and adding an interview prep module (company research, role-specific checklists, salary research). The architecture would generalise for anyone willing to encode their own goals; productisation is not the aim.
+    </p>
+
+    <h2><span class="secnum">6</span>References</h2>
+    <div class="refs">
+      <ol>
+        <li>Anthropic, "Claude API Reference", accessed 2026.</li>
+        <li>Notion API Documentation, accessed 2026.</li>
+      </ol>
+    </div>
+  </Paper>
+</BaseLayout>

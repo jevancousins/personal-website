@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="NutriPlan · A working paper · J. Cousins"
+  description="NutriPlan: personalised meal planning by vector retrieval over a curated database with LLM optimisation against macro targets. Sub-2s latency; ±10% calorie accuracy; 99.8% backend uptime."
+>
+  <Paper
+    identifier="jcousins/2026.04.002"
+    title="NutriPlan"
+    subtitle="Personalised meal planning by vector retrieval over a curated database, with LLM optimisation against macro targets."
+    abstract="We describe <strong>NutriPlan</strong>, a meal-planning system that combines vector similarity search over a curated meal database (pgvector with text-embedding-3-small, 1536 dimensions) with downstream optimisation by GPT-4o against user-specified calorie and macro targets. A separate, cheaper model (GPT-4o-mini) handles user feedback ingestion. The retrieval-then-optimise architecture is a deliberate alternative to pure LLM generation, which we found tends toward repetition and hallucinated nutritional content. The system meets calorie targets within ±10% and produces a full weekly plan in under two seconds end-to-end. The backend is a deployed FastAPI service on Render with 99.8% uptime; a SwiftUI iOS client is in beta."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2025-08"
+    revised="2026-04"
+    status="Beta"
+    keywords={['retrieval-augmented generation', 'pgvector', 'FastAPI', 'GPT-4o', 'iOS', 'nutrition science']}
+    repo="https://github.com/jevancousins/nutriplan"
+    meta={[
+      { label: 'Version', value: 'v0.9 (beta)' },
+      { label: 'Started', value: '2025' },
+      { label: 'Stack', value: 'FastAPI · GPT-4o · pgvector' },
+      { label: 'Calorie acc.', value: '±10%' },
+      { label: 'Latency', value: '< 2s end-to-end' },
+      { label: 'Uptime', value: '99.8% · Render' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      Meal planning is a constrained optimisation problem dressed as a creative one. Users have explicit constraints (calorie targets, macro splits, allergies, time budget) and implicit constraints (taste, variety, cuisine preferences) that they cannot or will not articulate as rules. Most existing tools are template-based: a fixed catalogue of plans tweaked at the margins. We argue that the right architecture is to separate retrieval (which meals are plausible candidates given preferences and history) from optimisation (which subset of candidates best meets the day's targets), and to keep both surfaces narrow enough to test.
+    </p>
+
+    <h2><span class="secnum">2</span>Method</h2>
+
+    <h3><span class="secnum">2.1</span>Retrieval over generation</h3>
+    <p>
+      Pure GPT-4o generation tended to produce repeated meals across days within a week and was difficult to ground against accurate nutritional data. We instead retrieve approximately 100 candidate meals via pgvector cosine similarity (text-embedding-3-small, 1536 dimensions) over a curated meal database, then ask the LLM to optimise within that candidate set. The retrieval step also gives us a natural diversity knob: we constrain candidate selection by 14-day meal history.
+    </p>
+
+    <h3><span class="secnum">2.2</span>Two-model pipeline</h3>
+    <p>
+      Generation uses GPT-4o for quality. Feedback analysis (parsing free-text user responses into preference signals) uses GPT-4o-mini for cost efficiency. The two are abstracted behind LiteLLM so we can swap models per-task without touching application code. This was a small decision with a large compounding payoff: most of the cost optimisation in the system has come from picking the right model for the right step rather than from any prompt engineering.
+    </p>
+
+    <h3><span class="secnum">2.3</span>Preference embeddings</h3>
+    <p>
+      Rather than capturing preferences as explicit rules ("user dislikes mushrooms"), we update a per-user preference embedding from positive and negative meal feedback. This generalises across cuisines and ingredients in ways an explicit rule set does not. The trade-off is that the system is harder to introspect: "why was this meal suggested" becomes a vector-distance question rather than a rule-trace.
+    </p>
+
+    <h3><span class="secnum">2.4</span>Nutrition engine</h3>
+    <p>
+      Daily energy and macro targets are computed from the Henry/Oxford equations per UK SACN guidelines, supporting user-defined macro splits (e.g., 40% carbohydrate, 30% protein, 30% fat). The optimiser hits calorie targets within ±10% and macro splits with under 5% variance.
+    </p>
+
+    <h2><span class="secnum">3</span>Implementation</h2>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Client</td><td>Swift / SwiftUI · iOS 26</td><td>Native performance, Liquid Glass design system.</td></tr>
+        <tr><td>Backend</td><td>FastAPI · async</td><td>High throughput, automatic OpenAPI, Pydantic validation.</td></tr>
+        <tr><td>DB</td><td>Supabase (Postgres 15)</td><td>Managed Postgres with pgvector, RLS for security.</td></tr>
+        <tr><td>Embeddings</td><td>text-embedding-3-small (1536d)</td><td>Cosine similarity for meal retrieval, low cost-per-call.</td></tr>
+        <tr><td>Generation</td><td>GPT-4o (meals), GPT-4o-mini (feedback)</td><td>Quality where it matters, cost efficiency where it does not.</td></tr>
+        <tr><td>Abstraction</td><td>LiteLLM</td><td>Swap models per-task without code changes.</td></tr>
+        <tr><td>Hosting</td><td>Render</td><td>Simple deploy from GitHub, env vars, free tier sufficient for MVP.</td></tr>
+      </tbody>
+    </table>
+
+    <h2><span class="secnum">4</span>Results</h2>
+    <ul>
+      <li>Calorie accuracy: within ±10% of target.</li>
+      <li>Macro targeting: user-defined ratios with under 5% variance.</li>
+      <li>End-to-end latency: under 2 seconds (retrieval + optimisation).</li>
+      <li>API uptime: 99.8% on Render.</li>
+      <li>Preference coverage: 100+ meals embedded into the user-feedback corpus.</li>
+    </ul>
+
+    <h2><span class="secnum">5</span>Discussion</h2>
+    <p>
+      The architectural call we keep returning to is the retrieval-then-optimise split. It is more code than a single LLM prompt, but it makes every other property of the system testable in isolation: nutrition targeting becomes deterministic, candidate diversity is a measurable quantity, and the LLM step is a small constraint-satisfaction problem rather than an open-ended generation task. We expect this pattern to generalise to other domains where the search space is finite and the optimisation surface is well-defined.
+    </p>
+    <p>
+      Near-term: complete the SwiftUI client and ship a TestFlight beta over summer 2026. Integrate Spoonacular and Edamam for richer recipe coverage. The product roadmap follows a freemium ladder: free calorie tracker, premium meal planning, pro for advanced personalisation and household coordination.
+    </p>
+
+    <h2><span class="secnum">6</span>References</h2>
+    <div class="refs">
+      <ol>
+        <li>SACN, "Dietary Reference Values for Energy", UK Scientific Advisory Committee on Nutrition.</li>
+        <li>Henry, C.J.K. (2005), "Basal metabolic rate studies in humans: measurement and development of new equations", Public Health Nutrition.</li>
+        <li>Lewis, P. et al. (2020), "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", arXiv:2005.11401.</li>
+      </ol>
+    </div>
+  </Paper>
+</BaseLayout>

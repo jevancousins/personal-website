@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PaperCard from '../../components/PaperCard.astro';
+
+const papers = [
+  {
+    identifier: 'jcousins/2026.04.001',
+    title: 'Lineup',
+    abstract: 'A production data platform for live-music discovery. 1M+ events ingested daily from six APIs; entity resolution via a persistent cross-source identifier registry; SwiftUI iOS client. Twelve months of production operation; zero data loss.',
+    href: '/papers/lineup',
+    status: 'In production',
+    keywords: ['Data engineering', 'Airflow', 'BigQuery', 'iOS'],
+    pageRef: '12',
+  },
+  {
+    identifier: 'jcousins/2026.04.002',
+    title: 'NutriPlan',
+    abstract: 'Personalised meal planning by vector retrieval over a curated database with subsequent LLM optimisation against macro targets. Calorie accuracy ±10%; sub-2s generation; 99.8% backend uptime.',
+    href: '/papers/nutriplan',
+    status: 'Beta',
+    keywords: ['RAG', 'pgvector', 'FastAPI', 'GPT-4o'],
+    pageRef: '24',
+  },
+  {
+    identifier: 'jcousins/2026.04.003',
+    title: 'JobHunter',
+    abstract: 'Encoding personal career goals as an automated job-discovery and scoring system. Six-dimension framework evaluated by Claude API; daily crawls across four sources; Notion as triage UI.',
+    href: '/papers/jobhunter',
+    status: 'In daily use',
+    keywords: ['Claude API', 'Playwright', 'Notion', 'Personal automation'],
+    pageRef: '36',
+  },
+  {
+    identifier: 'jcousins/2026.04.004',
+    title: 'Earnings-call Q&A alignment as an equity signal',
+    abstract: 'A research replication of Chiang et al. (2025): contrastive PyTorch classifier over FinBERT embeddings of earnings-call Q&A pairs, evaluated against forward equity returns. Architecture and dashboard complete; labelled training set is the critical-path blocker.',
+    href: '/papers/earnings-call-analyser',
+    status: 'Working paper',
+    keywords: ['NLP', 'FinBERT', 'PyTorch', 'Equity research'],
+    pageRef: '46',
+  },
+  {
+    identifier: 'jcousins/2026.04.005',
+    title: 'A personal AI layer',
+    abstract: 'OpenClaw (a self-hosted local agent surfacing through Telegram) and a Claude Cowork-backed assistant: two tools sharing one job description, deliberately not unified for cost / latency / reasoning reasons.',
+    href: '/papers/personal-ai-layer',
+    status: 'Active',
+    keywords: ['Agentic AI', 'MCP', 'Cowork', 'Personal automation'],
+    pageRef: '58',
+  },
+  {
+    identifier: 'jcousins/2026.04.006',
+    title: 'An adaptive learning system',
+    abstract: 'A self-directed curriculum across seven technical subjects, with spaced testing and Claude-mediated curriculum updates. Treats the syllabus itself as state an LLM can read, write, and reason about.',
+    href: '/papers/personalised-learning-system',
+    status: 'Active',
+    keywords: ['Adaptive learning', 'Spaced repetition', 'Claude', 'Pedagogy'],
+    pageRef: '68',
+  },
+  {
+    identifier: 'jcousins/2026.04.007',
+    title: 'SMB AI discovery',
+    abstract: 'A structured discovery method for identifying real agentic-AI use cases inside small and mid-sized businesses, adapted from enterprise discovery work in a €176B European asset manager.',
+    href: '/papers/smb-ai-discovery',
+    status: 'Engagement',
+    keywords: ['Agentic AI', 'Discovery', 'SMB', 'Change management'],
+    pageRef: '76',
+  },
+];
+---
+
+<BaseLayout
+  title="Papers · A working journal · J. Cousins"
+  description="Working systems and research projects, written up in preprint format. Lineup, NutriPlan, JobHunter, Earnings-call analyser, Personal AI layer, Adaptive learning, SMB AI discovery."
+>
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
+
+    <!-- top band -->
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>Papers · table of contents</span>
+      <span class="text-ink-muted hidden md:inline mono normal-case tracking-[0.04em]">vol. 04 · {new Date().toISOString().slice(0, 7)}</span>
+      <span class="text-ink-muted">7 entries</span>
+    </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-14">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-prussian mb-5">Index</p>
+        <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.8rem,7vw,5rem)]">
+          Papers
+        </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          Working systems and research, written up as preprints. The decisions and trade-offs, not the highlight reel.
+        </p>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+        <p class="label mb-3">Aims & scope</p>
+        <p class="sans text-[0.82rem] text-ink-muted leading-[1.55]">
+          Each paper documents a working artefact in the author's own portfolio. Preprints are revised in place; substantial changes are recorded. Submissions and corrections welcome via correspondence.
+        </p>
+      </aside>
+    </header>
+
+    <!-- Index legend -->
+    <div class="hidden md:grid grid-cols-12 gap-4 mb-2 sans text-[0.6rem] uppercase tracking-[0.18em] text-ink-faint border-b border-rule pb-2">
+      <div class="col-span-9">Identifier · Title · Abstract</div>
+      <div class="col-span-3 text-right">Status</div>
+    </div>
+
+    <section>
+      {papers.map((p) => (
+        <PaperCard
+          identifier={p.identifier}
+          title={p.title}
+          abstract={p.abstract}
+          href={p.href}
+          status={p.status}
+          keywords={p.keywords}
+          pageRef={p.pageRef}
+        />
+      ))}
+      <div class="border-t border-ink"></div>
+    </section>
+
+    <!-- Past work pointer -->
+    <div class="mt-16 grid grid-cols-12 gap-6 border-t border-ink pt-10">
+      <div class="col-span-12 md:col-span-7">
+        <p class="label-prussian mb-3">See also</p>
+        <p class="font-display text-2xl md:text-[1.7rem] text-ink leading-tight mb-3">
+          Past work and selected coursework, archived separately.
+        </p>
+        <p class="text-ink-muted leading-relaxed max-w-xl">
+          The UCL Physics dissertation, the DataCamp Data Science certification project, and other archived material live on the past-work page.
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-4 md:col-start-9 md:text-right self-end">
+        <a href="/past-work" class="sans text-[0.74rem] uppercase tracking-[0.16em] font-medium border border-ink px-5 py-3 inline-block hover:bg-ink hover:text-paper transition-colors">
+          To past work →
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

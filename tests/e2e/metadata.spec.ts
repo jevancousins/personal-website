@@ -3,13 +3,18 @@ import { test, expect } from "./fixtures";
 const PAGES = [
   "/",
   "/about",
-  "/now",
-  "/writing",
-  "/projects",
-  "/projects/earnings-call-analyser",
-  "/projects/jobhunter",
-  "/projects/lineup",
-  "/projects/nutriplan",
+  "/journal",
+  "/notes",
+  "/reading",
+  "/papers",
+  "/past-work",
+  "/papers/lineup",
+  "/papers/nutriplan",
+  "/papers/jobhunter",
+  "/papers/earnings-call-analyser",
+  "/papers/personal-ai-layer",
+  "/papers/personalised-learning-system",
+  "/papers/smb-ai-discovery",
 ];
 
 for (const path of PAGES) {

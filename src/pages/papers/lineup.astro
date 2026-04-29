@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="Lineup · A working paper · J. Cousins"
+  description="Lineup: a production data platform ingesting 1M+ events daily from six APIs into a single source of truth, paired with a SwiftUI iOS app. Twelve months of production operation; zero data loss."
+>
+  <Paper
+    identifier="jcousins/2026.04.001"
+    title="Lineup"
+    subtitle="A production data platform for live-music discovery, with a SwiftUI client."
+    abstract="Live-music discovery is a data integration problem masquerading as a consumer one: events are scattered across at least six largely-incompatible APIs, with inconsistent identifiers, partial overlap, and no canonical source of truth. <strong>Lineup</strong> presents an attempt to solve the problem from the data side first. We describe a production pipeline orchestrated in Apache Airflow that ingests 1M+ events and 300K+ artists daily from Ticketmaster, Skiddle, Resident Advisor, Concert Archives, Spotify, and MusicBrainz; resolves entities through a three-stage matcher backed by a persistent cross-source identifier registry; and lands data into Supabase (operational) and BigQuery (analytic) via a write-through pattern. A SwiftUI iOS client consumes the operational store. The system has run in production for twelve months with zero data losses."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2024-11"
+    revised="2026-04"
+    status="In production"
+    keywords={['data engineering', 'Airflow', 'BigQuery', 'dbt', 'entity resolution', 'iOS', 'SwiftUI']}
+    repo="https://github.com/jevancousins/lineup-data-platform"
+    meta={[
+      { label: 'Version', value: 'v1.4' },
+      { label: 'Started', value: '2024' },
+      { label: 'Stack', value: 'Airflow · dbt · BQ · SwiftUI' },
+      { label: 'Sources', value: '6 APIs' },
+      { label: 'Volume', value: '1M+ events / 300K+ artists' },
+      { label: 'Tests', value: '122 unit · 122 dbt' },
+      { label: 'Uptime', value: '12 months · zero data loss' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      Concert discovery is fragmented in a way that is faintly absurd given how mature both the live-music industry and the modern data stack are. There is no single platform that aggregates events across the full breadth of the calendar, and the existing aggregators are either commercial fronts for one supplier (Ticketmaster) or surface-level scrapers without any commitment to entity quality. Lineup approaches the problem as a data-engineering problem first and a product problem second: solve the consolidation, dedup, and identity issues at the platform layer, then expose a small, opinionated client that does one thing well.
+    </p>
+    <p>
+      This paper documents the system as it stood after twelve months of production operation. We focus on the technical decisions and the specific trade-offs that shaped them rather than the product surface, which is documented separately in the iOS App Store listing.
+    </p>
+
+    <h2><span class="secnum">2</span>Method</h2>
+
+    <h3><span class="secnum">2.1</span>Orchestration</h3>
+    <p>
+      All ingestion runs in Apache Airflow 2.10 with a CeleryExecutor and Redis as the broker. We considered a Lambda-based serverless approach early on, but Airflow's first-class observability (DAG visualisation, retries, alerting, task-level logs) outweighed the operational overhead of running our own scheduler. Ten production DAGs orchestrate the daily syncs from the six API sources, each with source-specific selectors, three retries with exponential backoff, and Slack and email alerting on failure.
+    </p>
+
+    <h3><span class="secnum">2.2</span>Entity resolution</h3>
+    <p>
+      Multi-source deduplication is the central technical problem. We resolve entities in three stages, in order of decreasing precision:
+    </p>
+    <ol>
+      <li>Direct mapping from a source identifier to its MusicBrainz identifier where one exists.</li>
+      <li>Fuzzy matching on normalised name plus location for everything else, with strict similarity thresholds tuned per entity type.</li>
+      <li>An <code>ExternalIdManager</code> class maintaining persistent cross-source mappings in dedicated tables, so any pair of identifiers we have ever resolved together stays resolved.</li>
+    </ol>
+    <p class="no-indent">
+      The trade-off is complexity: the matcher carries non-trivial state and the failure modes (false positives at stage two) are the kind that erode user trust silently. The payoff is data quality that the aggregators do not match.
+    </p>
+
+    <h3><span class="secnum">2.3</span>Storage</h3>
+    <p>
+      We use a write-through pattern: every successful ingestion writes simultaneously to Supabase (PostgreSQL, the operational store backing the iOS client) and GCS Parquet files (the analytic input feeding BigQuery via dbt). The two systems remain independent: an operational outage does not block the analytic pipeline, and an analytic refactor cannot accidentally mutate production data. The cost is a small write-time latency penalty, which is acceptable given that ingestion is asynchronous from the user's perspective.
+    </p>
+    <p>
+      BigQuery was chosen over a traditional data lake for cost efficiency at our query volumes and for the SQL ergonomics. The dbt project is layered: staging → intermediate → marts, with data-quality tests at every layer.
+    </p>
+
+    <h3><span class="secnum">2.4</span>Caching</h3>
+    <p>
+      An earlier version of the pipeline used a 57MB JSON file as a process-local cache. This was the kind of decision that survives until it doesn't: it was fine for a single worker, problematic for parallel Celery workers, and openly hostile to deployment hygiene. We replaced it with Redis 7.x as a distributed cache, which gives proper eviction semantics and substantially reduces worker memory footprint and warm-start times.
+    </p>
+
+    <h2><span class="secnum">3</span>Implementation</h2>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Orchestration</td><td>Apache Airflow 2.10</td><td>Observable DAGs, mature retry / alerting.</td></tr>
+        <tr><td>Operational DB</td><td>Supabase (Postgres)</td><td>Row-level security, real-time, low ops overhead.</td></tr>
+        <tr><td>Analytic warehouse</td><td>BigQuery</td><td>Serverless, cost-efficient, native dbt integration.</td></tr>
+        <tr><td>Transformations</td><td>dbt</td><td>Version-controlled, testable SQL, layered architecture.</td></tr>
+        <tr><td>Cache</td><td>Redis 7.x</td><td>Distributed, proper eviction, replaces a process-local JSON.</td></tr>
+        <tr><td>Client</td><td>Swift / SwiftUI · iOS 26</td><td>Native performance, Apple ecosystem.</td></tr>
+        <tr><td>Infra</td><td>Docker Compose · GitHub Actions</td><td>Local reproducibility, CI on every commit.</td></tr>
+      </tbody>
+    </table>
+
+    <h2><span class="secnum">4</span>Results</h2>
+    <ul>
+      <li>1M+ events resolved across all sources.</li>
+      <li>300K+ unique artists in the canonical entity table.</li>
+      <li>6 active API integrations, each with its own DAG.</li>
+      <li>122 Python unit tests covering pipeline logic.</li>
+      <li>122 dbt data-quality tests in the warehouse layer.</li>
+      <li>Zero production data losses across twelve months of operation.</li>
+    </ul>
+
+    <h2><span class="secnum">5</span>Discussion</h2>
+    <p>
+      The single best decision was treating entity resolution as a first-class subsystem with its own persistent state, rather than a per-run heuristic. The cross-source identifier registry compounds: every resolution we do today makes tomorrow's resolutions cheaper and more accurate. The single worst decision was the JSON cache; it took longer to retire than it should have, because it kept appearing to work.
+    </p>
+    <p>
+      Near-term work splits into two strands. On the platform side: incremental loads to cut BigQuery costs, and a Looker Studio dashboard for pipeline-health observability. On the analytics side: attribution modelling for venue-popularity trends and artist-discovery patterns, which we expect to be useful both to users (recommendations) and to the catalogue (signal for which sources to prioritise). Integration roadmap: Live Nation API for major-promoter coverage, then regional promoters.
+    </p>
+
+    <h2><span class="secnum">6</span>References</h2>
+    <div class="refs">
+      <ol>
+        <li>Airflow documentation, Apache Software Foundation, accessed 2026.</li>
+        <li>MusicBrainz database schema and identifier model, MetaBrainz Foundation.</li>
+        <li>dbt project structure, dbt Labs, "How we structure our dbt projects".</li>
+      </ol>
+    </div>
+  </Paper>
+</BaseLayout>

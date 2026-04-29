@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entries = [
+  {
+    date: '2026-04-29',
+    head: 'Reread Chiang et al. and re-scoped the labelling task',
+    body: 'Spent the morning rereading the Chiang paper end-to-end. The labelling task is smaller than I had been treating it: 100 high-confidence pairs is enough to test the architecture; the full 200 is for calibration. Splitting the work into two batches; first batch starts this week.',
+    tags: ['Earnings Call Analyser'],
+  },
+  {
+    date: '2026-04-28',
+    head: 'OpenClaw briefing rewritten to surface the avoidance log',
+    body: 'The morning briefing was telling me what I planned to do, but not what I was avoiding. Added a section that pulls the Avoidance Log from the Tasks DB and ranks by days-avoided. Day one feedback: blunt, useful, mildly annoying. Keeping it.',
+    tags: ['Personal AI layer', 'OpenClaw'],
+  },
+  {
+    date: '2026-04-26',
+    head: 'Personal website redesigned (Vol. 04)',
+    body: 'Old draft was a generic dark-mode template; this is the first version that feels like it actually says something. Switched to a working-journal frame, broadened the project set, added Notes / Reading / Curriculum surfaces.',
+    tags: ['Personal Website'],
+  },
+  {
+    date: '2026-04-22',
+    head: 'Lineup pipeline refactored into an installable package',
+    body: 'The pipeline finally lives as a proper Python package (src/lineup_pipeline/) with explicit entry points. Two latent bugs surfaced and were fixed in the process; both were the kind that only show up when imports run in a different order.',
+    tags: ['Lineup'],
+  },
+  {
+    date: '2026-04-15',
+    head: 'OpenClaw 2026.4.15 cut',
+    body: 'Cut as a release. Telegram bot answering correctly; LaunchAgent autostart confirmed across reboots. The gog skill (Google services) is the one that needed the most ironing; everything else was straightforward.',
+    tags: ['Personal AI layer', 'OpenClaw'],
+  },
+  {
+    date: '2026-04-08',
+    head: 'NutriPlan: preference embeddings updated for the second time',
+    body: 'Second pass at the preference-update step. Cleaner gradient on what the system thinks I will or will not like. Moved the update from per-meal-feedback to per-day-batch; cheaper, less noisy.',
+    tags: ['NutriPlan'],
+  },
+  {
+    date: '2026-03-30',
+    head: 'Started SMB AI Discovery as a structured offer',
+    body: 'First serious attempt at packaging the discovery method I ran inside AGI for SMB engagements. Three-axis scoring rubric drafted; first conversations next week.',
+    tags: ['SMB AI Discovery'],
+  },
+];
+
+function fmtDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+---
+
+<BaseLayout
+  title="Lab journal · A working journal · J. Cousins"
+  description="A reverse-chronological log of recent work, decisions, and observations across the active projects."
+>
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
+
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>Lab journal</span>
+      <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">jcousins/journal</span>
+      <span class="text-ink-muted">Reverse chronological</span>
+    </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-14">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-prussian mb-5">Working log</p>
+        <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.8rem,7vw,5rem)]">
+          Lab journal
+        </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          What I have actually been doing, in the order I did it. Less polished than the papers; that is the point.
+        </p>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+        <p class="label mb-3">About this log</p>
+        <p class="sans text-[0.82rem] text-ink-muted leading-[1.55]">
+          Inspired by <a href="https://nownownow.com/about" class="ink-link text-ink" target="_blank" rel="noopener noreferrer">Derek Sivers' Now page</a> and the lab-notebook habit. Updated when something happens worth writing down.
+        </p>
+      </aside>
+    </header>
+
+    <ol class="border-t border-ink">
+      {entries.map((e, i) => (
+        <li class="grid grid-cols-12 gap-4 md:gap-6 py-7 border-b border-rule">
+          <div class="col-span-12 md:col-span-2">
+            <p class="mono text-[0.78rem] text-prussian font-medium tabular">
+              {fmtDate(e.date)}
+            </p>
+            <p class="sans text-[0.62rem] uppercase tracking-[0.16em] text-ink-faint mt-1">
+              Entry № {String(entries.length - i).padStart(3, '0')}
+            </p>
+          </div>
+          <div class="col-span-12 md:col-span-7">
+            <h3 class="font-display text-[1.4rem] md:text-[1.55rem] text-ink leading-tight mb-2">
+              {e.head}
+            </h3>
+            <p class="text-ink leading-relaxed text-[0.98rem] max-w-3xl">
+              {e.body}
+            </p>
+          </div>
+          <div class="col-span-12 md:col-span-3 md:text-right self-start">
+            <div class="flex md:justify-end flex-wrap gap-2">
+              {e.tags.map((t) => (
+                <span class="sans text-[0.62rem] uppercase tracking-[0.14em] text-ink-muted border border-rule px-2 py-0.5">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-faint mt-8">
+      End of log · {entries.length} most-recent entries · Older entries available on request.
+    </p>
+  </article>
+</BaseLayout>

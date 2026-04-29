@@ -1,147 +1,156 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 
 const today = new Date();
 const todayFmt = today.toISOString().slice(0, 10);
+const monthFmt = today.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 
-const projects = [
+const featured = [
   {
-    index: '№ 01',
+    identifier: 'jcousins/2026.04.001',
     title: 'Lineup',
-    description: 'Concert discovery iOS app on a production data platform. 1M+ events and 300K+ artists ingested daily from six APIs via Airflow; BigQuery + dbt; 122 unit tests; zero data losses in twelve months.',
-    href: '/projects/lineup',
-    tags: ['iOS', 'Airflow', 'BigQuery', 'dbt'],
-    status: 'Production · 2024–',
-    meta: 'Read the dossier',
+    abstract: 'A production data platform for live-music discovery. 1M+ events ingested daily from six APIs; entity resolution via a persistent cross-source identifier registry; SwiftUI iOS client. Twelve months of production operation; zero data loss.',
+    href: '/papers/lineup',
+    status: 'In production',
+    keywords: ['Data engineering', 'Airflow', 'BigQuery', 'iOS'],
   },
   {
-    index: '№ 02',
+    identifier: 'jcousins/2026.04.002',
     title: 'NutriPlan',
-    description: 'AI meal planner. FastAPI + GPT-4o with pgvector RAG; calorie accuracy within ±10%; generation under two seconds end-to-end. SwiftUI frontend in beta.',
-    href: '/projects/nutriplan',
-    tags: ['iOS', 'FastAPI', 'RAG', 'pgvector'],
-    status: 'Beta · 2025–',
-    meta: 'Read the dossier',
+    abstract: 'Personalised meal planning by vector retrieval over a curated database with subsequent LLM optimisation against macro targets. Sub-2s end-to-end; 99.8% backend uptime; calorie accuracy ±10%.',
+    href: '/papers/nutriplan',
+    status: 'Beta',
+    keywords: ['RAG', 'pgvector', 'FastAPI', 'GPT-4o'],
   },
   {
-    index: '№ 03',
-    title: 'JobHunter',
-    description: 'My own job search automation. Claude API scores 500–1,000 jobs a day against a six-dimension career framework. Playwright crawlers, GitHub Actions cron, Notion as the UI.',
-    href: '/projects/jobhunter',
-    tags: ['Python', 'Claude API', 'Playwright', 'Notion'],
-    status: 'In daily use · 2026',
-    meta: 'Read the dossier',
+    identifier: 'jcousins/2026.04.005',
+    title: 'A personal AI layer',
+    abstract: 'OpenClaw and a Cowork-backed assistant: two tools sharing one job description, deliberately not unified for cost and reasoning reasons. Active and in daily use.',
+    href: '/papers/personal-ai-layer',
+    status: 'Active',
+    keywords: ['Agentic AI', 'MCP', 'Cowork'],
   },
   {
-    index: '№ 04',
-    title: 'Earnings Call Analyser',
-    description: 'PyTorch + FinBERT pipeline testing Chiang et al. 2025 on earnings call Q&A alignment as an equity signal. Contrastive classifier, backtesting framework, Kubernetes deployment.',
-    href: '/projects/earnings-call-analyser',
-    tags: ['PyTorch', 'FinBERT', 'NLP', 'Research'],
-    status: 'Proof of concept · Q1 2026',
-    meta: 'Read the dossier',
+    identifier: 'jcousins/2026.04.006',
+    title: 'An adaptive learning system',
+    abstract: 'A self-directed curriculum across seven technical subjects, with spaced testing and Claude-mediated curriculum updates. Treats the syllabus as state an LLM can reason over.',
+    href: '/papers/personalised-learning-system',
+    status: 'Active',
+    keywords: ['Adaptive learning', 'Pedagogy', 'Claude'],
   },
 ];
 
 const stats = [
-  { num: '€176B', label: 'Fixed Income AUM\nplatform supported' },
-  { num: '1M+', label: 'Events ingested\nfor Lineup, daily' },
-  { num: '500–1K', label: 'Roles scored daily\nby JobHunter' },
-  { num: '7yrs', label: 'BarraOne rollout\nfailed twice; shipped 3rd time' },
+  { num: '€176B', label: 'Fixed Income AUM platform supported at AGI' },
+  { num: '7', label: 'Working papers in this issue' },
+  { num: '1M+', label: 'Live-music events ingested daily for Lineup' },
+  { num: '12 mo.', label: 'Production uptime, zero data loss' },
 ];
 
-const principles = [
-  { n: '01', t: 'Ship the system, not the slide.', b: 'A working pipeline beats a polished proposal. Architecture earns its keep when somebody depends on it on a Monday morning.' },
-  { n: '02', t: 'Read the paper. Then build it.', b: 'Most edge in applied AI is implementation craft on top of public research. Closing that gap is the work.' },
-  { n: '03', t: 'Eat the dog food.', b: 'JobHunter scores my own job search. Lineup ingests gigs I want to attend. Build for yourself first; users second.' },
+const journalRecent = [
+  { date: '29 Apr', body: 'Reread Chiang et al. and re-scoped the labelling task for the earnings-call analyser.' },
+  { date: '28 Apr', body: 'OpenClaw briefing rewritten to surface the avoidance log from the Tasks DB.' },
+  { date: '26 Apr', body: 'Personal website redesigned; Vol. 04 cut.' },
 ];
+
+const subjects = ['Agentic AI', 'AI Use Cases', 'CS Fundamentals', 'Data Engineering', 'Production ML & MLOps', 'Quantitative Finance', 'System Design'];
 ---
 
 <BaseLayout
-  title="Jevan Cousins — Applied AI engineer, builder of Lineup and NutriPlan"
-  description="Jevan Cousins. Applied AI engineer. Architected enterprise agentic AI at Allianz GI on a €176B platform. Now building Lineup and NutriPlan. London, targeting Paris."
+  title="Jevan Cousins · Applied engineer · A working journal"
+  description="Jevan Cousins. Applied engineer. Going deep on a domain, building the technology that turns understanding into impact. London-based; building independently across applied AI, data, and finance."
 >
-  <!-- ===== HERO ===== -->
-  <section class="border-b border-ink">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
 
-      <!-- top metadata band -->
-      <div class="grid grid-cols-12 gap-6 py-4 mono text-[0.68rem] uppercase tracking-widest text-ink-muted border-b border-rule">
+  <!-- ===== JOURNAL MASTHEAD ===== -->
+  <section class="border-b border-ink">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9">
+
+      <!-- COVER RULE / TOP META -->
+      <div class="cover-rule pt-2"></div>
+      <div class="grid grid-cols-12 gap-4 py-3 sans text-[0.66rem] uppercase tracking-[0.18em] text-ink">
         <div class="col-span-6 md:col-span-3 reveal d-1">
-          <span class="text-ink">Filed</span> · {todayFmt}
+          <span class="text-ink-muted">Vol.</span>&nbsp; 04
+          <span class="text-ink-muted ml-3">No.</span>&nbsp; 01
         </div>
-        <div class="col-span-6 md:col-span-3 reveal d-1">
-          <span class="text-ink">Located</span> · 51.5074°N / 0.1278°W
+        <div class="col-span-6 md:col-span-3 reveal d-1 md:text-center">
+          <span class="text-ink-muted">Issued</span>&nbsp; {monthFmt}
         </div>
-        <div class="hidden md:block col-span-3 reveal d-2">
-          <span class="text-ink">Status</span> · Open to roles
+        <div class="col-span-6 md:col-span-3 reveal d-2 md:text-center">
+          <span class="text-ink-muted">Filed from</span>&nbsp; London
         </div>
-        <div class="hidden md:block col-span-3 text-right reveal d-2">
-          Ed. 04 / Spring 2026
+        <div class="col-span-6 md:col-span-3 reveal d-2 md:text-right mono normal-case tracking-[0.04em] text-ink-muted">
+          jcousins/{todayFmt}
         </div>
       </div>
+      <hr class="rule" />
 
-      <!-- name + tagline -->
-      <div class="grid grid-cols-12 gap-6 pt-12 md:pt-20 pb-12">
+      <!-- HERO -->
+      <div class="grid grid-cols-12 gap-6 pt-12 md:pt-20 pb-10">
         <div class="col-span-12 md:col-span-9">
-          <p class="label-oxide mb-6 reveal d-1">A dossier ·  J.&nbsp;C.</p>
-          <h1 class="font-display leading-[0.92] tracking-tight text-ink reveal d-2">
-            Jevan<br/>
-            <span class="italic text-oxide">Cousins.</span>
+          <p class="label-prussian mb-7 reveal d-1">A working journal of applied engineering</p>
+          <h1 class="font-display leading-[0.94] tracking-tight text-ink reveal d-2 text-[clamp(3.4rem,11vw,8rem)]">
+            Jevan Cousins
           </h1>
+          <p class="font-display text-prussian italic mt-5 reveal d-3 text-[clamp(1.6rem,3.4vw,2.4rem)] leading-[1.1]">
+            Applied engineer.
+          </p>
         </div>
         <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule self-end reveal d-3">
-          <p class="font-display italic text-xl md:text-2xl leading-snug text-ink mb-4">
-            Applied&nbsp;AI engineer.
+          <p class="font-display text-[1.45rem] md:text-[1.6rem] leading-[1.2] text-ink mb-3">
+            Going deep on a domain. Building the technology that turns the understanding into impact.
           </p>
-          <p class="mono text-[0.72rem] uppercase tracking-widest text-ink-muted leading-relaxed">
-            Full-stack shipping.<br/>
-            Founder-curious.<br/>
-            Quant-adjacent.
+          <p class="sans text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted leading-relaxed">
+            Trained as a physicist. Sharpened in markets. Independent.
           </p>
         </aside>
       </div>
 
       <hr class="rule" />
 
-      <!-- bio block -->
-      <div class="grid grid-cols-12 gap-6 py-12">
+      <!-- ABSTRACT -->
+      <div class="grid grid-cols-12 gap-6 py-12 md:py-14">
         <div class="col-span-12 md:col-span-3 md:order-1 order-2 reveal d-3">
-          <p class="label mb-3">Précis</p>
-          <p class="mono text-[0.72rem] leading-relaxed text-ink-muted">
-            Four years architecting AI systems and data pipelines inside a €176B Fixed Income platform. Left 28 February 2026 to ship products and find the next problem worth chasing.
+          <p class="label mb-3">Author</p>
+          <p class="sans text-[0.84rem] text-ink leading-relaxed mb-4">
+            J. Cousins<br />
+            <span class="text-ink-muted">Independent · London, UK</span>
+          </p>
+          <p class="label mb-3">Keywords</p>
+          <p class="sans text-[0.74rem] text-ink-muted leading-relaxed">
+            applied AI · data engineering · forward-deployed systems · cross-domain product · independent research · adaptive learning
           </p>
         </div>
 
         <div class="col-span-12 md:col-span-9 md:order-2 order-1 reveal d-4">
-          <p class="font-display text-2xl md:text-[1.85rem] leading-[1.25] text-ink">
-            I architected the <a href="/about" class="ink-link">first enterprise agentic AI system</a> at Allianz Global Investors, delivered an <span class="marker">MSCI BarraOne</span> rollout that had failed twice over seven years, and directed AI adoption across a €176B Fixed Income platform.
-          </p>
-          <p class="font-display text-2xl md:text-[1.85rem] leading-[1.25] text-ink-muted mt-5">
-            Now building <a href="/projects/lineup" class="ink-link text-ink">Lineup</a>, <a href="/projects/nutriplan" class="ink-link text-ink">NutriPlan</a>, <a href="/projects/jobhunter" class="ink-link text-ink">JobHunter</a>, and an <a href="/projects/earnings-call-analyser" class="ink-link text-ink">earnings-call equity signal</a>. Based in London, targeting Paris.
+          <div class="abstract">
+            <span class="abstract-label">Abstract.</span>
+            <span>
+              This is the personal journal of an applied engineer. The author was trained as a physicist (UCL); spent four years architecting AI systems and data pipelines inside a €176B European asset manager (Allianz Global Investors); and is now building independently across live music, nutrition, career systems, personal AI, equity research, and SMB AI discovery. The thesis running through the work is that real-world impact comes from going deep on a domain, understanding the problem on its own terms, and shipping the technology that encodes the understanding. Each paper in this issue documents an active artefact in that programme.
+            </span>
+          </div>
+          <p class="sans text-[0.78rem] text-ink-muted mt-6 pl-5 max-w-2xl">
+            <span class="text-prussian font-semibold uppercase tracking-[0.14em] text-[0.66rem] mr-2">Aims</span>
+            To document the work openly, make the decisions and trade-offs visible, and invite correspondence with anyone working on adjacent problems.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== STATISTICS SLAB ===== -->
-  <section class="border-b border-ink bg-paper-shade">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-10">
-      <div class="flex items-baseline justify-between mb-6">
-        <p class="label-oxide">Vital statistics</p>
-        <p class="mono text-[0.68rem] uppercase tracking-widest text-ink-faint hidden md:inline">
-          As of {todayFmt} · figures verified
+  <!-- ===== STATS / FRONT MATTER ===== -->
+  <section class="border-b border-ink bg-paper-tint">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9 py-8">
+      <div class="flex items-baseline justify-between mb-5">
+        <p class="label-prussian">In figures</p>
+        <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-ink-faint hidden md:inline">
+          Selected statistics, current as of {todayFmt}
         </p>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4">
         {stats.map((s, i) => (
-          <div class={`p-5 md:p-7 ${i < 3 ? 'border-r border-rule-strong' : ''} ${i < 2 ? 'border-b border-rule-strong md:border-b-0' : ''}`}>
-            <p class="font-display text-5xl md:text-6xl leading-none text-ink tabular">
-              {s.num}
-            </p>
-            <p class="mono text-[0.66rem] uppercase tracking-widest text-ink-muted mt-3 whitespace-pre-line">
+          <div class={`p-4 md:p-6 ${i < 3 ? 'border-r border-rule-strong' : ''} ${i < 2 ? 'border-b border-rule-strong md:border-b-0' : ''}`}>
+            <p class="stat-fig">{s.num}</p>
+            <p class="sans text-[0.66rem] uppercase tracking-[0.14em] text-ink-muted mt-3 leading-snug">
               {s.label}
             </p>
           </div>
@@ -150,159 +159,162 @@ const principles = [
     </div>
   </section>
 
-  <!-- ===== FIELD NOTES ===== -->
+  <!-- ===== IN THIS ISSUE ===== -->
   <section class="border-b border-ink">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9 py-16 md:py-20">
       <div class="grid grid-cols-12 gap-6 mb-10">
         <div class="col-span-12 md:col-span-4">
-          <p class="label-oxide mb-4">Folio · I</p>
-          <h2 class="font-display text-ink leading-none">Field notes</h2>
+          <p class="label-prussian mb-4">Folio · I</p>
+          <h2 class="font-display text-ink leading-none">In this issue</h2>
         </div>
         <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
           <p class="text-ink-muted leading-relaxed max-w-xl">
-            Four projects in active rotation. Each entry is a working system; each dossier is the decisions and trade-offs, not the highlight reel. Pulled apart and labelled.
+            Selected papers from the current volume. The full table of contents lives on the <a href="/papers" class="ink-link text-ink">Papers</a> page; seven entries in total.
           </p>
         </div>
       </div>
 
-      <div>
-        {projects.map((p) => (
-          <ProjectCard
-            title={p.title}
-            description={p.description}
-            href={p.href}
-            tags={p.tags}
-            status={p.status}
-            index={p.index}
-            meta={p.meta}
-          />
+      <ol class="border-t border-ink">
+        {featured.map((p) => (
+          <li class="border-b border-rule py-6 md:py-7">
+            <a href={p.href} class="group block hover:bg-paper-tint -mx-3 px-3 py-2 transition-colors">
+              <div class="grid grid-cols-12 gap-4 md:gap-6 items-baseline mb-2">
+                <div class="col-span-12 md:col-span-9 flex items-baseline gap-3 flex-wrap">
+                  <span class="mono text-[0.7rem] text-ink-muted tracking-[0.04em]">
+                    {p.identifier}
+                  </span>
+                  <h3 class="font-display text-[1.45rem] md:text-[1.7rem] text-ink leading-tight group-hover:text-prussian transition-colors">
+                    {p.title}
+                  </h3>
+                </div>
+                <div class="col-span-12 md:col-span-3 md:text-right">
+                  <span class="pill pill-prussian">{p.status}</span>
+                </div>
+              </div>
+              <p class="text-ink leading-snug max-w-3xl text-[0.95rem] mb-2">
+                {p.abstract}
+              </p>
+              <div class="flex flex-wrap gap-x-3 gap-y-1 sans text-[0.62rem] uppercase tracking-[0.12em] text-ink-muted">
+                {p.keywords.map((kw, i) => <span>{kw}{i < p.keywords.length - 1 ? ' ·' : ''}</span>)}
+              </div>
+            </a>
+          </li>
         ))}
-        <div class="border-t border-ink pt-4">
-          <a href="/projects" class="mono text-[0.72rem] uppercase tracking-widest text-ink hover:text-oxide transition-colors">
-            All field notes →
+        <li class="pt-5">
+          <a href="/papers" class="sans text-[0.74rem] uppercase tracking-[0.16em] text-ink hover:text-prussian transition-colors font-medium">
+            Full table of contents · 7 entries →
           </a>
-        </div>
-      </div>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <!-- ===== PRINCIPLES ===== -->
-  <section class="border-b border-ink bg-paper-shade">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20">
-      <div class="grid grid-cols-12 gap-6 mb-10">
-        <div class="col-span-12 md:col-span-4">
-          <p class="label-oxide mb-4">Folio · II</p>
-          <h2 class="font-display text-ink leading-none">House rules</h2>
-        </div>
-        <div class="col-span-12 md:col-span-7 md:col-start-6 self-end">
-          <p class="text-ink-muted leading-relaxed max-w-xl">
-            Three principles, learned by being wrong about all three at some point. Posted on the wall above the desk.
+  <!-- ===== READING + JOURNAL ===== -->
+  <section class="border-b border-ink bg-paper-tint">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9 py-16 md:py-20 grid grid-cols-12 gap-10">
+
+      <!-- READING -->
+      <div class="col-span-12 md:col-span-6 md:border-r border-rule md:pr-10">
+        <p class="label-prussian mb-4">Folio · II</p>
+        <h2 class="font-display text-ink leading-none mb-8">From the reading desk</h2>
+
+        <div class="border-y border-ink py-6 mb-6">
+          <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-ink-muted mb-2">Currently reading</p>
+          <p class="font-display text-[1.7rem] md:text-[1.95rem] text-ink leading-tight mb-1">
+            The Scaling Era
           </p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule-strong border border-rule-strong">
-        {principles.map((p) => (
-          <div class="bg-paper-shade p-7 md:p-9">
-            <p class="mono text-[0.68rem] uppercase tracking-widest text-oxide mb-3">
-              Rule {p.n}
-            </p>
-            <p class="font-display italic text-2xl md:text-[1.7rem] leading-tight text-ink mb-4">
-              {p.t}
-            </p>
-            <p class="text-ink-muted leading-relaxed text-[0.97rem]">
-              {p.b}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== NOW + WRITING ===== -->
-  <section class="border-b border-ink">
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-20 grid grid-cols-12 gap-10">
-
-      <div class="col-span-12 md:col-span-7 md:border-r border-rule md:pr-10">
-        <p class="label-oxide mb-4">Folio · III</p>
-        <h2 class="font-display text-ink leading-none mb-8">Currently</h2>
-
-        <ul class="space-y-6">
-          <li class="grid grid-cols-12 gap-4">
-            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
-              Searching
-            </span>
-            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
-              For applied AI, quant, and forward-deployed roles. Paris first, London close second. <a href="/now" class="ink-link">More on the Now page</a>.
-            </p>
-          </li>
-          <li class="grid grid-cols-12 gap-4">
-            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
-              Hardening
-            </span>
-            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
-              Lineup's pipeline: incremental BigQuery loads, Redis cache replacing the 57MB JSON, Looker dashboards next.
-            </p>
-          </li>
-          <li class="grid grid-cols-12 gap-4">
-            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
-              Closing out
-            </span>
-            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
-              NutriPlan v1: SwiftUI frontend implementation, TestFlight beta targeted for summer 2026.
-            </p>
-          </li>
-          <li class="grid grid-cols-12 gap-4">
-            <span class="col-span-3 md:col-span-2 mono text-[0.7rem] uppercase tracking-widest text-oxide pt-1">
-              Researching
-            </span>
-            <p class="col-span-9 md:col-span-10 text-ink leading-snug">
-              Earnings-call Q&A alignment as an equity signal. Blocker: a labelled training set of 100–200 Q&A pairs.
-            </p>
-          </li>
-        </ul>
-      </div>
-
-      <aside class="col-span-12 md:col-span-5">
-        <p class="label-oxide mb-4">Folio · IV</p>
-        <h2 class="font-display text-ink leading-none mb-8">From the desk</h2>
-
-        <div class="border-y border-ink py-8">
-          <p class="font-display italic text-3xl md:text-[2rem] leading-[1.18] text-ink mb-4">
-            "The interesting bit isn't the model. It's the operational scar tissue around it."
+          <p class="font-display italic text-ink-muted text-[1.15rem] mb-3">
+            Dwarkesh Patel · 2026
           </p>
-          <p class="mono text-[0.68rem] uppercase tracking-widest text-ink-muted">
-            Working notes · 2026
+          <p class="text-ink-muted leading-snug max-w-md">
+            A first-hand chronicle of the people, decisions, and capital flowing into frontier AI. Reading slowly because the bibliography is half the value.
           </p>
         </div>
 
-        <p class="text-ink-muted leading-relaxed mt-8">
-          Notes and essays on applied AI, shipping products solo, and the path from enterprise engineering to founding something. First pieces queued.
-        </p>
-        <a href="/writing" class="mono text-[0.72rem] uppercase tracking-widest text-ink hover:text-oxide transition-colors mt-4 inline-block">
-          To the Writing index →
+        <p class="label mb-3">Active curriculum</p>
+        <div class="flex flex-wrap gap-x-3 gap-y-2">
+          {subjects.map((s, i) => (
+            <span class="sans text-[0.74rem] text-ink border border-rule-strong px-2.5 py-1 bg-paper">
+              {s}
+            </span>
+          ))}
+        </div>
+
+        <a href="/reading" class="ink-link sans text-[0.72rem] uppercase tracking-[0.16em] mt-6 inline-block text-ink font-medium">
+          To the reading room →
+        </a>
+      </div>
+
+      <!-- JOURNAL -->
+      <aside class="col-span-12 md:col-span-6">
+        <p class="label-prussian mb-4">Folio · III</p>
+        <h2 class="font-display text-ink leading-none mb-8">From the lab journal</h2>
+
+        <ol class="border-t border-ink">
+          {journalRecent.map((j) => (
+            <li class="grid grid-cols-12 gap-4 py-5 border-b border-rule">
+              <div class="col-span-3 mono text-[0.78rem] text-prussian tabular pt-1">
+                {j.date}
+              </div>
+              <div class="col-span-9">
+                <p class="text-ink leading-snug">{j.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <a href="/journal" class="ink-link sans text-[0.72rem] uppercase tracking-[0.16em] mt-6 inline-block text-ink font-medium">
+          Full lab journal →
         </a>
       </aside>
     </div>
   </section>
 
-  <!-- ===== CONTACT BAND ===== -->
+  <!-- ===== PAST WORK + NOTES POINTER ===== -->
+  <section class="border-b border-ink">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9 py-16 md:py-20 grid grid-cols-12 gap-10">
+
+      <div class="col-span-12 md:col-span-6">
+        <p class="label-prussian mb-4">Folio · IV</p>
+        <h2 class="font-display text-ink leading-none mb-6">In preparation</h2>
+        <p class="text-ink leading-relaxed mb-5 max-w-md">
+          Three literature reviews on the desk: a working review of <strong>wealth inequality</strong> and the evidence on social mobility; production ML observability; agentic AI evaluation in 2026. Plus three editorials in draft, including a longer note on leaving a job I was good at.
+        </p>
+        <a href="/notes" class="sans text-[0.74rem] uppercase tracking-[0.16em] text-ink hover:text-prussian transition-colors font-medium border border-ink px-5 py-3 inline-block">
+          Notes & literature reviews →
+        </a>
+      </div>
+
+      <div class="col-span-12 md:col-span-6">
+        <p class="label-prussian mb-4">Folio · V</p>
+        <h2 class="font-display text-ink leading-none mb-6">Archive</h2>
+        <p class="text-ink leading-relaxed mb-5 max-w-md">
+          Earlier work and the bedrock chapters. The UCL Physics dissertation on deep learning for image reconstruction in lithium-ion batteries; the DataCamp Data Scientist certification; long-running mentoring; sport for Sussex; Young Enterprise. Bedrock for everything since.
+        </p>
+        <a href="/past-work" class="sans text-[0.74rem] uppercase tracking-[0.16em] text-ink hover:text-prussian transition-colors font-medium border border-ink px-5 py-3 inline-block">
+          Past work archive →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CORRESPONDENCE ===== -->
   <section>
-    <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
+    <div class="max-w-[1320px] mx-auto px-5 md:px-9 py-20 md:py-28">
       <div class="grid grid-cols-12 gap-6 items-end">
         <div class="col-span-12 md:col-span-8">
-          <p class="label-oxide mb-6">End of folio</p>
-          <p class="font-display leading-[0.96] text-[clamp(2.5rem,7vw,5.5rem)] text-ink">
-            If the work resonates, <span class="italic text-oxide">write to me.</span>
+          <p class="label-prussian mb-6">End of issue</p>
+          <p class="font-display leading-[0.96] text-[clamp(2.4rem,6.5vw,5rem)] text-ink">
+            If a problem you can't quite get out of your head sits at the boundary between a domain and a technology, <span class="italic text-prussian">write to me.</span>
           </p>
           <p class="text-ink-muted mt-6 max-w-xl leading-relaxed">
-            Roles, collaborations, problems you can't quite get out of your head. I read everything and reply to most.
+            For collaborations, conversations, or quiet introductions. Roles too, where the description and the work above genuinely overlap. I read everything and reply to most.
           </p>
         </div>
         <div class="col-span-12 md:col-span-4 md:text-right">
           <a
             href="mailto:jevan.cousins@gmail.com"
-            class="inline-block mono text-[0.78rem] uppercase tracking-widest border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
+            class="inline-block sans text-[0.74rem] uppercase tracking-[0.18em] font-medium border border-ink px-6 py-4 hover:bg-ink hover:text-paper transition-colors"
           >
             jevan.cousins@gmail.com →
           </a>
