@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/now", "destination": "/journal", "permanent": true },
+    { "source": "/writing", "destination": "/notes", "permanent": true },
+    { "source": "/projects", "destination": "/papers", "permanent": true },
+    { "source": "/projects/:slug", "destination": "/papers/:slug", "permanent": true }
+  ]
+}

@@ -1,0 +1,132 @@
+---
+interface MetaItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  identifier: string;
+  title: string;
+  subtitle?: string;
+  abstract: string;
+  authors?: string;
+  affiliation?: string;
+  submitted?: string;
+  revised?: string;
+  status?: string;
+  keywords?: string[];
+  meta?: MetaItem[];
+  repo?: string;
+}
+
+const {
+  identifier,
+  title,
+  subtitle,
+  abstract,
+  authors = 'J. Cousins',
+  affiliation = 'Independent · London, UK',
+  submitted,
+  revised,
+  status,
+  keywords = [],
+  meta = [],
+  repo,
+} = Astro.props;
+---
+
+<article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-20">
+
+  <!-- Top metadata band -->
+  <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+    <span class="text-ink">A working journal of applied engineering</span>
+    <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">{identifier}</span>
+    <span class="text-ink-muted">{status ?? 'Working paper'}</span>
+  </div>
+
+  <!-- Title block (arXiv-style) -->
+  <header class="grid grid-cols-12 gap-6 mb-12">
+    <div class="col-span-12 md:col-span-9">
+      <p class="label-prussian mb-5">{ identifier }</p>
+      <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.4rem,6.5vw,4.5rem)]">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="font-display text-[1.4rem] md:text-[1.65rem] text-ink-muted leading-[1.25] max-w-3xl mb-6">
+          {subtitle}
+        </p>
+      )}
+
+      <div class="sans text-[0.86rem] text-ink space-y-1 mb-2">
+        <p><span class="font-medium">{authors}</span></p>
+        <p class="text-ink-muted text-[0.8rem]">{affiliation}</p>
+      </div>
+
+      <div class="sans text-[0.7rem] uppercase tracking-[0.14em] text-ink-muted mt-3 flex flex-wrap gap-x-5 gap-y-1">
+        {submitted && <span><span class="text-ink-faint">Submitted</span>&nbsp; {submitted}</span>}
+        {revised && <span><span class="text-ink-faint">Revised</span>&nbsp; {revised}</span>}
+        {status && <span><span class="text-ink-faint">Status</span>&nbsp; {status}</span>}
+      </div>
+    </div>
+
+    <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+      {meta.length > 0 && (
+        <>
+          <p class="label mb-3">Metadata</p>
+          <dl class="space-y-2.5 sans text-[0.78rem]">
+            {meta.map((m) => (
+              <div class="flex justify-between gap-4 border-b border-rule pb-2">
+                <dt class="text-ink-muted uppercase tracking-[0.14em] text-[0.62rem] font-medium">{m.label}</dt>
+                <dd class="text-ink text-right">{m.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </>
+      )}
+      {repo && (
+        <a
+          href={repo}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ink-link sans text-[0.72rem] uppercase tracking-[0.16em] mt-5 inline-block font-medium"
+        >
+          Source repository ↗
+        </a>
+      )}
+    </aside>
+  </header>
+
+  <!-- Abstract + keywords block -->
+  <section class="grid grid-cols-12 gap-6 mb-14">
+    <div class="col-span-12 md:col-span-9 md:col-start-2">
+      <div class="abstract">
+        <span class="abstract-label">Abstract.</span>
+        <span set:html={abstract}></span>
+      </div>
+      {keywords.length > 0 && (
+        <p class="sans text-[0.74rem] mt-5 pl-5">
+          <span class="text-prussian font-semibold uppercase tracking-[0.14em] text-[0.66rem] mr-2">Keywords</span>
+          <span class="text-ink-muted">
+            {keywords.join(' · ')}
+          </span>
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Body -->
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 md:col-span-9 md:col-start-2">
+      <div class="prose-body">
+        <slot />
+      </div>
+
+      <hr class="rule-double mt-16 mb-6" />
+
+      <div class="flex items-center justify-between sans text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
+        <a href="/papers" class="ink-link text-ink">← Back to the index</a>
+        <a href="mailto:jevan.cousins@gmail.com" class="ink-link text-ink">Correspondence →</a>
+      </div>
+    </div>
+  </div>
+</article>

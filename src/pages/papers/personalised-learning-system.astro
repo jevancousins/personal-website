@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="An adaptive learning system · A working paper · J. Cousins"
+  description="A self-directed curriculum across seven technical subjects, with spaced testing and Claude-mediated updates that treat the syllabus itself as state an LLM can reason over."
+>
+  <Paper
+    identifier="jcousins/2026.04.006"
+    title="An adaptive learning system"
+    subtitle="A self-directed curriculum across seven technical subjects, with spaced testing and Claude-mediated updates."
+    abstract="The hard problem in self-directed technical study is not access to material; it is keeping a coherent curriculum, testing yourself honestly, and updating the syllabus when your gaps reveal themselves. We describe a personal adaptive learning system that handles all three: a Claude-mediated set of skills (<code>learn-study</code>, <code>learn-test</code>, <code>learn-progress</code>, <code>learn-update-curriculum</code>) operating over a curriculum of seven subjects (Agentic AI, AI Use Cases, CS Fundamentals, Data Engineering, Production ML & MLOps, Quantitative Finance, System Design). The system has been the author's primary technical study harness since early 2026 and is described here both as an artefact and as a candidate template for anyone who has tried and abandoned other learning workflows."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2026-02"
+    revised="2026-04"
+    status="Active · personal use"
+    keywords={['adaptive learning', 'self-directed study', 'spaced repetition', 'Claude', 'pedagogy']}
+    meta={[
+      { label: 'Version', value: 'v0.6' },
+      { label: 'Started', value: '2026' },
+      { label: 'Subjects', value: '7 technical' },
+      { label: 'Skills', value: 'study · test · progress · update' },
+      { label: 'Cadence', value: 'Daily · weekly review' },
+      { label: 'Engine', value: 'Claude · Notion' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      The author has reached the lifecycle stage where the bottleneck on technical growth is neither motivation nor access but coordination: a coherent curriculum across many subjects, honest assessment, and a feedback loop that produces the next study session rather than the next bookmark. Most off-the-shelf tools optimise for one of those three. This system tries to address all three by treating the curriculum itself as state that an LLM can read, write, and reason about.
+    </p>
+
+    <h2><span class="secnum">2</span>Subjects</h2>
+    <p>The current curriculum:</p>
+    <ul>
+      <li><strong>Agentic AI</strong>: orchestration patterns, tool use, evaluation, failure modes.</li>
+      <li><strong>AI Use Cases</strong>: a working catalogue of "where this is actually deployed and what it took".</li>
+      <li><strong>CS Fundamentals</strong>: data structures, algorithms, complexity, the parts of theory that compound.</li>
+      <li><strong>Data Engineering</strong>: ingestion patterns, warehousing, lineage, quality.</li>
+      <li><strong>Production ML & MLOps</strong>: serving, monitoring, drift, retraining, the full lifecycle.</li>
+      <li><strong>Quantitative Finance</strong>: signal construction, factor research, backtesting, risk.</li>
+      <li><strong>System Design</strong>: large-scale architecture, the FAANG-shaped interview surface that doubles as real engineering vocabulary.</li>
+    </ul>
+
+    <h2><span class="secnum">3</span>The four skills</h2>
+
+    <h3><span class="secnum">3.1</span><code>learn-study</code></h3>
+    <p>
+      Pulls the next topic for a given subject from the curriculum, presents the material in a focused session (concept, worked examples, references), and records what was covered. The presentation is calibrated to the author's current depth on that topic, which is read from the running progress state.
+    </p>
+
+    <h3><span class="secnum">3.2</span><code>learn-test</code></h3>
+    <p>
+      Generates and conducts a test on previously-studied material with spaced-repetition scheduling. Tests are deliberately adversarial: ambiguous wording, edge cases, mixed difficulty. Results are recorded and update the per-topic mastery score.
+    </p>
+
+    <h3><span class="secnum">3.3</span><code>learn-progress</code></h3>
+    <p>
+      Reports current mastery across subjects, surfaces topics due for revision, flags subjects that have been ignored for too long, and proposes the next session. This is the dashboard skill: it answers "what should I study right now".
+    </p>
+
+    <h3><span class="secnum">3.4</span><code>learn-update-curriculum</code></h3>
+    <p>
+      Mutates the curriculum itself: adds topics revealed by testing as gaps, retires topics that have hit mastery, re-orders syllabuses when an upstream change makes a downstream topic newly relevant. This is the part that is genuinely different from a static study plan.
+    </p>
+
+    <h2><span class="secnum">4</span>Discussion</h2>
+    <p>
+      Three things have been more important than expected. First: the test step is non-negotiable; without it, the system collapses into a slow-paced reading list with the comfortable illusion of progress. Second: <code>learn-update-curriculum</code> is the difference between a planner and a learner; if the syllabus does not change as the gaps reveal themselves, the gaps stay there. Third: keeping the system inside Notion (curriculum, scores, session logs) means it sits next to everything else the author tracks, which lowers the activation energy to actually use it.
+    </p>
+    <p>
+      This system also sits in a longer personal thread. The author spent years tutoring and mentoring children from under-privileged backgrounds, and the question of "how do you actually help someone learn" has informed the design more than any pedagogy literature. The answer continues to be: regular sessions, honest assessment, an updated plan, and someone who notices when you stop showing up.
+    </p>
+  </Paper>
+</BaseLayout>

@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const litReviews = [
+  {
+    n: '01',
+    title: 'Wealth inequality: a working literature review',
+    abstract: "An evolving review of the literature on wealth inequality, the mechanisms that drive it, and what the evidence says about interventions that have or have not narrowed it. Begun in early 2026 and revised as the author reads further.",
+    keywords: ['economics', 'inequality', 'social mobility', 'policy'],
+    status: 'In preparation',
+  },
+  {
+    n: '02',
+    title: 'Production ML observability: what the field actually does',
+    abstract: 'A practitioner-oriented review of the live observability stack for production machine-learning systems: drift detection, retraining triggers, fairness monitoring, and the boring instrumentation that holds it all together.',
+    keywords: ['MLOps', 'observability', 'production ML'],
+    status: 'In preparation',
+  },
+  {
+    n: '03',
+    title: 'Agentic AI evaluation in 2026',
+    abstract: 'A review of how the field currently evaluates agentic systems, and where the gap between benchmark and deployed reality is widest.',
+    keywords: ['agentic AI', 'evaluation', 'benchmarks'],
+    status: 'In preparation',
+  },
+];
+
+const editorials = [
+  {
+    n: '01',
+    title: 'Why I left a job I was good at',
+    blurb: 'A short note on leaving Allianz Global Investors after four years. What I learned, what I am taking with me, and the thesis that survived contact with the corporate environment.',
+    when: 'Q2 2026',
+  },
+  {
+    n: '02',
+    title: 'Three months inside an enterprise agentic AI rollout',
+    blurb: 'What worked, what nearly killed it, and the bits I would change before doing it again.',
+    when: 'Q2 2026',
+  },
+  {
+    n: '03',
+    title: 'A job search, written as a system',
+    blurb: 'How I built a six-dimension scoring framework for my own search, and what the data has done to my priors so far.',
+    when: 'Q3 2026',
+  },
+];
+---
+
+<BaseLayout
+  title="Notes · A working journal · J. Cousins"
+  description="Working notes, literature reviews on subjects of interest, and short editorials. Wealth inequality, agentic AI, production ML, and other ongoing reading."
+>
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
+
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>Notes</span>
+      <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">jcousins/notes</span>
+      <span class="text-ink-muted">In preparation</span>
+    </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-14">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-prussian mb-5">Working notes & literature reviews</p>
+        <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.8rem,7vw,5rem)]">
+          Notes
+        </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          Two formats: literature reviews on subjects I am actively learning about, and short editorial pieces on whatever has been on the desk that month.
+        </p>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+        <p class="label mb-3">Method</p>
+        <p class="sans text-[0.82rem] text-ink-muted leading-[1.55]">
+          Reviews stay light by design: a working summary of what the literature says, with citations, revised as the reading deepens. Editorials are shorter pieces with a single argument and no claim to neutrality.
+        </p>
+      </aside>
+    </header>
+
+    <!-- LITERATURE REVIEWS -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Literature reviews
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">{litReviews.length} entries</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {litReviews.map((r) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-7 border-b border-rule">
+            <div class="col-span-12 md:col-span-2">
+              <p class="mono text-[0.72rem] text-ink-muted">№ {r.n}</p>
+              <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-prussian mt-2">Lit. review</p>
+            </div>
+            <div class="col-span-12 md:col-span-7">
+              <h3 class="font-display text-[1.4rem] md:text-[1.6rem] text-ink leading-tight mb-2">
+                {r.title}
+              </h3>
+              <p class="text-ink leading-snug text-[0.97rem] mb-3 max-w-3xl">
+                {r.abstract}
+              </p>
+              <div class="flex flex-wrap gap-x-3 gap-y-1 sans text-[0.66rem] uppercase tracking-[0.12em] text-ink-muted">
+                {r.keywords.map((kw, i) => (
+                  <span>{kw}{i < r.keywords.length - 1 ? ' ·' : ''}</span>
+                ))}
+              </div>
+            </div>
+            <div class="col-span-12 md:col-span-3 md:text-right self-start">
+              <span class="pill">{r.status}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- EDITORIALS -->
+    <section>
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Editorials
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">In preparation</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {editorials.map((e) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-7 border-b border-rule">
+            <div class="col-span-12 md:col-span-2">
+              <p class="mono text-[0.72rem] text-ink-muted">№ {e.n}</p>
+            </div>
+            <div class="col-span-12 md:col-span-7">
+              <h3 class="font-display text-[1.4rem] md:text-[1.6rem] text-ink leading-tight mb-2">
+                {e.title}
+              </h3>
+              <p class="text-ink-muted leading-snug max-w-3xl">
+                {e.blurb}
+              </p>
+            </div>
+            <div class="col-span-12 md:col-span-3 md:text-right self-start sans text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
+              Targeted · {e.when}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="mt-16 border-y border-ink py-10">
+      <p class="font-display italic text-[1.7rem] md:text-[2rem] text-ink leading-tight max-w-3xl">
+        If a particular subject above is the reason you came here, <a href="mailto:jevan.cousins@gmail.com" class="ink-link text-ink">tell me</a>. I will move it up the queue.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

@@ -2,14 +2,19 @@ import { test, expect } from "./fixtures";
 
 const PAGES = [
   { path: "/", title: /Jevan Cousins/i },
-  { path: "/about", title: /Bio/i },
-  { path: "/now", title: /Now/i },
-  { path: "/writing", title: /Writing/i },
-  { path: "/projects", title: /Projects/i },
-  { path: "/projects/earnings-call-analyser", title: /Jevan Cousins/i },
-  { path: "/projects/jobhunter", title: /JobHunter/i },
-  { path: "/projects/lineup", title: /Lineup/i },
-  { path: "/projects/nutriplan", title: /NutriPlan/i },
+  { path: "/about", title: /About/i },
+  { path: "/journal", title: /Lab journal/i },
+  { path: "/notes", title: /Notes/i },
+  { path: "/reading", title: /Reading/i },
+  { path: "/papers", title: /Papers/i },
+  { path: "/past-work", title: /Past work/i },
+  { path: "/papers/lineup", title: /Lineup/i },
+  { path: "/papers/nutriplan", title: /NutriPlan/i },
+  { path: "/papers/jobhunter", title: /JobHunter/i },
+  { path: "/papers/earnings-call-analyser", title: /Earnings-call/i },
+  { path: "/papers/personal-ai-layer", title: /personal AI layer/i },
+  { path: "/papers/personalised-learning-system", title: /adaptive learning/i },
+  { path: "/papers/smb-ai-discovery", title: /SMB AI/i },
 ];
 
 for (const p of PAGES) {

@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const currently = {
+  title: 'The Scaling Era',
+  author: 'Dwarkesh Patel',
+  year: '2026',
+  pages: null,
+  rating: null,
+  blurb: 'A first-hand chronicle of the people, decisions, and capital flowing into frontier AI. Reading slowly because the bibliography is half the value.',
+};
+
+const reviews = [
+  {
+    title: 'Designing Machine Learning Systems',
+    author: 'Chip Huyen',
+    year: '2022',
+    rating: 5,
+    blurb: 'The closest thing the field has to a standard text on production ML. Returns are diminishing on the second pass; gains are non-zero on the third.',
+    tags: ['Production ML', 'MLOps'],
+  },
+  {
+    title: 'The Hard Thing About Hard Things',
+    author: 'Ben Horowitz',
+    year: '2014',
+    rating: 4,
+    blurb: 'A practical companion for the parts of building things nobody wants to talk about: layoffs, founder-CEO transitions, the wartime mindset. Periodically dated, mostly not.',
+    tags: ['Founding', 'Operating'],
+  },
+  {
+    title: 'Working in Public',
+    author: 'Nadia Eghbal',
+    year: '2020',
+    rating: 4,
+    blurb: 'The economics and social dynamics of open-source maintainership, written with unusual care. Has aged remarkably well.',
+    tags: ['Open source', 'Software economics'],
+  },
+  {
+    title: 'Why Machines Learn',
+    author: 'Anil Ananthaswamy',
+    year: '2024',
+    rating: 4,
+    blurb: 'A historical-mathematical tour of the ideas behind modern machine learning, traced through the people who developed them. Read and enjoyed in 2025; a longer take to follow.',
+    tags: ['Machine learning', 'History of ideas'],
+  },
+];
+
+const french = [
+  {
+    title: 'Capital et Idéologie',
+    author: 'Thomas Piketty',
+    year: '2019',
+    blurb: 'Sur la liste de lecture en cours sur les inégalités de richesse. Lecture lente, en français pour entretenir la langue et parce que la traduction perd quelque chose.',
+  },
+  {
+    title: "L'Élégance du hérisson",
+    author: 'Muriel Barbery',
+    year: '2006',
+    blurb: 'Roman. Relu pour le plaisir et pour le vocabulaire.',
+  },
+];
+
+const curriculum = [
+  { name: 'Agentic AI', focus: 'Orchestration patterns, tool use, evaluation, failure modes.' },
+  { name: 'AI Use Cases', focus: 'A working catalogue of where this is actually deployed and what it took.' },
+  { name: 'CS Fundamentals', focus: 'Data structures, algorithms, complexity, the parts of theory that compound.' },
+  { name: 'Data Engineering', focus: 'Ingestion, warehousing, lineage, quality.' },
+  { name: 'Production ML & MLOps', focus: 'Serving, monitoring, drift, retraining, the full lifecycle.' },
+  { name: 'Quantitative Finance', focus: 'Signal construction, factor research, backtesting, risk.' },
+  { name: 'System Design', focus: 'Large-scale architecture and the FAANG-shaped interview surface.' },
+];
+
+const interests = [
+  'Wealth inequality and social mobility',
+  'Education and how people actually learn',
+  'AI safety and the deployment gap',
+  'Geopolitics and geography',
+  'Macroeconomics and monetary policy',
+  'Sport (football, cricket, long-distance running)',
+  'British comedy: panel shows, stand-up, the long-form podcast era',
+];
+
+const star = (n: number | null) => n == null ? '·' : '★'.repeat(n) + '☆'.repeat(5 - n);
+---
+
+<BaseLayout
+  title="Reading · A working journal · J. Cousins"
+  description="What I'm currently reading, the active curriculum I'm studying, book reviews, French reading, and the broader subjects of interest."
+>
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
+
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>Reading</span>
+      <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">jcousins/reading</span>
+      <span class="text-ink-muted">Updated continually</span>
+    </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-14">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-prussian mb-5">Library, curriculum, interests</p>
+        <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.8rem,7vw,5rem)]">
+          Reading
+        </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          What is on the desk, what I am studying, and what I keep returning to.
+        </p>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+        <p class="label mb-3">Format</p>
+        <p class="sans text-[0.82rem] text-ink-muted leading-[1.55]">
+          Reviews are short and honest. Ratings are out of five and lightly held. The curriculum is the one driving my <a href="/papers/personalised-learning-system" class="ink-link text-ink">adaptive learning system</a>.
+        </p>
+      </aside>
+    </header>
+
+    <!-- CURRENTLY READING -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Currently reading
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">On the desk</p>
+      </div>
+
+      <div class="grid grid-cols-12 gap-6 border-b border-rule pb-8">
+        <div class="col-span-12 md:col-span-2 sans text-[0.68rem] uppercase tracking-[0.16em] text-prussian">
+          Now reading
+        </div>
+        <div class="col-span-12 md:col-span-8">
+          <p class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-tight mb-2">
+            {currently.title} <span class="font-display italic text-ink-muted text-[1.3rem]">· {currently.author}</span>
+          </p>
+          <p class="text-ink-muted leading-relaxed max-w-3xl">
+            {currently.blurb}
+          </p>
+        </div>
+        <div class="col-span-12 md:col-span-2 md:text-right">
+          <p class="mono text-[0.72rem] text-ink-faint">{currently.year}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURRICULUM -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Curriculum
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">7 active subjects</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {curriculum.map((c, i) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-5 border-b border-rule items-baseline">
+            <div class="col-span-1 sans text-[0.68rem] uppercase tracking-[0.16em] text-prussian font-medium tabular">
+              0{i + 1}
+            </div>
+            <div class="col-span-11 md:col-span-4">
+              <p class="font-display text-[1.25rem] md:text-[1.4rem] text-ink leading-tight">
+                {c.name}
+              </p>
+            </div>
+            <div class="col-span-12 md:col-span-7">
+              <p class="text-ink-muted leading-snug text-[0.95rem]">
+                {c.focus}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Reviewed
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">{reviews.length} entries</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-rule border border-rule">
+        {reviews.map((b) => (
+          <div class="bg-paper p-7 flex flex-col">
+            <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-prussian mb-3">
+              Book review
+            </p>
+            <p class="font-display text-[1.4rem] text-ink leading-tight mb-1">
+              {b.title}
+            </p>
+            <p class="font-display italic text-ink-muted text-[1.05rem] mb-3">
+              {b.author} · {b.year}
+            </p>
+            {b.rating != null ? (
+              <p class="mono text-[0.78rem] text-prussian mb-4 tabular">
+                {star(b.rating)}
+              </p>
+            ) : (
+              <p class="sans text-[0.66rem] uppercase tracking-[0.16em] text-ink-faint mb-4">
+                Read · awaiting rating
+              </p>
+            )}
+            <p class="text-ink-muted leading-snug text-[0.95rem] mb-4 flex-1">
+              {b.blurb}
+            </p>
+            <div class="flex flex-wrap gap-x-3 sans text-[0.62rem] uppercase tracking-[0.12em] text-ink-faint">
+              {b.tags.map((t, i) => <span>{t}{i < b.tags.length - 1 ? ' ·' : ''}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- LECTURES FRANCOPHONES -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Lectures francophones
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">En français · pour entretenir</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {french.map((b) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-6 border-b border-rule">
+            <div class="col-span-12 md:col-span-4">
+              <p class="font-display text-[1.3rem] text-ink leading-tight">{b.title}</p>
+              <p class="font-display italic text-ink-muted">{b.author} · {b.year}</p>
+            </div>
+            <div class="col-span-12 md:col-span-8">
+              <p class="text-ink-muted leading-snug max-w-2xl">{b.blurb}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- INTERESTS -->
+    <section>
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Subjects of standing interest
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">Long-running</p>
+      </div>
+
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 border-t border-rule">
+        {interests.map((it) => (
+          <li class="border-b border-rule py-3 flex items-baseline gap-4">
+            <span class="mono text-[0.66rem] text-prussian">→</span>
+            <span class="text-ink leading-snug">{it}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </article>
+</BaseLayout>

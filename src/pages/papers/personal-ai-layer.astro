@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Paper from '../../components/Paper.astro';
+---
+
+<BaseLayout
+  title="A personal AI layer · A working paper · J. Cousins"
+  description="A two-tool personal AI stack: OpenClaw (a self-hosted local agent over Telegram) and a Claude Cowork-backed assistant, sharing one job description across two surfaces."
+>
+  <Paper
+    identifier="jcousins/2026.04.005"
+    title="A personal AI layer"
+    subtitle="OpenClaw and a Cowork-backed assistant: two tools, one job description."
+    abstract="The category of work that benefits most from a personal AI is the boring, predictable, persistent kind: morning briefings, calendar triage, mail filtering, follow-up nudges, the long tail of life admin. We describe a two-tool stack that approaches the problem from both ends. <strong>OpenClaw</strong> is a self-hosted local agent running as a macOS LaunchAgent, exposing skills (calendar, mail, weather, briefings) to a Telegram bot the author can address from anywhere. <strong>Personal AI Assistant</strong> is the same job description executed inside Claude Cowork, taking advantage of richer reasoning, longer-running tasks, and direct access to the author's MCP-connected services. The two are deliberately not unified: each plays to a different cost / latency / reasoning trade-off, and treating them as one tool would force the wrong compromise on both."
+    authors="J. Cousins"
+    affiliation="Independent · London, UK"
+    submitted="2026-03"
+    revised="2026-04"
+    status="Active · in daily use"
+    keywords={['agentic AI', 'personal automation', 'Claude Cowork', 'MCP', 'LaunchAgent', 'Telegram']}
+    meta={[
+      { label: 'Version', value: 'OpenClaw 2026.4.15' },
+      { label: 'Started', value: '2026' },
+      { label: 'Stack', value: 'Python · Claude · MCP' },
+      { label: 'Surfaces', value: 'Telegram · Cowork' },
+      { label: 'Skills', value: 'Calendar · Mail · Briefings · Weather' },
+      { label: 'Status', value: 'End-to-end live' },
+    ]}
+  >
+    <h2><span class="secnum">1</span>Introduction</h2>
+    <p class="drop-cap">
+      The promise of personal AI is large; the lived experience of it, in 2026, is still mostly sub-Saharan in delivery. The wins are real but distributed: a model that can reliably tell you the right thing at the right time without being asked is more valuable than a model that can compose a sonnet on demand. The two systems described here are an attempt to live inside that distinction, by building tools that compete with, rather than complement, an unloaded calendar.
+    </p>
+    <p>
+      The deliberate split between OpenClaw and the Cowork-backed assistant is not architectural elegance; it is honest about the constraint surface. OpenClaw is for fast, cheap, repeatable interactions over a low-bandwidth channel (Telegram). The Cowork-backed assistant is for richer reasoning, multi-step plans, and access to MCP services that benefit from longer context.
+    </p>
+
+    <h2><span class="secnum">2</span>OpenClaw</h2>
+
+    <h3><span class="secnum">2.1</span>Surface and runtime</h3>
+    <p>
+      OpenClaw runs as a macOS LaunchAgent with a small Python core. Skills are first-class plugins (currently: <code>gog</code> for Google services, <code>calendar</code>, <code>mail</code>, <code>briefings</code>, <code>weather</code>); each authenticates against the relevant API and exposes a narrow set of tool calls to the agent loop. The user-facing surface is a Telegram bot. Round-trip latency on a typical query (current time, today's events, send a quick mail) is under two seconds.
+    </p>
+
+    <h3><span class="secnum">2.2</span>What it is good at</h3>
+    <ul>
+      <li>Morning briefings, scheduled and pushed without prompting.</li>
+      <li>One-shot factual queries (calendar, weather, mail subjects).</li>
+      <li>Quick captures: "remind me at 17:00", "draft a reply to X saying Y".</li>
+      <li>Triggers for downstream automations: "open the morning focus loop now".</li>
+    </ul>
+
+    <h2><span class="secnum">3</span>Personal AI Assistant</h2>
+
+    <h3><span class="secnum">3.1</span>Surface and runtime</h3>
+    <p>
+      Personal AI Assistant lives inside Claude Cowork. The job description is identical to OpenClaw's: be useful in the long tail of life admin. The runtime is different: a hosted environment with stronger reasoning, longer context windows, and MCP connections to Notion (tasks and projects), Gmail, Calendar, and Drive. It is the right tool when the question is not "what is on my calendar" but "given everything I'm trying to do this month, what should I work on next, and what am I avoiding".
+    </p>
+
+    <h3><span class="secnum">3.2</span>What it is good at</h3>
+    <ul>
+      <li>Multi-step planning across the Tasks and Projects DBs.</li>
+      <li>Drafting that requires actual judgement (longer mails, status notes, briefs).</li>
+      <li>Cross-source synthesis (Drive + Notion + Calendar) that benefits from larger context.</li>
+      <li>Adversarial nudging: explicitly calling out avoidance patterns.</li>
+    </ul>
+
+    <h2><span class="secnum">4</span>Why two tools</h2>
+    <p>
+      The dominant temptation is to unify, on grounds of architectural elegance and reduced surface area. We resist it for three reasons.
+    </p>
+    <ol>
+      <li><strong>Cost / latency profile.</strong> A Telegram round-trip should be cheap and fast. A Cowork session is neither, and should not be.</li>
+      <li><strong>Reasoning depth.</strong> Forcing the cheap, fast surface to handle deep reasoning makes both worse; forcing the deep surface to handle one-shot factual queries wastes tokens.</li>
+      <li><strong>Failure modes.</strong> A bug in OpenClaw's calendar skill should not bring down the system that is currently helping the author plan their week. The two share no runtime.</li>
+    </ol>
+
+    <h2><span class="secnum">5</span>Implementation</h2>
+    <table>
+      <thead>
+        <tr><th>Component</th><th>Choice</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>OpenClaw runtime</td><td>Python · macOS LaunchAgent</td><td>Long-running, autostarts, low ceremony.</td></tr>
+        <tr><td>OpenClaw surface</td><td>Telegram Bot API</td><td>Cheap, fast, available on every device.</td></tr>
+        <tr><td>OpenClaw skills</td><td>Plugin model (Python)</td><td>Each skill self-contained, separately auth'd.</td></tr>
+        <tr><td>PAA runtime</td><td>Claude Cowork</td><td>Strong reasoning, longer context, hosted.</td></tr>
+        <tr><td>PAA connectors</td><td>MCP (Notion, Gmail, Calendar, Drive)</td><td>Stable contract; cross-source workflows.</td></tr>
+        <tr><td>Source of truth</td><td>Notion Tasks + Projects DBs</td><td>Single backbone shared by both tools.</td></tr>
+      </tbody>
+    </table>
+
+    <h2><span class="secnum">6</span>Discussion</h2>
+    <p>
+      The interesting design question for personal AI in 2026 is no longer "what model" or "what framework"; it is "where in the day does this tool need to live, and what is the right cost / latency profile for that moment". OpenClaw and PAA represent two different answers to that question, sharing only the underlying schema (Notion as the canonical store) and the author's intent. That separation has held up better in practice than we initially expected.
+    </p>
+    <p>
+      Near-term: a third skill family for OpenClaw (Apple Reminders / Notes write-back), better calibration of the morning briefing on what the author actually opens versus skips, and deeper PAA integration with the morning focus loop.
+    </p>
+  </Paper>
+</BaseLayout>

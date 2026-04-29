@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entries = [
+  {
+    identifier: 'jcousins/2021.06.001',
+    title: 'Deep learning for image reconstruction in lithium-ion battery Bragg coherent diffractive imaging',
+    subtitle: 'BSc Natural Sciences dissertation · UCL Department of Physics & Astronomy',
+    abstract: "First-class (76%) literature review and computational study on the use of deep learning for image reconstruction in Bragg coherent diffractive imaging of lithium-ion battery cathodes. The dissertation surveys the limits of conventional iterative phase-retrieval algorithms (HIO, ER, RAAR) on noisy, low-photon-budget BCDI data, and reviews the emerging neural-network reconstruction work that bypasses iterative inversion altogether.",
+    year: '2021',
+    venue: 'UCL · BSc Natural Sciences (2:1)',
+    keywords: ['Physics', 'Deep learning', 'Image reconstruction', 'BCDI', 'Energy materials'],
+    status: 'Archived',
+  },
+  {
+    identifier: 'jcousins/2023.08.001',
+    title: 'DataCamp Data Science Professional Certification · capstone project',
+    subtitle: 'Applied data-science programme · DataCamp',
+    abstract: 'A multi-stage data science capstone covering exploratory analysis, feature engineering, supervised learning, model evaluation, and presentation, completed as the practical component of the DataCamp Data Scientist Professional certification.',
+    year: '2023',
+    venue: 'DataCamp Professional · Data Scientist',
+    keywords: ['Data science', 'Python', 'scikit-learn', 'Communication'],
+    status: 'Certified',
+  },
+];
+
+const certifications = [
+  { name: 'Data Scientist Professional · DataCamp', year: '2023', detail: 'Full track plus capstone project.' },
+  { name: 'SQL Associate · DataCamp', year: '2023', detail: 'Window functions, query optimisation, schema design.' },
+  { name: 'Data Engineer Associate · DataCamp', year: '2024', detail: 'Pipelines, warehousing, dbt foundations.' },
+  { name: 'AI Engineer for Developers · DataCamp', year: '2024', detail: 'Practical LLM application engineering.' },
+  { name: 'LIBF Level 6 Diploma · Trading and Financial Market Analysis', year: '2021', detail: 'Distinction. Earned alongside the UCL degree, picked up because reading filings without anyone to translate them was overdue.' },
+];
+
+const talksAndEvents = [
+  { name: 'Databricks Data + AI World Tour · London', year: '2025–26', role: 'Attendee' },
+];
+
+const earlier = [
+  { name: 'Young Enterprise · Ratton School', year: '2014–15', detail: 'Year-long programme running a real student business end-to-end. First serious experience of operating outside a classroom; left with a habit of asking who the customer is before anything else.' },
+  { name: 'Sussex County representative · football, cricket, long-distance running', year: 'Secondary school', detail: 'Sport has been the constant: discipline, training cycles, and a tolerance for being wrong in front of other people.' },
+  { name: 'Tutoring and mentoring · under-privileged backgrounds', year: 'Multiple years', detail: 'Long-running volunteer work, primarily in maths and the sciences. Where my interest in education and social mobility grew up.' },
+];
+---
+
+<BaseLayout
+  title="Past work · A working journal · J. Cousins"
+  description="Earlier work, certifications, and formative experiences. UCL Physics dissertation, DataCamp Data Scientist certification, Young Enterprise, sport, mentoring."
+>
+  <article class="max-w-[1320px] mx-auto px-5 md:px-9 pt-10 pb-24">
+
+    <div class="flex items-center justify-between border-y border-ink py-2 mb-12 sans text-[0.68rem] uppercase tracking-[0.18em]">
+      <span>Past work</span>
+      <span class="hidden md:inline mono normal-case tracking-[0.04em] text-ink-muted">jcousins/archive</span>
+      <span class="text-ink-muted">Archived</span>
+    </div>
+
+    <header class="grid grid-cols-12 gap-6 mb-14">
+      <div class="col-span-12 md:col-span-9">
+        <p class="label-prussian mb-5">Archive</p>
+        <h1 class="font-display leading-[0.98] text-ink mb-5 text-[clamp(2.8rem,7vw,5rem)]">
+          Past work
+        </h1>
+        <p class="font-display text-[1.45rem] md:text-[1.7rem] text-ink-muted leading-[1.25] max-w-2xl">
+          Earlier projects, certifications, and the formative chapters that the working journal sits on top of.
+        </p>
+      </div>
+      <aside class="col-span-12 md:col-span-3 md:pl-6 md:border-l border-rule">
+        <p class="label mb-3">Note</p>
+        <p class="sans text-[0.82rem] text-ink-muted leading-[1.55]">
+          Kept here intentionally separate from the active work. The current journal is for working systems; the archive is for the bedrock.
+        </p>
+      </aside>
+    </header>
+
+    <!-- ARCHIVED PAPERS -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Archived papers
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">{entries.length} entries</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {entries.map((e) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-8 border-b border-rule">
+            <div class="col-span-12 md:col-span-2">
+              <p class="mono text-[0.7rem] text-ink-muted">{e.identifier}</p>
+              <p class="font-display text-[1.6rem] text-prussian mt-2 tabular leading-none">{e.year}</p>
+            </div>
+            <div class="col-span-12 md:col-span-7">
+              <h3 class="font-display text-[1.4rem] md:text-[1.55rem] text-ink leading-tight mb-2">
+                {e.title}
+              </h3>
+              <p class="font-display italic text-ink-muted text-[1.05rem] mb-4">
+                {e.subtitle}
+              </p>
+              <p class="text-ink leading-relaxed text-[0.97rem] max-w-3xl mb-4">
+                {e.abstract}
+              </p>
+              <div class="flex flex-wrap gap-x-3 gap-y-1 sans text-[0.66rem] uppercase tracking-[0.12em] text-ink-muted">
+                {e.keywords.map((kw, i) => <span>{kw}{i < e.keywords.length - 1 ? ' ·' : ''}</span>)}
+              </div>
+            </div>
+            <div class="col-span-12 md:col-span-3 md:text-right self-start">
+              <span class="pill">{e.status}</span>
+              <p class="sans text-[0.7rem] text-ink-faint mt-3">{e.venue}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Certifications & coursework
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">{certifications.length} entries</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {certifications.map((c) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-5 border-b border-rule items-baseline">
+            <div class="col-span-3 md:col-span-2 mono text-[0.78rem] text-prussian tabular">
+              {c.year}
+            </div>
+            <div class="col-span-9 md:col-span-5">
+              <p class="font-display text-[1.15rem] text-ink leading-tight">{c.name}</p>
+            </div>
+            <div class="col-span-12 md:col-span-5">
+              <p class="text-ink-muted text-[0.93rem] leading-snug max-w-md md:ml-auto md:text-right">
+                {c.detail}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- TALKS / EVENTS -->
+    <section class="mb-20">
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Talks & events
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">Selected</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {talksAndEvents.map((t) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-5 border-b border-rule items-baseline">
+            <div class="col-span-3 md:col-span-2 mono text-[0.78rem] text-prussian tabular">
+              {t.year}
+            </div>
+            <div class="col-span-9 md:col-span-7">
+              <p class="font-display text-[1.15rem] text-ink leading-tight">{t.name}</p>
+            </div>
+            <div class="col-span-12 md:col-span-3 md:text-right sans text-[0.7rem] uppercase tracking-[0.16em] text-ink-muted">
+              {t.role}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- EARLIER FORMATIVE -->
+    <section>
+      <div class="flex items-baseline justify-between border-t border-ink pt-3 mb-6">
+        <h2 class="font-display text-[1.7rem] md:text-[2rem] text-ink leading-none">
+          Earlier, formative
+        </h2>
+        <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted">Bedrock</p>
+      </div>
+
+      <ol class="border-t border-rule">
+        {earlier.map((e) => (
+          <li class="grid grid-cols-12 gap-4 md:gap-6 py-7 border-b border-rule">
+            <div class="col-span-12 md:col-span-3">
+              <p class="font-display text-[1.2rem] text-ink leading-tight">{e.name}</p>
+              <p class="sans text-[0.68rem] uppercase tracking-[0.16em] text-ink-faint mt-1">{e.year}</p>
+            </div>
+            <div class="col-span-12 md:col-span-9">
+              <p class="text-ink-muted leading-relaxed max-w-3xl">{e.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </article>
+</BaseLayout>
